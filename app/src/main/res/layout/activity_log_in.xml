@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+<com.example.mycommunity.BackLayout
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"></com.example.mycommunity.BackLayout>
+        <LinearLayout
+            android:id="@+id/user_container"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_centerInParent="true">
+
+                <EditText
+                    android:id="@+id/user_id"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="10sp"
+                    android:hint="用户名"
+                    android:inputType="text"
+                    android:maxLines="1" />
+
+                <EditText
+                    android:id="@+id/pass_word"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="10sp"
+                    android:layout_marginBottom="20sp"
+                    android:ems="10"
+                    android:hint="密码"
+                    android:inputType="textPassword"
+                    android:maxLines="1" />
+
+                <Button
+                    android:id="@+id/login_button"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="10sp"
+                    android:text="登录" />
+        </LinearLayout>
+
+        <RelativeLayout
+            android:id="@+id/about_account"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="10sp"
+            android:layout_below="@id/user_container">
+
+                <TextView
+                    android:id="@+id/register_button"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentLeft="true"
+                    android:text="注册账号" />
+
+                <TextView
+                    android:id="@+id/forget_pass_word"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:text="忘记密码" />
+        </RelativeLayout>
+
+        <ProgressBar
+            android:id="@+id/check_information"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/about_account"
+            android:layout_centerHorizontal="true"
+            android:visibility="invisible"/>
+
+</RelativeLayout>

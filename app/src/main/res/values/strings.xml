@@ -1,0 +1,8 @@
+<resources>
+    <string name="app_name">MyCommunity</string>
+    <string name="title_community">社区</string>
+    <string name="title_news">新闻</string>
+    <string name="title_function">便民</string>
+    <string name="title_mine">我的</string>
+    <string name="title_activity_main_community">MainCommunity</string>
+</resources>
