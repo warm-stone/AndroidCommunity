@@ -34,10 +34,10 @@ public class RegisterActivity extends AppCompatActivity {
                 Toast.makeText(RegisterActivity.this,"请输入用户名和密码",Toast.LENGTH_SHORT).show();
             }
             else if(phoneEditText.getText().toString().isEmpty()){
-                Toast.makeText(RegisterActivity.this,"请输入手机号",Toast.LENGTH_SHORT);
+                Toast.makeText(RegisterActivity.this,"请输入手机号",Toast.LENGTH_SHORT).show();
             }
             else if(passWordEditText.equals(passWordConfirmText)){
-                Toast.makeText(RegisterActivity.this,"两次密码输入不一致",Toast.LENGTH_SHORT);
+                Toast.makeText(RegisterActivity.this,"两次密码输入不一致",Toast.LENGTH_SHORT).show();
             }
             else {
                 userInformation = new UserInformation(
