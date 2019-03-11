@@ -1,5 +1,6 @@
 package com.example.mycommunity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
@@ -20,6 +21,7 @@ public class MainCommunity extends AppCompatActivity {
     private List<Fragment> fragments = new ArrayList<>();
     private PagerAdapter pagerAdapter;
     private MineFragment mineFragment;
+    private Intent intent;
     private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
             = new BottomNavigationView.OnNavigationItemSelectedListener() {
         @Override
@@ -29,6 +31,8 @@ public class MainCommunity extends AppCompatActivity {
                     main_container.setCurrentItem(0);
                     return true;
                 case R.id.navigation_community:
+                    intent = new Intent(MainCommunity.this, LogIn.class);
+                    startActivity(intent);
                     main_container.setCurrentItem(1);
                     return true;
                 case R.id.navigation_function:

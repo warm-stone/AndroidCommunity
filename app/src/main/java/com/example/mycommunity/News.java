@@ -1,6 +1,9 @@
 package com.example.mycommunity;
 
-public class News {
+
+import org.litepal.crud.LitePalSupport;
+
+public class News  extends LitePalSupport {
     private String title;
     private String news_had_seen;
     private String news_had_heart;

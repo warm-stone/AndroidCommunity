@@ -1,6 +1,8 @@
 package com.example.mycommunity;
 
-public class UserInformation {
+import org.litepal.crud.LitePalSupport;
+
+public class UserInformation  extends LitePalSupport {
     private String userName;
     private String passWord;
     private String phone;//手机号
@@ -19,11 +21,16 @@ public class UserInformation {
         this.gender = gender;
         this.idCard = idCard;
     }
+
+    public UserInformation(String userName, String passWord,String phone){
+        this.userName = userName;
+        this.passWord = passWord;
+        this.phone = phone;
+    }
     public UserInformation(String userName, String passWord){
         this.userName = userName;
         this.passWord = passWord;
     }
-
     public void setBirthday(String birthday) {
         this.birthday = birthday;
     }

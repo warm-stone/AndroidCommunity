@@ -40,13 +40,13 @@ public class CommunityFragment extends Fragment {
         for (int i = 0; i < 40; i++){
             communityPost.setUserImg(R.drawable.ic_user);
             builder.append("一个大新闻");
-            communityPost.setUseName("小 虾米");
+            communityPost.setUseName("小虾米");
             communityPost.setPostTime("4分钟前");
             communityPost.setPostTitle(builder.toString());
             communityPost.setPostImg(R.drawable.ic_big_news);
-            tem = 243;
+            tem = random.nextInt(3000);
             communityPost.setPostHeartCount(String.valueOf(tem));
-            tem = random.nextInt();
+            tem = random.nextInt(3000);
             communityPost.setPostCommentsCount(String.valueOf(tem));
             posts.add(communityPost);
         }

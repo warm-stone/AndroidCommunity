@@ -33,7 +33,7 @@ public class LogIn extends AppCompatActivity {
             actionbar.hide();
         }
         userIdEditText = findViewById(R.id.user_id);
-        passWordEditText = findViewById(R.id.pass_word);
+        passWordEditText = findViewById(R.id.password);
         final ProgressBar progressBar = findViewById(R.id.check_information);
         Button login_button = findViewById(R.id.login_button);
         login_button.setOnClickListener(new View.OnClickListener() {
