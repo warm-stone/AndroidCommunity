@@ -1,8 +1,10 @@
-package com.example.mycommunity;
+package com.example.mycommunity.Login;
 
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+
+import com.example.mycommunity.R;
 
 public class ForgetPassWord extends AppCompatActivity {
 

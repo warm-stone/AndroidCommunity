@@ -3,8 +3,8 @@
     <dbname value="MyCommunity"/>
     <version value="1"/>
     <list>
-        <mapping class="com.example.mycommunity.News"/>
-        <mapping class="com.example.mycommunity.UserInformation"/>
+        <mapping class="com.example.mycommunity.News.News"/>
+        <mapping class="com.example.mycommunity.JsonEntity.UserInformation"/>
 
     </list>
 </litepal>

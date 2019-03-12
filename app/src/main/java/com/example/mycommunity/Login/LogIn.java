@@ -1,16 +1,18 @@
-package com.example.mycommunity;
+package com.example.mycommunity.Login;
 import android.content.Intent;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
-import org.json.JSONObject;
+
+import com.example.mycommunity.R;
+import com.example.mycommunity.JsonEntity.UserInformation;
+
 import java.io.BufferedReader;
 import java.io.InputStream;
 import java.io.InputStreamReader;

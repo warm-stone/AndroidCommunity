@@ -1,4 +1,4 @@
-package com.example.mycommunity;
+package com.example.mycommunity.News;
 
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;

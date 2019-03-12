@@ -9,6 +9,11 @@ import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.view.MenuItem;
 
+import com.example.mycommunity.Community.CommunityFragment;
+import com.example.mycommunity.Function.FunctionFragment;
+import com.example.mycommunity.Login.LogIn;
+import com.example.mycommunity.News.NewsFragment;
+
 import java.util.ArrayList;
 import java.util.List;
 

@@ -1,4 +1,4 @@
-package com.example.mycommunity;
+package com.example.mycommunity.Function;
 
 public class Function {
     private int functionImgId;

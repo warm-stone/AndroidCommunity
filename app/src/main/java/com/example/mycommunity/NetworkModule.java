@@ -17,7 +17,7 @@ public  class NetworkModule {
 
      public static void post(String url, String json,Callback callback){
          OkHttpClient client = new OkHttpClient();
-         RequestBody requestBody = FormBody.create(MediaType.parse("application/jason; charset=utf-8"),json);
+         RequestBody requestBody = FormBody.create(MediaType.parse("application/json; charset=utf-8"),json);
          Request request = new Request.Builder().url(url).post(requestBody).build();
          client.newCall(request).enqueue(callback);
      }

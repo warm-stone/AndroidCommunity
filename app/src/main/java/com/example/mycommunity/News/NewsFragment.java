@@ -1,4 +1,4 @@
-package com.example.mycommunity;
+package com.example.mycommunity.News;
 
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -6,14 +6,14 @@ import android.support.annotation.Nullable;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
-import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.example.mycommunity.R;
+
 import java.util.ArrayList;
 import java.util.List;
-import java.util.zip.Inflater;
 
 public class NewsFragment extends Fragment {
 

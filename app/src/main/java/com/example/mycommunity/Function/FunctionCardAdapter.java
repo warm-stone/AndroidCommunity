@@ -1,4 +1,4 @@
-package com.example.mycommunity;
+package com.example.mycommunity.Function;
 
 import android.content.Context;
 import android.support.annotation.NonNull;
@@ -11,6 +11,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
+import com.example.mycommunity.R;
 
 import java.util.List;
 

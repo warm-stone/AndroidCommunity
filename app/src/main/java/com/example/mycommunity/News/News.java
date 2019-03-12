@@ -1,4 +1,4 @@
-package com.example.mycommunity;
+package com.example.mycommunity.News;
 
 
 import org.litepal.crud.LitePalSupport;

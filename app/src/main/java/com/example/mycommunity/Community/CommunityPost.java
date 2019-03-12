@@ -1,4 +1,4 @@
-package com.example.mycommunity;
+package com.example.mycommunity.Community;
 
 public class CommunityPost {
     private int userImg;
