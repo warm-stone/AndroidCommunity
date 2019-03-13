@@ -110,6 +110,7 @@ public class LogIn extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(LogIn.this, RegisterActivity.class);
+                finish();
                 startActivity(intent);
             }
         });

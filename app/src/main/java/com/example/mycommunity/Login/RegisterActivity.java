@@ -1,4 +1,5 @@
 package com.example.mycommunity.Login;
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -7,6 +8,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.example.mycommunity.Main.MainCommunity;
 import com.example.mycommunity.NetworkModule;
 import com.example.mycommunity.R;
 import com.example.mycommunity.JsonEntity.ReturnMsg;
@@ -16,6 +18,7 @@ import okhttp3.Call;
 import okhttp3.Callback;
 import okhttp3.Response;
 import java.io.IOException;
+import java.util.concurrent.TimeUnit;
 
 public class RegisterActivity extends AppCompatActivity {
 
@@ -23,7 +26,6 @@ public class RegisterActivity extends AppCompatActivity {
     private EditText passWordEditText;
     private EditText passWordConfirmText;
     private EditText phoneEditText;
-    String s;
     private Gson gson = new Gson();
     private View.OnClickListener onClickListener = new View.OnClickListener() {
         @Override
@@ -41,7 +43,7 @@ public class RegisterActivity extends AppCompatActivity {
                 UserInformation userInformation = new UserInformation(
                         userNameEditText.getText().toString(),
                         passWordEditText.getText().toString(),
-                        passWordConfirmText.getText().toString());
+                        phoneEditText.getText().toString());
 
                 final String json = gson.toJson(userInformation);
                 NetworkModule.post("http://47.95.244.237:9990/chengfeng/per/registry", json, new Callback() {
@@ -58,15 +60,25 @@ public class RegisterActivity extends AppCompatActivity {
 
                     @Override
                     public void onResponse(Call call, final Response response) throws IOException {
-                        s = response.body().string();
-                        final ReturnMsg returnMsg = gson.fromJson(s,ReturnMsg.class);
-                        Log.w("成功",json);
-                        runOnUiThread(new Runnable() {
-                            @Override
-                            public void run() {
-                                Toast.makeText(RegisterActivity.this,returnMsg.getData().getExceptionMsg(),Toast.LENGTH_SHORT).show();
-                            }
-                        });
+                        final ReturnMsg returnMsg = gson.fromJson(response.body().string(),ReturnMsg.class);
+                        if(returnMsg.getStatus() == 10001){
+                            runOnUiThread(new Runnable() {
+                                @Override
+                                public void run() {
+                                    Toast.makeText(RegisterActivity.this,returnMsg.getMessage(),Toast.LENGTH_SHORT).show();
+                                    finish();
+                                }
+                            });
+                        }
+                        else {
+                            runOnUiThread(new Runnable() {
+                                @Override
+                                public void run() {
+                                    Toast.makeText(RegisterActivity.this,returnMsg.getData().getExceptionMsg(),Toast.LENGTH_SHORT).show();
+                                }
+                            });
+                        }
+
                     }
                 });
             }

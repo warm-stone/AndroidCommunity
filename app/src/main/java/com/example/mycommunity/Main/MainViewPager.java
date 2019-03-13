@@ -1,4 +1,4 @@
-package com.example.mycommunity;
+package com.example.mycommunity.Main;
 
 import android.content.Context;
 import android.support.annotation.NonNull;

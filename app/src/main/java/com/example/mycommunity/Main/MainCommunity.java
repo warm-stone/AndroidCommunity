@@ -1,4 +1,4 @@
-package com.example.mycommunity;
+package com.example.mycommunity.Main;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -13,6 +13,7 @@ import com.example.mycommunity.Community.CommunityFragment;
 import com.example.mycommunity.Function.FunctionFragment;
 import com.example.mycommunity.Login.LogIn;
 import com.example.mycommunity.News.NewsFragment;
+import com.example.mycommunity.R;
 
 import java.util.ArrayList;
 import java.util.List;
