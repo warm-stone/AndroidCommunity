@@ -13,6 +13,9 @@ public class UserInformation  extends LitePalSupport {
     private String profileImg;//头像地址
     private String motto;//个性签名
 
+    public UserInformation() {
+    }
+
     public UserInformation(String userName, String passWord, String phone, String email, String gender, String idCard) {
         this.username = userName;
         this.password = passWord;

@@ -8,6 +8,24 @@ public class Data {
     private String profileImg;
     private String motto;
     private String email;
+    private String integral;
+    private String token;
+
+    public String getIntegral() {
+        return integral;
+    }
+
+    public void setIntegral(String integral) {
+        this.integral = integral;
+    }
+
+    public String getToken() {
+        return token;
+    }
+
+    public void setToken(String token) {
+        this.token = token;
+    }
 
     public String getUsername() {
         return username;

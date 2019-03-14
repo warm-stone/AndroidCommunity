@@ -7,6 +7,10 @@ import android.view.Menu;
 import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
+
+import com.example.mycommunity.JsonEntity.UserInformation;
+import com.example.mycommunity.Login.Login;
+
 import java.io.IOException;
 import okhttp3.Call;
 import okhttp3.Callback;
@@ -18,6 +22,8 @@ import okhttp3.RequestBody;
 import okhttp3.Response;
 
 public class test extends AppCompatActivity {
+
+    UserInformation userInformation = new UserInformation("1234","1234567");
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.toolbar,menu);
@@ -29,37 +35,24 @@ public class test extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_test);
         Button button  = findViewById(R.id.button);
+        Button button2 = findViewById(R.id.button_2);
+
         button.setOnClickListener(onClickListener);
+        button2.setOnClickListener(onClickListener2);
     }
 
     View.OnClickListener onClickListener = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
-            OkHttpClient client = new OkHttpClient();
-            RequestBody requestBody = FormBody.create(MediaType.parse("application/json; charset=utf-8"),"{\"password\":\"1234567890\",\"phone\":\"1234567890\",\"username\":\"12345\",\"baseObjId\":0}");
-            Request request = new Request.Builder().url("http://47.95.244.237:9990/chengfeng/per/registry").post(requestBody).build();
-            client.newCall(request).enqueue(callback);
+            Login.storagePassword(userInformation,test.this);
+
+        }
+    };
+    View.OnClickListener onClickListener2 = new View.OnClickListener() {
+        @Override
+        public void onClick(View v) {
+
         }
     };
 
-    Callback callback = new Callback() {
-        @Override
-        public void onFailure(Call call, IOException e) {
-
-        }
-
-        @Override
-        public void onResponse(Call call, final Response response) throws IOException {
-
-            final String s = response.body().string();
-            Log.w("test",s);
-            runOnUiThread(new Runnable() {
-                @Override
-                public void run() {
-                    //Toast.makeText(test.this,returnMsg.getMessage(),Toast.LENGTH_SHORT).show();
-                    Toast.makeText(test.this,s,Toast.LENGTH_SHORT).show();
-                }
-            });
-        }
-    };
 }
