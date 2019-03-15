@@ -31,11 +31,6 @@ public class NetworkModule {
 
     public static void postForm(String url, UserInformation userInformation, Callback callback) {
          OkHttpClient client = new OkHttpClient();
-
-//         RequestBody requestBody = FormBody.create(MediaType.parse("application/form-data; charset=utf-8"),"");/
-//         Request request = new Request.Builder().url(url).("username", userInformation.getUsername()).header("password",userInformation.getPassword()).post(requestBody).build();
-//         client.newCall(request).enqueue(callback);
-        //FormBody formBody = new FormBody.Builder().add("username","12345").add("password","12345678901").build();
         RequestBody requestBody = new MultipartBody.Builder()
                 .addFormDataPart("username", userInformation.getUsername())
                 .addFormDataPart("password",userInformation.getPassword()).build();

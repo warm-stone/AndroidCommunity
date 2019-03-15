@@ -43,10 +43,12 @@ public class LoginActivity extends AppCompatActivity {
                 case 10003:
                     progressBar.setVisibility(View.INVISIBLE);
                     Toast.makeText(LoginActivity.this, "登录成功", Toast.LENGTH_SHORT).show();
+                    Login.storagePassword(new UserInformation(userIdEditText.getText().toString(), passWordEditText.getText().toString()), LoginActivity.this);
                     finish();
                     break;
                 default:
                     progressBar.setVisibility(View.INVISIBLE);
+                    Login.clearPassword(LoginActivity.this);
                     Toast.makeText(LoginActivity.this, returnMsg.getData().getExceptionMsg(), Toast.LENGTH_SHORT).show();
             }
 
@@ -69,7 +71,7 @@ public class LoginActivity extends AppCompatActivity {
             @Override
             public void onFailure(Call call, IOException e) {
                 Log.w("test", e.toString());
-                Toast.makeText(LoginActivity.this, "shibai", Toast.LENGTH_SHORT).show();
+                Toast.makeText(LoginActivity.this, "预期之外的错误", Toast.LENGTH_SHORT).show();
             }
 
             @Override
@@ -89,11 +91,14 @@ public class LoginActivity extends AppCompatActivity {
         if (actionbar != null) {
             actionbar.hide();
         }
+        UserInformation userInformation = Login.loadPassword(LoginActivity.this);
         userIdEditText = findViewById(R.id.user_id);
         passWordEditText = findViewById(R.id.password);
         progressBar = findViewById(R.id.check_information);
         Button login_button = findViewById(R.id.login_button);
         login_button.setOnClickListener(onClickListener);
+        userIdEditText.setText(userInformation.getUsername());
+        passWordEditText.setText(userInformation.getPassword());
 
         //忘记密码
         TextView forget_pass_word = findViewById(R.id.forget_pass_word);
