@@ -11,6 +11,7 @@ import android.view.MenuItem;
 
 import com.example.mycommunity.Community.CommunityFragment;
 import com.example.mycommunity.Function.FunctionFragment;
+import com.example.mycommunity.Login.Login;
 import com.example.mycommunity.Login.LoginActivity;
 import com.example.mycommunity.News.NewsFragment;
 import com.example.mycommunity.R;
@@ -37,8 +38,10 @@ public class MainCommunity extends AppCompatActivity {
                     main_container.setCurrentItem(0);
                     return true;
                 case R.id.navigation_community:
-                    intent = new Intent(MainCommunity.this, LoginActivity.class);
-                    startActivity(intent);
+                    if(!Login.isLoggedIn(MainCommunity.this)){
+                        intent = new Intent(MainCommunity.this, LoginActivity.class);
+                        startActivity(intent);
+                    }
                     main_container.setCurrentItem(1);
                     return true;
                 case R.id.navigation_function:

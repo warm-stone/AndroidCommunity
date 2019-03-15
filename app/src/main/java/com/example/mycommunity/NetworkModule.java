@@ -1,10 +1,9 @@
 package com.example.mycommunity;
 
+import android.support.annotation.Nullable;
+
 import com.example.mycommunity.JsonEntity.UserInformation;
 
-import java.io.IOException;
-
-import okhttp3.Call;
 import okhttp3.Callback;
 import okhttp3.FormBody;
 import okhttp3.MediaType;
@@ -12,7 +11,6 @@ import okhttp3.MultipartBody;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.RequestBody;
-import okhttp3.Response;
 
 public class NetworkModule {
 
@@ -29,7 +27,7 @@ public class NetworkModule {
         client.newCall(request).enqueue(callback);
     }
 
-    public static void postForm(String url, UserInformation userInformation, Callback callback) {
+    public static void postForm(String url, UserInformation userInformation,@Nullable Callback callback) {
          OkHttpClient client = new OkHttpClient();
         RequestBody requestBody = new MultipartBody.Builder()
                 .addFormDataPart("username", userInformation.getUsername())

@@ -26,27 +26,7 @@ public class RegisterActivity extends AppCompatActivity {
     private EditText phoneEditText;
     private String url = "http://47.95.244.237:9990/chengfeng/per/registry";
     private Gson gson = new Gson();
-    private void login(UserInformation userInformation){
-        NetworkModule.postForm(url, userInformation, new Callback() {
-            @Override
-            public void onFailure(Call call, IOException e) {
-                Log.w("test", e.toString());
-            }
 
-            @Override
-            public void onResponse(Call call, Response response) throws IOException {
-                ReturnMsg returnMsg = gson.fromJson(response.body().string(), ReturnMsg.class);
-                if(returnMsg.getStatus() != 10003){
-                    runOnUiThread(new Runnable() {
-                        @Override
-                        public void run() {
-                            Toast.makeText(RegisterActivity.this,"登录时遇到预期之外的错误",Toast.LENGTH_SHORT);
-                        }
-                    });
-                }
-            }
-        });
-    }
     private View.OnClickListener onClickListener = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
@@ -60,7 +40,7 @@ public class RegisterActivity extends AppCompatActivity {
                 Toast.makeText(RegisterActivity.this,"两次密码输入不一致",Toast.LENGTH_SHORT).show();
             }
             else {
-                UserInformation userInformation = new UserInformation(
+                final UserInformation userInformation = new UserInformation(
                         userNameEditText.getText().toString(),
                         passWordEditText.getText().toString(),
                         phoneEditText.getText().toString());
@@ -86,6 +66,8 @@ public class RegisterActivity extends AppCompatActivity {
                                 @Override
                                 public void run() {
                                     Toast.makeText(RegisterActivity.this,returnMsg.getMessage(),Toast.LENGTH_SHORT).show();
+                                    Login.storagePassword(userInformation, RegisterActivity.this);
+                                    Login.login(null,RegisterActivity.this);
                                     finish();
                                 }
                             });
