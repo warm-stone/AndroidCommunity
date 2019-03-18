@@ -3,6 +3,7 @@ package com.example.mycommunity.Community;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.design.widget.CoordinatorLayout;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -24,7 +25,8 @@ public class CommunityFragment extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.community_layout, container, false);
-        RecyclerView recyclerView = (RecyclerView)view;
+        CoordinatorLayout coordinatorLayout = (CoordinatorLayout) view;
+        RecyclerView recyclerView = coordinatorLayout.findViewById(R.id.community_recycler_view);
         init();
         communityPostAdapter = new CommunityPostAdapter(posts);
         LinearLayoutManager layoutManager = new LinearLayoutManager(getContext());
