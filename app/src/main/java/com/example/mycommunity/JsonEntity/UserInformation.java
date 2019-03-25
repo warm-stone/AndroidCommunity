@@ -3,21 +3,31 @@ package com.example.mycommunity.JsonEntity;
 import org.litepal.crud.LitePalSupport;
 
 public class UserInformation  extends LitePalSupport {
-    private String username;
+
+    /*
+    * nickname : 昵称（不可重复）
+    * communityId : 社区id
+    * username : 用户名（可重复）
+    * avatar : 头像地址
+    * motto : 个性签名
+    * */
+    private String nickname;
     private String password;
-    private String phone;//手机号
-    private String email;
+    private String phone;
+    private int communityId;
+    private String username;
+    private String avatar;
     private String gender;
     private String idCard;
     private String birthday;
-    private String profileImg;//头像地址
-    private String motto;//个性签名
+    private String motto;
+    private String email;
 
     public UserInformation() {
     }
 
     public UserInformation(String userName, String passWord, String phone, String email, String gender, String idCard) {
-        this.username = userName;
+        this.nickname = userName;
         this.password = passWord;
         this.phone = phone;
         this.email = email;
@@ -26,21 +36,45 @@ public class UserInformation  extends LitePalSupport {
     }
 
     public UserInformation(String userName, String passWord,String phone){
-        this.username = userName;
+        this.nickname = userName;
         this.password = passWord;
         this.phone = phone;
     }
     public UserInformation(String userName, String passWord){
-        this.username = userName;
+        this.nickname = userName;
         this.password = passWord;
     }
 
+    public String getNickname() {
+        return nickname;
+    }
+
+    public void setNickname(String nickname) {
+        this.nickname = nickname;
+    }
+
+    public int getCommunityId() {
+        return communityId;
+    }
+
+    public void setCommunityId(int communityId) {
+        this.communityId = communityId;
+    }
+
+    public String getAvatar() {
+        return avatar;
+    }
+
+    public void setAvatar(String avatar) {
+        this.avatar = avatar;
+    }
+
     public String getUsername() {
-        return username;
+        return nickname;
     }
 
     public void setUsername(String username) {
-        this.username = username;
+        this.nickname = username;
     }
 
     public String getPassword() {
@@ -92,11 +126,11 @@ public class UserInformation  extends LitePalSupport {
     }
 
     public String getProfileImg() {
-        return profileImg;
+        return avatar;
     }
 
     public void setProfileImg(String profileImg) {
-        this.profileImg = profileImg;
+        this.avatar = profileImg;
     }
 
     public String getMotto() {

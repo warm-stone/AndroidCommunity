@@ -1,5 +1,6 @@
 package com.example.mycommunity.Login;
 
+import android.content.Intent;
 import android.os.Message;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -8,6 +9,8 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
+
+import com.example.mycommunity.CommunityListActivity;
 import com.example.mycommunity.NetworkModule;
 import com.example.mycommunity.R;
 import com.example.mycommunity.JsonEntity.ReturnMsg;
@@ -24,6 +27,7 @@ public class RegisterActivity extends AppCompatActivity {
     private EditText passWordEditText;
     private EditText passWordConfirmText;
     private EditText phoneEditText;
+    private EditText communityIdText;
     private String url = "http://47.95.244.237:9990/chengfeng/per/registry";
     private Gson gson = new Gson();
 
@@ -76,7 +80,7 @@ public class RegisterActivity extends AppCompatActivity {
                             runOnUiThread(new Runnable() {
                                 @Override
                                 public void run() {
-                                    Toast.makeText(RegisterActivity.this,returnMsg.getData().getExceptionMsg(),Toast.LENGTH_SHORT).show();
+                                    //Toast.makeText(RegisterActivity.this,returnMsg.getData().getExceptionMsg(),Toast.LENGTH_SHORT).show();
                                 }
                             });
                         }
@@ -86,6 +90,19 @@ public class RegisterActivity extends AppCompatActivity {
             }
         }
     };
+
+    private View.OnClickListener forCommunity = new View.OnClickListener() {
+        @Override
+        public void onClick(View v) {
+            Intent intent = new Intent(RegisterActivity.this, CommunityListActivity.class);
+            startActivityForResult(intent, 25);
+        }
+    };
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data){
+
+    }
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -94,6 +111,8 @@ public class RegisterActivity extends AppCompatActivity {
         passWordEditText = findViewById(R.id.register_password);
         passWordConfirmText = findViewById(R.id.register_password_confirm);
         phoneEditText = findViewById(R.id.register_phone_number);
+        communityIdText = findViewById(R.id.register_community_id);
+        communityIdText.setOnClickListener(forCommunity);
         Button registerButton = findViewById(R.id.register_information_button);
         registerButton.setOnClickListener(onClickListener);
 

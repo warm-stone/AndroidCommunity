@@ -34,26 +34,30 @@ public class LoginActivity extends AppCompatActivity {
     private EditText passWordEditText;
     private ProgressBar progressBar;
     private Gson gson = new Gson();
-    private Handler handler = new Handler() {
+    private Handler handler = new Handler(new Handler.Callback() {
         @Override
-        public void handleMessage(Message message) {
-            super.handleMessage(message);
-            ReturnMsg returnMsg = (ReturnMsg) message.obj;
-            switch (returnMsg.getStatus()) {
-                case 10003:
-                    progressBar.setVisibility(View.INVISIBLE);
-                    Toast.makeText(LoginActivity.this, "登录成功", Toast.LENGTH_SHORT).show();
-                    Login.storagePassword(new UserInformation(userIdEditText.getText().toString(), passWordEditText.getText().toString()), LoginActivity.this);
-                    finish();
-                    break;
-                default:
-                    progressBar.setVisibility(View.INVISIBLE);
-                    Login.clearPassword(LoginActivity.this);
-                    Toast.makeText(LoginActivity.this, returnMsg.getData().getExceptionMsg(), Toast.LENGTH_SHORT).show();
-            }
+        public boolean handleMessage(Message message) {
+            if (message.what == 0) {
+                ReturnMsg returnMsg = (ReturnMsg) message.obj;
+                switch (returnMsg.getStatus()) {
+                    case 10003:
+                        progressBar.setVisibility(View.INVISIBLE);
+                        Toast.makeText(LoginActivity.this, "登录成功", Toast.LENGTH_SHORT).show();
+                        Login.storagePassword(new UserInformation(userIdEditText.getText().toString(), passWordEditText.getText().toString()), LoginActivity.this);
+                        finish();
+                        break;
+                    default:
+                        progressBar.setVisibility(View.INVISIBLE);
+                        Login.clearPassword(LoginActivity.this);
+                        //Toast.makeText(LoginActivity.this, returnMsg.getData().getExceptionMsg(), Toast.LENGTH_SHORT).show();
+                }
 
+            } else {
+                Toast.makeText(LoginActivity.this, "预期之外的错误", Toast.LENGTH_SHORT).show();
+            }
+        return false;
         }
-    };
+    });
     private View.OnClickListener onClickListener = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
@@ -71,7 +75,7 @@ public class LoginActivity extends AppCompatActivity {
             @Override
             public void onFailure(Call call, IOException e) {
                 Log.w("test", e.toString());
-                Toast.makeText(LoginActivity.this, "预期之外的错误", Toast.LENGTH_SHORT).show();
+                Message message = handler.obtainMessage(1);
             }
 
             @Override

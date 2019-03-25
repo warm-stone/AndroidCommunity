@@ -36,11 +36,11 @@ public class CommunityFragment extends Fragment {
     }
 
     private void init(){
-        CommunityPost communityPost = new CommunityPost();
         Random random = new Random();
         StringBuilder builder = new StringBuilder();
         int tem;
         for (int i = 0; i < 40; i++){
+            CommunityPost communityPost = new CommunityPost();
             communityPost.setUserImg(R.drawable.ic_user);
             builder.append("一个大新闻");
             communityPost.setUseName("小虾米");

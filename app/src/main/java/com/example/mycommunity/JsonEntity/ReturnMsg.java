@@ -1,9 +1,11 @@
 package com.example.mycommunity.JsonEntity;
 
+import java.util.List;
+
 public class ReturnMsg {
     private int status;
     private String message;
-    private Data data;
+    private List<Data> data;
 
     public int getStatus() {
         return status;
@@ -21,11 +23,11 @@ public class ReturnMsg {
         this.message = message;
     }
 
-    public Data getData() {
+    public List<Data> getData() {
         return data;
     }
 
-    public void setData(Data data) {
+    public void setData(List<Data> data) {
         this.data = data;
     }
 }
