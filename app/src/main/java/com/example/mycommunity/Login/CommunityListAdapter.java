@@ -9,7 +9,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
-import com.example.mycommunity.JsonEntity.Data;
 import com.example.mycommunity.R;
 import java.util.List;
 
@@ -31,14 +30,17 @@ public class CommunityListAdapter extends RecyclerView.Adapter {
 
     @NonNull
     @Override
-    public RecyclerView.ViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i){
+    public RecyclerView.ViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, final int i){
         context = viewGroup.getContext();
         final ViewHolder viewHolder = new ViewHolder(LayoutInflater.from(context).inflate(R.layout.community_list_item, viewGroup, false));
         viewHolder.textView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 int position = viewHolder.getAdapterPosition();
-               // ((Activity)context).setResult(Activity.RESULT_OK, );
+                Intent intent = new Intent();
+                intent.putExtra("data", datas.get(position));
+                ((Activity)context).setResult(Activity.RESULT_OK, intent);
+                ((Activity)context).finish();
             }
         });
         return viewHolder;

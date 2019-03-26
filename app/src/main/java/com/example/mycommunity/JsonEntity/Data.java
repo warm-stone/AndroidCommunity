@@ -3,7 +3,7 @@ package com.example.mycommunity.JsonEntity;
 public class Data {
 
     /*
-     * id : 社区id及用户id
+     * id : 社区id
      * name : 社区名称
      * address : 社区地址
      * admin : 社区管理员
@@ -28,6 +28,15 @@ public class Data {
     private String nickname;
     private long signUp;
     private String error;
+    private String Authorization;
+
+    public String getAuthorization() {
+        return Authorization;
+    }
+
+    public void setAuthorization(String authorization) {
+        Authorization = authorization;
+    }
 
     public int getId() {
         return id;

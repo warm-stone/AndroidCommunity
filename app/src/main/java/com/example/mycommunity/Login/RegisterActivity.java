@@ -1,7 +1,6 @@
 package com.example.mycommunity.Login;
 
 import android.content.Intent;
-import android.os.Message;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -10,10 +9,10 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.example.mycommunity.JsonEntity.ReturnMsg;
 import com.example.mycommunity.CommunityListActivity;
 import com.example.mycommunity.NetworkModule;
 import com.example.mycommunity.R;
-import com.example.mycommunity.JsonEntity.ReturnMsg;
 import com.example.mycommunity.JsonEntity.UserInformation;
 import com.google.gson.Gson;
 import okhttp3.Call;
@@ -28,7 +27,8 @@ public class RegisterActivity extends AppCompatActivity {
     private EditText passWordConfirmText;
     private EditText phoneEditText;
     private EditText communityIdText;
-    private String url = "http://47.95.244.237:9990/chengfeng/per/registry";
+    private UserInformation userInformation = new UserInformation();
+    private String url = "http://192.168.123.50:8585/chengfeng/user/registry";
     private Gson gson = new Gson();
 
     private View.OnClickListener onClickListener = new View.OnClickListener() {
@@ -44,16 +44,15 @@ public class RegisterActivity extends AppCompatActivity {
                 Toast.makeText(RegisterActivity.this,"两次密码输入不一致",Toast.LENGTH_SHORT).show();
             }
             else {
-                final UserInformation userInformation = new UserInformation(
-                        userNameEditText.getText().toString(),
-                        passWordEditText.getText().toString(),
-                        phoneEditText.getText().toString());
+                userInformation.setUsername(userNameEditText.getText().toString());
+                userInformation.setPassword(passWordEditText.getText().toString());
+                userInformation.setPhone(phoneEditText.getText().toString());
 
                 final String json = gson.toJson(userInformation);
                 NetworkModule.post(url, json, new Callback() {
                     @Override
                     public void onFailure(Call call,final IOException e) {
-                        Log.w("失败",e.toString());
+                        Log.w("test",e.toString());
                         runOnUiThread(new Runnable() {
                             @Override
                             public void run() {
@@ -66,6 +65,7 @@ public class RegisterActivity extends AppCompatActivity {
                     public void onResponse(Call call, final Response response) throws IOException {
                         final ReturnMsg returnMsg = gson.fromJson(response.body().string(),ReturnMsg.class);
                         if(returnMsg.getStatus() == 10001){
+                            userInformation.setAuthorization(returnMsg.getData().getAuthorization());
                             runOnUiThread(new Runnable() {
                                 @Override
                                 public void run() {
@@ -80,7 +80,7 @@ public class RegisterActivity extends AppCompatActivity {
                             runOnUiThread(new Runnable() {
                                 @Override
                                 public void run() {
-                                    //Toast.makeText(RegisterActivity.this,returnMsg.getData().getExceptionMsg(),Toast.LENGTH_SHORT).show();
+                                    Toast.makeText(RegisterActivity.this,returnMsg.getData().getError(),Toast.LENGTH_SHORT).show();
                                 }
                             });
                         }
@@ -101,7 +101,14 @@ public class RegisterActivity extends AppCompatActivity {
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data){
-
+        if(resultCode == RESULT_OK){
+            switch (requestCode){
+                case 25:
+                    Data data1 = (Data)data.getSerializableExtra("data");
+                    communityIdText.setText(data1.getName());
+                    userInformation.setCommunityId(data1.getId());
+            }
+        }
     }
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -112,6 +119,9 @@ public class RegisterActivity extends AppCompatActivity {
         passWordConfirmText = findViewById(R.id.register_password_confirm);
         phoneEditText = findViewById(R.id.register_phone_number);
         communityIdText = findViewById(R.id.register_community_id);
+        communityIdText.setCursorVisible(false);
+        communityIdText.setFocusable(false);
+        communityIdText.setFocusableInTouchMode(false);
         communityIdText.setOnClickListener(forCommunity);
         Button registerButton = findViewById(R.id.register_information_button);
         registerButton.setOnClickListener(onClickListener);

@@ -9,10 +9,9 @@ import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.ProgressBar;
 import android.widget.Toast;
-
-import com.example.mycommunity.JsonEntity.Data;
-import com.example.mycommunity.JsonEntity.ReturnMsg;
 import com.example.mycommunity.Login.CommunityListAdapter;
+import com.example.mycommunity.Login.Data;
+import com.example.mycommunity.Login.ReturnMsg;
 import com.google.gson.Gson;
 
 import java.io.IOException;
@@ -74,12 +73,6 @@ public class CommunityListActivity extends AppCompatActivity {
         progressBar = findViewById(R.id.community_list_progress_bar);
         recyclerView = findViewById(R.id.community_list_recycler_view);
         NetworkModule.get(url, callback);
-
-    }
-
-    @Override
-    protected void onResume() {
-        super.onResume();
 
     }
 }

@@ -84,7 +84,7 @@
                     android:layout_height="wrap_content"
                     android:hint="社区名称"
                     android:imeOptions="actionUnspecified"
-                    android:inputType="text"
+                    android:inputType=""
                     android:maxLines="1"
                     android:singleLine="true" />
             </android.support.design.widget.TextInputLayout>

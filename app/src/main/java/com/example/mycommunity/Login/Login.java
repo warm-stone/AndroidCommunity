@@ -20,6 +20,7 @@ public class Login {
         editor = preferences.edit();
         editor.putString("username", userInformation.getUsername());
         editor.putString("password", userInformation.getPassword());
+        editor.putString("Authorization",userInformation.getAuthorization());
         editor.putBoolean("isLoggedIn", true);
         editor.apply();
     }
@@ -30,9 +31,14 @@ public class Login {
         editor.remove("username");
         editor.remove("password");
         editor.remove("isLoggedIn");
+        editor.remove("Authorization");
         editor.apply();
     }
 
+    public static String getAuthorization(Context context){
+        preferences = PreferenceManager.getDefaultSharedPreferences(context);
+        return preferences.getString("Authorization", "");
+    }
     public static boolean isLoggedIn(Context context){
         preferences = PreferenceManager.getDefaultSharedPreferences(context);
         return preferences.getBoolean("isLoggedIn", false);
@@ -47,7 +53,7 @@ public class Login {
     }
 
     public static void login(@Nullable Callback callback , Context context){
-        String url = "http://47.95.244.237:9990/chengfeng/per/login";
+        String url = "http://192.168.123.50:8585/chengfeng/user/login";
         NetworkModule.postForm(url, loadPassword(context), callback);
     }
 }

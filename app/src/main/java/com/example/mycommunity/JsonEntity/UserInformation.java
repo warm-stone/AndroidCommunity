@@ -22,6 +22,15 @@ public class UserInformation  extends LitePalSupport {
     private String birthday;
     private String motto;
     private String email;
+    private String Authorization;
+
+    public String getAuthorization() {
+        return Authorization;
+    }
+
+    public void setAuthorization(String authorization) {
+        Authorization = authorization;
+    }
 
     public UserInformation() {
     }
