@@ -1,16 +1,25 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="horizontal"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_margin="15dp">
     <ImageView
+        android:id="@+id/user_information_ic"
+        android:layout_alignParentStart="true"
         android:layout_width="25dp"
         android:layout_height="25dp" />
     <TextView
+        android:id="@+id/user_information_text"
+        android:layout_toEndOf="@+id/user_information_ic"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="134dd"
-        android:layout_marginLeft="15dp"
-        android:layout_gravity="center"/>
-</LinearLayout>
+        android:layout_centerVertical="true"
+        android:layout_marginEnd="15dp"/>
+    <ImageView
+        android:layout_alignParentEnd="true"
+        android:layout_width="20dp"
+        android:layout_centerVertical="true"
+        android:layout_height="20dp"
+        android:src="@mipmap/ic_right_foreground" />
+</RelativeLayout>
