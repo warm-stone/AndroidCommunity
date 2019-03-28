@@ -29,7 +29,6 @@ import okhttp3.Response;
 
 public class LoginActivity extends AppCompatActivity {
 
-    private static String url = "http://47.95.244.237:9990/chengfeng/per/login";
     private EditText userIdEditText;
     private EditText passWordEditText;
     private ProgressBar progressBar;
@@ -40,19 +39,20 @@ public class LoginActivity extends AppCompatActivity {
             if (message.what == 0) {
                 ReturnMsg returnMsg = (ReturnMsg) message.obj;
                 switch (returnMsg.getStatus()) {
-                    case 10003:
+                    case 10001:
                         progressBar.setVisibility(View.INVISIBLE);
                         Toast.makeText(LoginActivity.this, "登录成功", Toast.LENGTH_SHORT).show();
+                        Login.storageAuthorization(returnMsg.getData().getAuthorization(), LoginActivity.this);
                         Login.storagePassword(new UserInformation(userIdEditText.getText().toString(), passWordEditText.getText().toString()), LoginActivity.this);
                         finish();
                         break;
                     default:
                         progressBar.setVisibility(View.INVISIBLE);
-                        Login.clearPassword(LoginActivity.this);
-                        //Toast.makeText(LoginActivity.this, returnMsg.getData().getExceptionMsg(), Toast.LENGTH_SHORT).show();
+                        //Login.clearPassword(LoginActivity.this);
+                        Toast.makeText(LoginActivity.this, returnMsg.getMessage(), Toast.LENGTH_SHORT).show();
                 }
-
-            } else {
+            }
+            else {
                 Toast.makeText(LoginActivity.this, "预期之外的错误", Toast.LENGTH_SHORT).show();
             }
         return false;
@@ -61,15 +61,16 @@ public class LoginActivity extends AppCompatActivity {
     private View.OnClickListener onClickListener = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
-            UserInformation userInformation = new UserInformation();
+            UserInformation userInformation;
             userInformation = new UserInformation();
-            userInformation.setUsername(userIdEditText.getText().toString());
+            userInformation.setNickname(userIdEditText.getText().toString());
             userInformation.setPassword(passWordEditText.getText().toString());
             login(userInformation);
         }
     };
 
     public void login(UserInformation userInformation) {
+        String url = "http://192.168.123.50:8585/chengfeng/user/login";
         progressBar.setVisibility(View.VISIBLE);
         NetworkModule.postForm(url, userInformation, new Callback() {
             @Override
@@ -80,7 +81,8 @@ public class LoginActivity extends AppCompatActivity {
 
             @Override
             public void onResponse(Call call, Response response) throws IOException {
-                ReturnMsg returnMsg = gson.fromJson(response.body().string(), ReturnMsg.class);
+                String temp = response.body().string();
+                ReturnMsg returnMsg = gson.fromJson(temp, ReturnMsg.class);
                 Message message = handler.obtainMessage(0, returnMsg);
                 handler.sendMessage(message);
             }
@@ -95,15 +97,16 @@ public class LoginActivity extends AppCompatActivity {
         if (actionbar != null) {
             actionbar.hide();
         }
-        UserInformation userInformation = Login.loadPassword(LoginActivity.this);
         userIdEditText = findViewById(R.id.user_id);
         passWordEditText = findViewById(R.id.password);
         progressBar = findViewById(R.id.check_information);
         Button login_button = findViewById(R.id.login_button);
         login_button.setOnClickListener(onClickListener);
-        userIdEditText.setText(userInformation.getUsername());
-        passWordEditText.setText(userInformation.getPassword());
-
+        if (Login.isRemember(LoginActivity.this)){
+            UserInformation userInformation = Login.loadPassword(LoginActivity.this);
+            userIdEditText.setText(userInformation.getNickname());
+            passWordEditText.setText(userInformation.getPassword());
+        }
         //忘记密码
         TextView forget_pass_word = findViewById(R.id.forget_pass_word);
         forget_pass_word.setOnClickListener(new View.OnClickListener() {

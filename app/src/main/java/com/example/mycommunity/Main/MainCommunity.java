@@ -7,18 +7,27 @@ import android.support.design.widget.BottomNavigationView;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.MenuItem;
+import android.widget.Toast;
 
 import com.example.mycommunity.Community.CommunityFragment;
 import com.example.mycommunity.Function.FunctionFragment;
+import com.example.mycommunity.JsonEntity.UserInformation;
 import com.example.mycommunity.Login.Login;
 import com.example.mycommunity.Login.LoginActivity;
 import com.example.mycommunity.MineFragment;
+import com.example.mycommunity.NetworkModule;
 import com.example.mycommunity.News.NewsFragment;
 import com.example.mycommunity.R;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+
+import okhttp3.Call;
+import okhttp3.Callback;
+import okhttp3.Response;
 
 public class MainCommunity extends AppCompatActivity {
 

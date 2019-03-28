@@ -27,12 +27,13 @@ public class NetworkModule {
         client.newCall(request).enqueue(callback);
     }
 
-    public static void postForm(String url, UserInformation userInformation,@Nullable Callback callback) {
-         OkHttpClient client = new OkHttpClient();
-        RequestBody requestBody = new MultipartBody.Builder()
-                .addFormDataPart("username", userInformation.getUsername())
-                .addFormDataPart("password",userInformation.getPassword()).build();
-        Request request = new Request.Builder().url(url).post(requestBody).build();
+    public static void postForm(String url, UserInformation userInformation, @Nullable Callback callback) {
+        OkHttpClient client = new OkHttpClient();
+        FormBody formBody = new FormBody.Builder()
+                .add("nickname", userInformation.getNickname())
+                .add("password", userInformation.getPassword())
+                .build();
+        Request request = new Request.Builder().url("http://192.168.123.50:8585/chengfeng/user/login").post(formBody).build();
         client.newCall(request).enqueue(callback);
     }
 

@@ -56,6 +56,7 @@ public class MineFragment extends Fragment {
                     Toast.makeText(getContext(), "已退出", Toast.LENGTH_SHORT).show();
                 }
             });
+            Login.setLoggedIn(getContext());
         }
     };
 

@@ -1,4 +1,4 @@
-package com.example.mycommunity;
+package com.example.mycommunity.Login;
 
 import android.os.Bundle;
 import android.os.Handler;
@@ -9,9 +9,9 @@ import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.ProgressBar;
 import android.widget.Toast;
-import com.example.mycommunity.Login.CommunityListAdapter;
-import com.example.mycommunity.Login.Data;
-import com.example.mycommunity.Login.ReturnMsg;
+
+import com.example.mycommunity.NetworkModule;
+import com.example.mycommunity.R;
 import com.google.gson.Gson;
 
 import java.io.IOException;
@@ -46,7 +46,7 @@ public class CommunityListActivity extends AppCompatActivity {
                 }
             }
             else {
-                Toast.makeText(CommunityListActivity.this, "服务器错误", Toast.LENGTH_SHORT).show();
+                Toast.makeText(CommunityListActivity.this, "预期之外的错误", Toast.LENGTH_SHORT).show();
             }
             return false;
         }
