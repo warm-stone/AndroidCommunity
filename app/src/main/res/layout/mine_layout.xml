@@ -47,6 +47,9 @@
             android:layout_height="1px"
             android:background="@color/gray"/>
             <include
+                android:id="@+id/mine_information"
+                layout="@layout/user_information_layout"/>
+            <include
                 android:id="@+id/mine_sign_out"
                 layout="@layout/user_information_layout"/>
         </LinearLayout>

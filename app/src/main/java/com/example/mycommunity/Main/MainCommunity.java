@@ -13,6 +13,7 @@ import com.example.mycommunity.Community.CommunityFragment;
 import com.example.mycommunity.Function.FunctionFragment;
 import com.example.mycommunity.Login.Login;
 import com.example.mycommunity.Login.LoginActivity;
+import com.example.mycommunity.MineFragment;
 import com.example.mycommunity.News.NewsFragment;
 import com.example.mycommunity.R;
 

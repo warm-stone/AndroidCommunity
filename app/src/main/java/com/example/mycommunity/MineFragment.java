@@ -1,4 +1,4 @@
-package com.example.mycommunity.Main;
+package com.example.mycommunity;
 
 import android.app.Activity;
 import android.os.Bundle;
@@ -58,6 +58,13 @@ public class MineFragment extends Fragment {
             });
         }
     };
+
+    private View.OnClickListener informationListener = new View.OnClickListener() {
+        @Override
+        public void onClick(View v) {
+
+        }
+    };
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savadInstanceState){
@@ -66,8 +73,11 @@ public class MineFragment extends Fragment {
         TextView signOutText = signOut.findViewById(R.id.user_information_text);
         RelativeLayout message = view.findViewById(R.id.mine_message);
         TextView messageText = message.findViewById(R.id.user_information_text);
+        RelativeLayout information = view.findViewById(R.id.mine_information);
+        TextView informationText = information.findViewById(R.id.user_information_text);
         signOutText.setText("退出");
         signOutText.setTextColor(getResources().getColor(R.color.red));
+        informationText.setText("个人信息");
         messageText.setText("消息");
         signOut.setOnClickListener(signOutListener);
         return view;
