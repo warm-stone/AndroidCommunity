@@ -7,6 +7,7 @@ import android.support.annotation.Nullable;
 
 import com.example.mycommunity.JsonEntity.UserInformation;
 import com.example.mycommunity.NetworkModule;
+import com.example.mycommunity.UserAccountActivity;
 
 import okhttp3.Callback;
 
@@ -25,6 +26,36 @@ public class Login {
         editor.apply();
     }
 
+    public static UserInformation loadInformation(Context context){
+        preferences = PreferenceManager.getDefaultSharedPreferences(context);
+        UserInformation userInformation = new UserInformation();
+        userInformation.setNickname(preferences.getString("nickname", ""));
+        userInformation.setPassword(preferences.getString("password", ""));
+        userInformation.setPhone(preferences.getString("phone", ""));
+        userInformation.setAvatar(preferences.getString("avatar", ""));
+        userInformation.setUsername(preferences.getString("username", ""));
+        userInformation.setEmail(preferences.getString("email", ""));
+        userInformation.setGender(preferences.getString("gender", ""));
+        userInformation.setBirthday(preferences.getLong("birthday",0l));
+        userInformation.setMotto(preferences.getString("motto", ""));
+        userInformation.setCommunityId(preferences.getInt("communityId", 0));
+        return userInformation;
+    }
+
+    public static void storageInformation (UserInformation information, Context context){
+        preferences = PreferenceManager.getDefaultSharedPreferences(context);
+        editor=preferences.edit();
+        editor.putString("nickname", information.getNickname());
+        editor.putString("password", information.getPassword());
+        editor.putString("phone", information.getPhone());
+        editor.putString("avatar", information.getAvatar());
+        editor.putString("username", information.getUsername());
+        editor.putString("email", information.getEmail());
+        editor.putLong("birthday", information.getBirthday());
+        editor.putString("motto", information.getMotto());
+        editor.putInt("community", information.getCommunityId());
+        editor.apply();
+    }
     public static void storageAuthorization(String authorization, Context context) {
         preferences = PreferenceManager.getDefaultSharedPreferences(context);
         editor = preferences.edit();

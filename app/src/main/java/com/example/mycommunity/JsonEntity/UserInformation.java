@@ -19,7 +19,7 @@ public class UserInformation  extends LitePalSupport {
     private String avatar;
     private String gender;
     private String idCard;
-    private String birthday;
+    private Long birthday;
     private String motto;
     private String email;
     private String Authorization;
@@ -126,20 +126,12 @@ public class UserInformation  extends LitePalSupport {
         this.idCard = idCard;
     }
 
-    public String getBirthday() {
+    public Long getBirthday() {
         return birthday;
     }
 
-    public void setBirthday(String birthday) {
+    public void setBirthday(Long birthday) {
         this.birthday = birthday;
-    }
-
-    public String getProfileImg() {
-        return avatar;
-    }
-
-    public void setProfileImg(String profileImg) {
-        this.avatar = profileImg;
     }
 
     public String getMotto() {

@@ -64,9 +64,16 @@ public class MineFragment extends Fragment {
 
         }
     };
+
+    private View.OnClickListener accountListener = new View.OnClickListener() {
+        @Override
+        public void onClick(View v) {
+
+        }
+    };
     @Nullable
     @Override
-    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savadInstanceState){
+    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState){
         View view = inflater.inflate(R.layout.mine_layout, container, false);
         RelativeLayout signOut = view.findViewById(R.id.mine_sign_out);
         TextView signOutText = signOut.findViewById(R.id.user_information_text);
@@ -79,6 +86,10 @@ public class MineFragment extends Fragment {
         informationText.setText("个人信息");
         messageText.setText("消息");
         signOut.setOnClickListener(signOutListener);
+        RelativeLayout account = view.findViewById(R.id.mine_account);
+        TextView accountText = account.findViewById(R.id.user_information_text);
+        accountText.setText("账户");
+        account.setOnClickListener(accountListener);
         return view;
     }
 }

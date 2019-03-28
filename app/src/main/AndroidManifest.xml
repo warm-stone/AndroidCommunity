@@ -12,23 +12,22 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".Login.CommunityListActivity">
-           </activity>
+        <activity android:name=".UserAccountActivity"></activity>
+        <activity android:name=".Login.CommunityListActivity"></activity>
         <activity
             android:name=".Main.MainCommunity"
             android:label="@string/title_activity_main_community">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".test"></activity>
-        <activity android:name=".Login.ForgetPassWord"></activity>
-        <activity android:name=".Login.RegisterActivity">
-        </activity>
-        <activity android:name=".Login.LoginActivity">
-        </activity>
-        <activity android:name=".MainActivity"></activity>
+        <activity android:name=".test" />
+        <activity android:name=".Login.ForgetPassWord" />
+        <activity android:name=".Login.RegisterActivity"></activity>
+        <activity android:name=".Login.LoginActivity"></activity>
+        <activity android:name=".MainActivity" />
     </application>
 
 </manifest>

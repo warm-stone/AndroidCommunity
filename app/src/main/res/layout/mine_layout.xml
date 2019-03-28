@@ -40,11 +40,15 @@
             android:layout_height="match_parent"
             android:layout_marginTop="15dp">
             <include
+                android:id="@+id/mine_account"
+                layout="@layout/user_information_layout"/>
+            <include
                 android:id="@+id/mine_message"
                 layout="@layout/user_information_layout"/>
             <View
             android:layout_width="match_parent"
             android:layout_height="1px"
+                android:layout_marginLeft="25dp"
             android:background="@color/gray"/>
             <include
                 android:id="@+id/mine_information"

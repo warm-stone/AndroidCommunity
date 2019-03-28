@@ -6,4 +6,5 @@
     <color name="ic_plus_background">#26A69A</color>
     <color name="gray">#ADADAD</color>
     <color name="red">#ffff0000</color>
+    <color name="black">#000</color>
 </resources>
