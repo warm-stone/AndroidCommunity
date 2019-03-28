@@ -69,7 +69,6 @@ public class RegisterActivity extends AppCompatActivity {
                                     //Toast.makeText(RegisterActivity.this,returnMsg.getMessage(),Toast.LENGTH_SHORT).show();
                                     Login.storagePassword(userInformation, RegisterActivity.this);
                                     Login.login(loginCallback, RegisterActivity.this);
-                                    finish();
                                 }
                             });
                         } else {
@@ -105,6 +104,7 @@ public class RegisterActivity extends AppCompatActivity {
                     }
                 });
                 Login.storageAuthorization(returnMsg.getData().getAuthorization(), RegisterActivity.this);
+                finish();
             }
         }
 

@@ -27,6 +27,13 @@ public class NetworkModule {
         client.newCall(request).enqueue(callback);
     }
 
+    public static void postWithAuthor(String url, String json, Callback callback, String authorization){
+        OkHttpClient client = new OkHttpClient();
+        RequestBody requestBody = FormBody.create(MediaType.parse("application/json; charset=utf-8"), json);
+        Request request = new Request.Builder().url(url).header("Authorization", authorization).post(requestBody).build();
+        client.newCall(request).enqueue(callback);
+    }
+
     public static void postForm(String url, UserInformation userInformation, @Nullable Callback callback) {
         OkHttpClient client = new OkHttpClient();
         FormBody formBody = new FormBody.Builder()

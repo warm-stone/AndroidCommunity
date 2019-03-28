@@ -30,10 +30,8 @@ public class MineFragment extends Fragment {
     private View.OnClickListener signOutListener = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
-            UserInformation userInformation = new UserInformation();
-            userInformation.setAuthorization(Login.getAuthorization(getContext()));
             String url = "http://192.168.123.50:8585/chengfeng/logout";
-            NetworkModule.post(url, gson.toJson(userInformation), callback);
+            NetworkModule.postWithAuthor(url, "", callback, Login.getAuthorization(getContext()));
         }
     };
 
