@@ -1,6 +1,7 @@
 package com.example.mycommunity;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -30,7 +31,7 @@ public class MineFragment extends Fragment {
     private View.OnClickListener signOutListener = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
-            String url = "http://192.168.123.50:8585/chengfeng/logout";
+            String url = "/logout";
             NetworkModule.postWithAuthor(url, "", callback, Login.getAuthorization(getContext()));
         }
     };
@@ -68,9 +69,11 @@ public class MineFragment extends Fragment {
     private View.OnClickListener accountListener = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
-
+            Intent intent = new Intent(getContext(), UserAccountActivity.class);
+            startActivity(intent);
         }
     };
+
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState){

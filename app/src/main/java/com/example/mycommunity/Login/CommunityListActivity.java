@@ -25,9 +25,7 @@ public class CommunityListActivity extends AppCompatActivity {
 
     private ProgressBar progressBar;
     private Gson gson = new Gson();
-    private CommunityListAdapter adapter;
     private RecyclerView recyclerView;
-    private String url = "http://192.168.123.50:8585/chengfeng/community/listall";
     private Handler handler = new Handler(new Handler.Callback() {
         @Override
         public boolean handleMessage(Message msg) {
@@ -37,7 +35,7 @@ public class CommunityListActivity extends AppCompatActivity {
                 switch (returnMsg.getStatus()) {
                     case 10001:
                         List<Data> data = returnMsg.getData();
-                        adapter = new CommunityListAdapter(data);
+                        CommunityListAdapter adapter = new CommunityListAdapter(data);
                         recyclerView.setLayoutManager(new LinearLayoutManager(CommunityListActivity.this));
                         recyclerView.setAdapter(adapter);
                         break;
@@ -70,6 +68,7 @@ public class CommunityListActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_community_list);
+        String url = "/community/listall";
         progressBar = findViewById(R.id.community_list_progress_bar);
         recyclerView = findViewById(R.id.community_list_recycler_view);
         NetworkModule.get(url, callback);

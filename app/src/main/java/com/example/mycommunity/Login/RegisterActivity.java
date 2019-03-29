@@ -29,7 +29,6 @@ public class RegisterActivity extends AppCompatActivity {
     private EditText phoneEditText;
     private EditText communityIdText;
     private UserInformation userInformation = new UserInformation();
-    private String url = "http://192.168.123.50:8585/chengfeng/user/registry";
     private Gson gson = new Gson();
 
     private View.OnClickListener onClickListener = new View.OnClickListener() {
@@ -42,11 +41,11 @@ public class RegisterActivity extends AppCompatActivity {
             } else if (!passWordEditText.getText().toString().equals(passWordConfirmText.getText().toString())) {
                 Toast.makeText(RegisterActivity.this, "两次密码输入不一致", Toast.LENGTH_SHORT).show();
             } else {
-                userInformation.setUsername(userNameEditText.getText().toString());
+                userInformation.setNickname(userNameEditText.getText().toString());
                 userInformation.setPassword(passWordEditText.getText().toString());
                 userInformation.setPhone(phoneEditText.getText().toString());
-
                 final String json = gson.toJson(userInformation);
+                String url = "/user/registry";
                 NetworkModule.post(url, json, new Callback() {
                     @Override
                     public void onFailure(Call call, final IOException e) {
@@ -66,8 +65,7 @@ public class RegisterActivity extends AppCompatActivity {
                             runOnUiThread(new Runnable() {
                                 @Override
                                 public void run() {
-                                    //Toast.makeText(RegisterActivity.this,returnMsg.getMessage(),Toast.LENGTH_SHORT).show();
-                                    Login.storagePassword(userInformation, RegisterActivity.this);
+                                    Login.storageInformation(userInformation, RegisterActivity.this);
                                     Login.login(loginCallback, RegisterActivity.this);
                                 }
                             });

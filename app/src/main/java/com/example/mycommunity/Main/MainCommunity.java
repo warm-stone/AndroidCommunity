@@ -1,7 +1,10 @@
 package com.example.mycommunity.Main;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.preference.Preference;
+import android.preference.PreferenceManager;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
 import android.support.v4.app.Fragment;
@@ -20,6 +23,7 @@ import com.example.mycommunity.MineFragment;
 import com.example.mycommunity.NetworkModule;
 import com.example.mycommunity.News.NewsFragment;
 import com.example.mycommunity.R;
+import com.example.mycommunity.UserAccountActivity;
 
 import java.io.IOException;
 import java.util.ArrayList;

@@ -19,7 +19,7 @@ public class UserInformation  extends LitePalSupport {
     private String avatar;
     private String gender;
     private String idCard;
-    private Long birthday;
+    private long birthday;
     private String motto;
     private String email;
     private String Authorization;
@@ -49,8 +49,8 @@ public class UserInformation  extends LitePalSupport {
         this.password = passWord;
         this.phone = phone;
     }
-    public UserInformation(String userName, String passWord){
-        this.nickname = userName;
+    public UserInformation(String nickname, String passWord){
+        this.nickname = nickname;
         this.password = passWord;
     }
 

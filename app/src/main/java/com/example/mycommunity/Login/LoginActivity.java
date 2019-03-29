@@ -48,7 +48,6 @@ public class LoginActivity extends AppCompatActivity {
                         break;
                     default:
                         progressBar.setVisibility(View.INVISIBLE);
-                        //Login.clearPassword(LoginActivity.this);
                         Toast.makeText(LoginActivity.this, returnMsg.getMessage(), Toast.LENGTH_SHORT).show();
                 }
             }
@@ -70,13 +69,14 @@ public class LoginActivity extends AppCompatActivity {
     };
 
     public void login(UserInformation userInformation) {
-        String url = "http://192.168.123.50:8585/chengfeng/user/login";
+        String url = "/user/login";
         progressBar.setVisibility(View.VISIBLE);
         NetworkModule.postForm(url, userInformation, new Callback() {
             @Override
             public void onFailure(Call call, IOException e) {
                 Log.w("test", e.toString());
                 Message message = handler.obtainMessage(1);
+                handler.sendMessage(message);
             }
 
             @Override

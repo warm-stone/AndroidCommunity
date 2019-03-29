@@ -4,10 +4,10 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
 import android.support.annotation.Nullable;
+import android.widget.EditText;
 
 import com.example.mycommunity.JsonEntity.UserInformation;
 import com.example.mycommunity.NetworkModule;
-import com.example.mycommunity.UserAccountActivity;
 
 import okhttp3.Callback;
 
@@ -36,7 +36,7 @@ public class Login {
         userInformation.setUsername(preferences.getString("username", ""));
         userInformation.setEmail(preferences.getString("email", ""));
         userInformation.setGender(preferences.getString("gender", ""));
-        userInformation.setBirthday(preferences.getLong("birthday",0l));
+        userInformation.setBirthday(preferences.getLong("birthday",0L));
         userInformation.setMotto(preferences.getString("motto", ""));
         userInformation.setCommunityId(preferences.getInt("communityId", 0));
         return userInformation;
@@ -53,7 +53,9 @@ public class Login {
         editor.putString("email", information.getEmail());
         editor.putLong("birthday", information.getBirthday());
         editor.putString("motto", information.getMotto());
-        editor.putInt("community", information.getCommunityId());
+        editor.putInt("communityId", information.getCommunityId());
+        editor.putBoolean("isRemember", true);
+        editor.putBoolean("isLoggedIn", true);
         editor.apply();
     }
     public static void storageAuthorization(String authorization, Context context) {
@@ -68,6 +70,13 @@ public class Login {
         editor = preferences.edit();
         editor.remove("nickname");
         editor.remove("password");
+        editor.remove("phone");
+        editor.remove("avatar");
+        editor.remove("username");
+        editor.remove("email");
+        editor.remove("birthday");
+        editor.remove("motto");
+        editor.remove("community");
         editor.remove("isLoggedIn");
         editor.remove("Authorization");
         editor.remove("isRemember");
@@ -105,7 +114,7 @@ public class Login {
     }
 
     public static void login(@Nullable Callback callback, Context context) {
-        String url = "http://192.168.123.50:8585/chengfeng/user/login";
+        String url = "/user/login";
         NetworkModule.postForm(url, loadPassword(context), callback);
     }
 }
