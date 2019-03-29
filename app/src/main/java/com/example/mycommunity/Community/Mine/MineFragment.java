@@ -1,4 +1,4 @@
-package com.example.mycommunity;
+package com.example.mycommunity.Community.Mine;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -13,7 +13,6 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.example.mycommunity.JsonEntity.UserInformation;
 import com.example.mycommunity.Login.Login;
 import com.example.mycommunity.NetworkModule;
 import com.example.mycommunity.R;

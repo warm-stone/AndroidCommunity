@@ -20,10 +20,4 @@
         android:background="@null"
         android:layout_alignBaseline="@id/common_text"
         />
-    <ImageView
-        android:layout_width="20dp"
-        android:layout_height="20dp"
-        android:layout_alignParentEnd="true"
-        android:layout_centerVertical="true"
-        android:src="@mipmap/ic_right_foreground"/>
 </RelativeLayout>

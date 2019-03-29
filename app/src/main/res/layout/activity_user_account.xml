@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    tools:context=".UserAccountActivity">
+    tools:context=".Community.Mine.UserAccountActivity">
 
 
     <android.support.design.widget.AppBarLayout
@@ -31,25 +31,35 @@
                 android:id="@+id/user_account_avatar"
                 layout="@layout/common_text_edit" />
 
-            <include
-                android:id="@+id/user_account_nickname"
-                layout="@layout/common_text_edit" />
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_marginStart="80dp"
+                android:background="@color/gray"/>
 
             <include
+                android:id="@+id/user_account_nickname"
+                layout="@layout/common_text_edit_without_right" />
+
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="@color/gray"/>
+            <include
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
                 android:id="@+id/user_account_motto"
-                layout="@layout/common_text_edit" />
+                layout="@layout/common_text_edit_without_right" />
 
             <include
                 android:id="@+id/user_account_gender"
-                layout="@layout/common_text_edit" />
-
-            <include
-                android:id="@+id/user_account_password"
-                layout="@layout/common_text_edit" />
+                layout="@layout/common_text_edit_without_right" />
 
             <include
                 android:id="@+id/user_account_phone"
-                layout="@layout/common_text_edit" />
+                layout="@layout/common_text_edit_without_right" />
 
             <include
                 android:id="@+id/user_account_community_id"
@@ -57,7 +67,12 @@
 
             <include
                 android:id="@+id/user_account_username"
+                layout="@layout/common_text_edit_without_right" />
+
+            <include
+                android:id="@+id/user_account_password"
                 layout="@layout/common_text_edit" />
+
         </LinearLayout>
 
     </android.support.v4.widget.NestedScrollView>
