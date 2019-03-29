@@ -40,16 +40,15 @@
             <include
                 android:id="@+id/user_account_nickname"
                 layout="@layout/common_text_edit_without_right" />
-
+            <include
+                android:id="@+id/user_account_email"
+                layout="@layout/common_text_edit"/>
 
             <View
                 android:layout_width="match_parent"
                 android:layout_height="1dp"
                 android:background="@color/gray"/>
             <include
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="20dp"
                 android:id="@+id/user_account_motto"
                 layout="@layout/common_text_edit_without_right" />
 
@@ -72,6 +71,12 @@
             <include
                 android:id="@+id/user_account_password"
                 layout="@layout/common_text_edit" />
+
+            <Button
+                android:id="@+id/user_account_ok"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="确定"/>
 
         </LinearLayout>
 
