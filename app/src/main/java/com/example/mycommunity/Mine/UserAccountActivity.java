@@ -1,4 +1,4 @@
-package com.example.mycommunity.Community.Mine;
+package com.example.mycommunity.Mine;
 
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;

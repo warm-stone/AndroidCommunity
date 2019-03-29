@@ -1,4 +1,4 @@
-package com.example.mycommunity.Community.Mine;
+package com.example.mycommunity.Mine;
 
 import android.app.Activity;
 import android.content.Intent;
