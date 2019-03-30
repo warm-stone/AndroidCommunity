@@ -1,27 +1,11 @@
 package com.example.mycommunity.JsonEntity;
 
+import com.example.mycommunity.BaseReturnMsg;
+
 import java.util.List;
 
-public class ReturnMsg {
-    private int status;
-    private String message;
+public class ReturnMsg extends BaseReturnMsg {
     private Data data;
-
-    public int getStatus() {
-        return status;
-    }
-
-    public void setStatus(int status) {
-        this.status = status;
-    }
-
-    public String getMessage() {
-        return message;
-    }
-
-    public void setMessage(String message) {
-        this.message = message;
-    }
 
     public Data getData() {
         return data;

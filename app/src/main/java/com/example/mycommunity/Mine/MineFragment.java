@@ -3,6 +3,8 @@ package com.example.mycommunity.Mine;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -14,6 +16,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.mycommunity.Login.Login;
+import com.example.mycommunity.Login.ReturnMsg;
 import com.example.mycommunity.NetworkModule;
 import com.example.mycommunity.R;
 import com.google.gson.Gson;
@@ -27,11 +30,19 @@ import okhttp3.Response;
 public class MineFragment extends Fragment {
 
     private Gson gson = new Gson();
+    private Handler handler = new Handler(new Handler.Callback() {
+        @Override
+        public boolean handleMessage(Message msg) {
+            Toast.makeText(getContext(), "已退出", Toast.LENGTH_SHORT).show();
+            Login.setLoggedIn(getContext(), false);
+            return false;
+        }
+    });
     private View.OnClickListener signOutListener = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
             String url = "/logout";
-            NetworkModule.postWithAuthor(url, "", callback, Login.getAuthorization(getContext()));
+            NetworkModule.postWithAuthor(url, "", handler, Login.getAuthorization(getContext()), getContext());
         }
     };
 
@@ -54,7 +65,7 @@ public class MineFragment extends Fragment {
                     Toast.makeText(getContext(), "已退出", Toast.LENGTH_SHORT).show();
                 }
             });
-            Login.setLoggedIn(getContext());
+            Login.setLoggedIn(getContext(), false);
         }
     };
 

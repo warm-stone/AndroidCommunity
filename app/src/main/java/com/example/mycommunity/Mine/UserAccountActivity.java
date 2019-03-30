@@ -17,11 +17,11 @@ public class UserAccountActivity extends AppCompatActivity {
 
     private UserInformation userInformation;
     private EditText nicknameEditText;
-    private EditText mottoEditeText;
-    private EditText genderEditerText;
-    private EditText phoneEditerText;
-    private EditText communityEditeText;
-    private EditText usernameEditerText;
+    private EditText mottoEditText;
+    private EditText genderEditText;
+    private EditText phoneEditText;
+    private EditText communityEditText;
+    private EditText usernameEditText;
     private View.OnClickListener passwordListener = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
@@ -33,7 +33,12 @@ public class UserAccountActivity extends AppCompatActivity {
         @Override
         public void onClick(View v) {
             userInformation.setNickname(nicknameEditText.getText().toString());
-            userInformation.setMotto(nicknameEditText.getText().toString());
+            userInformation.setMotto(mottoEditText.getText().toString());
+            userInformation.setGender(genderEditText.getText().toString());
+            userInformation.setPhone(phoneEditText.getText().toString());
+            userInformation.setCommunityName(communityEditText.getText().toString());
+            userInformation.setUsername(usernameEditText.getText().toString());
+
         }
     };
 
@@ -60,14 +65,19 @@ public class UserAccountActivity extends AppCompatActivity {
         TextView emailText = email.findViewById(R.id.common_text);
         emailText.setText("邮箱");
         TextView mottoText = motto.findViewById(R.id.common_text);
+        mottoEditText = motto.findViewById(R.id.common_edit);
         mottoText.setText("个性签名");
         TextView genderText = gender.findViewById(R.id.common_text);
+        genderEditText = gender.findViewById(R.id.common_edit);
         genderText.setText("性别");
         TextView phoneText = phone.findViewById(R.id.common_text);
+        phoneEditText = phone.findViewById(R.id.common_edit);
         phoneText.setText("电话");
         TextView communityText = community.findViewById(R.id.common_text);
+        communityEditText = community.findViewById(R.id.common_edit);
         communityText.setText("社区");
         TextView usernameText = username.findViewById(R.id.common_text);
+        usernameEditText = username.findViewById(R.id.common_edit);
         usernameText.setText("真实姓名");
         TextView passwordText = password.findViewById(R.id.common_text);
         passwordText.setText("修改密码");

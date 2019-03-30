@@ -98,10 +98,10 @@ public class Login {
         return preferences.getBoolean("isLoggedIn", false);
     }
 
-    public static void setLoggedIn(Context context){
+    public static void setLoggedIn(Context context, boolean state){
         preferences = PreferenceManager.getDefaultSharedPreferences(context);
         editor = preferences.edit();
-        editor.putBoolean("isLoggedIn", false);
+        editor.putBoolean("isLoggedIn", state);
         editor.apply();
     }
 

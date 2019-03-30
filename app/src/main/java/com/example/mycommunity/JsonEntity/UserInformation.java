@@ -15,6 +15,7 @@ public class UserInformation  extends LitePalSupport {
     private String password;
     private String phone;
     private int communityId;
+    private String communityName;
     private String username;
     private String avatar;
     private String gender;
@@ -35,8 +36,8 @@ public class UserInformation  extends LitePalSupport {
     public UserInformation() {
     }
 
-    public UserInformation(String userName, String passWord, String phone, String email, String gender, String idCard) {
-        this.nickname = userName;
+    public UserInformation(String nickname, String passWord, String phone, String email, String gender, String idCard) {
+        this.nickname = nickname;
         this.password = passWord;
         this.phone = phone;
         this.email = email;
@@ -44,8 +45,8 @@ public class UserInformation  extends LitePalSupport {
         this.idCard = idCard;
     }
 
-    public UserInformation(String userName, String passWord,String phone){
-        this.nickname = userName;
+    public UserInformation(String nickname, String passWord,String phone){
+        this.nickname = nickname;
         this.password = passWord;
         this.phone = phone;
     }
@@ -53,7 +54,13 @@ public class UserInformation  extends LitePalSupport {
         this.nickname = nickname;
         this.password = passWord;
     }
+    public String getCommunityName() {
+        return communityName;
+    }
 
+    public void setCommunityName(String communityName) {
+        this.communityName = communityName;
+    }
     public String getNickname() {
         return nickname;
     }
@@ -79,11 +86,11 @@ public class UserInformation  extends LitePalSupport {
     }
 
     public String getUsername() {
-        return nickname;
+        return username;
     }
 
     public void setUsername(String username) {
-        this.nickname = username;
+        this.username = username;
     }
 
     public String getPassword() {
