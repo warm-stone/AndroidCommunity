@@ -62,13 +62,8 @@ public class RegisterActivity extends AppCompatActivity {
                     public void onResponse(Call call, final Response response) throws IOException {
                         final ReturnMsg returnMsg = gson.fromJson(response.body().string(), ReturnMsg.class);
                         if (returnMsg.getStatus() == 10001) {
-                            runOnUiThread(new Runnable() {
-                                @Override
-                                public void run() {
                                     Login.storageInformation(userInformation, RegisterActivity.this);
                                     Login.login(loginCallback, RegisterActivity.this);
-                                }
-                            });
                         } else {
                             runOnUiThread(new Runnable() {
                                 @Override
@@ -125,6 +120,7 @@ public class RegisterActivity extends AppCompatActivity {
                     Data data1 = (Data) data.getSerializableExtra("data");
                     communityIdText.setText(data1.getName());
                     userInformation.setCommunityId(data1.getId());
+                    userInformation.setCommunityName(data1.getName());
             }
         }
     }

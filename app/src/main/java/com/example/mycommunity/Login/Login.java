@@ -54,6 +54,7 @@ public class Login {
         editor.putLong("birthday", information.getBirthday());
         editor.putString("motto", information.getMotto());
         editor.putInt("communityId", information.getCommunityId());
+        editor.putString("communityName", information.getCommunityName());
         editor.putBoolean("isRemember", true);
         editor.putBoolean("isLoggedIn", true);
         editor.apply();
