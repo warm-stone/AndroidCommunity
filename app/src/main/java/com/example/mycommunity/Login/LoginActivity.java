@@ -93,10 +93,6 @@ public class LoginActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_log_in);
-        ActionBar actionbar = getSupportActionBar();
-        if (actionbar != null) {
-            actionbar.hide();
-        }
         userIdEditText = findViewById(R.id.user_id);
         passWordEditText = findViewById(R.id.password);
         progressBar = findViewById(R.id.check_information);

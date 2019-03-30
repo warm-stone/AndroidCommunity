@@ -3,8 +3,6 @@ package com.example.mycommunity.Login;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
-import android.support.annotation.Nullable;
-import android.widget.EditText;
 
 import com.example.mycommunity.JsonEntity.UserInformation;
 import com.example.mycommunity.NetworkModule;
@@ -26,7 +24,7 @@ public class Login {
         editor.apply();
     }
 
-    public static UserInformation loadInformation(Context context){
+    public static UserInformation loadInformation(Context context) {
         preferences = PreferenceManager.getDefaultSharedPreferences(context);
         UserInformation userInformation = new UserInformation();
         userInformation.setNickname(preferences.getString("nickname", ""));
@@ -36,15 +34,15 @@ public class Login {
         userInformation.setUsername(preferences.getString("username", ""));
         userInformation.setEmail(preferences.getString("email", ""));
         userInformation.setGender(preferences.getString("gender", ""));
-        userInformation.setBirthday(preferences.getLong("birthday",0L));
+        userInformation.setBirthday(preferences.getLong("birthday", 0L));
         userInformation.setMotto(preferences.getString("motto", ""));
         userInformation.setCommunityId(preferences.getInt("communityId", 0));
         return userInformation;
     }
 
-    public static void storageInformation (UserInformation information, Context context){
+    public static void storageInformation(UserInformation information, Context context) {
         preferences = PreferenceManager.getDefaultSharedPreferences(context);
-        editor=preferences.edit();
+        editor = preferences.edit();
         editor.putString("nickname", information.getNickname());
         editor.putString("password", information.getPassword());
         editor.putString("phone", information.getPhone());
@@ -59,6 +57,7 @@ public class Login {
         editor.putBoolean("isLoggedIn", true);
         editor.apply();
     }
+
     public static void storageAuthorization(String authorization, Context context) {
         preferences = PreferenceManager.getDefaultSharedPreferences(context);
         editor = preferences.edit();
@@ -89,7 +88,7 @@ public class Login {
         return preferences.getString("Authorization", "");
     }
 
-    public static boolean isRemember(Context context){
+    public static boolean isRemember(Context context) {
         preferences = PreferenceManager.getDefaultSharedPreferences(context);
         return preferences.getBoolean("isRemember", false);
     }
@@ -99,7 +98,7 @@ public class Login {
         return preferences.getBoolean("isLoggedIn", false);
     }
 
-    public static void setLoggedIn(Context context, boolean state){
+    public static void setLoggedIn(Context context, boolean state) {
         preferences = PreferenceManager.getDefaultSharedPreferences(context);
         editor = preferences.edit();
         editor.putBoolean("isLoggedIn", state);
@@ -109,12 +108,12 @@ public class Login {
     public static UserInformation loadPassword(Context context) {
         preferences = PreferenceManager.getDefaultSharedPreferences(context);
         UserInformation userInformation = new UserInformation();
-        userInformation.setUsername(preferences.getString("nickname", ""));
+        userInformation.setNickname(preferences.getString("nickname", ""));
         userInformation.setPassword(preferences.getString("password", ""));
         return userInformation;
     }
 
-    public static void login(@Nullable Callback callback, Context context) {
+    public static void login(Callback callback, Context context) {
         String url = "/user/login";
         NetworkModule.postForm(url, loadPassword(context), callback);
     }
