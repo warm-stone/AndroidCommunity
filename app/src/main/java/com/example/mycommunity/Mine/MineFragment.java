@@ -42,7 +42,7 @@ public class MineFragment extends Fragment {
         @Override
         public void onClick(View v) {
             String url = "/logout";
-            NetworkModule.postWithAuthor(url, "", handler, Login.getAuthorization(getContext()), getContext());
+            NetworkModule.postWithAuthor(url, "", handler, getContext());
         }
     };
 

@@ -29,6 +29,7 @@ public class Data {
     private long signUp;
     private String error;
     private String Authorization;
+    private String idcard;
 
     public String getAuthorization() {
         return Authorization;
@@ -164,5 +165,13 @@ public class Data {
 
     public void setError(String error) {
         this.error = error;
+    }
+
+    public String getIdcard() {
+        return idcard;
+    }
+
+    public void setIdcard(String idcard) {
+        this.idcard = idcard;
     }
 }

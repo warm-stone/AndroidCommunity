@@ -43,8 +43,11 @@ public class Login {
     public static void storageInformation(UserInformation information, Context context) {
         preferences = PreferenceManager.getDefaultSharedPreferences(context);
         editor = preferences.edit();
+        editor.putLong("id", information.getId());
+        editor.putString("idcard", information.getIdCard());
+        editor.putLong("signUp", information.getSignUp());
+
         editor.putString("nickname", information.getNickname());
-        editor.putString("password", information.getPassword());
         editor.putString("phone", information.getPhone());
         editor.putString("avatar", information.getAvatar());
         editor.putString("username", information.getUsername());

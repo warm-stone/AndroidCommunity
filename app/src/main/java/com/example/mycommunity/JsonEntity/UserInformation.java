@@ -24,6 +24,17 @@ public class UserInformation  extends LitePalSupport {
     private String motto;
     private String email;
     private String Authorization;
+    /**
+     * id : 51
+     * idcard : 就是恰好的不解决
+     * integral : 0
+     * birthday : -28800000
+     * signUp : 1553937229000
+     */
+
+    private long id;
+    private long integral;
+    private long signUp;
 
     public String getAuthorization() {
         return Authorization;
@@ -149,5 +160,28 @@ public class UserInformation  extends LitePalSupport {
         this.motto = motto;
     }
 
+    public long getId() {
+        return id;
+    }
+
+    public void setId(long id) {
+        this.id = id;
+    }
+
+    public long getIntegral() {
+        return integral;
+    }
+
+    public void setIntegral(long integral) {
+        this.integral = integral;
+    }
+
+    public long getSignUp() {
+        return signUp;
+    }
+
+    public void setSignUp(long signUp) {
+        this.signUp = signUp;
+    }
 }
 

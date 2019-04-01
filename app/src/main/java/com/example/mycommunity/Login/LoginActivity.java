@@ -4,7 +4,6 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
-import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
@@ -16,6 +15,7 @@ import android.widget.Toast;
 
 import com.example.mycommunity.JsonEntity.ReturnMsg;
 import com.example.mycommunity.JsonEntity.UserInformation;
+import com.example.mycommunity.Mine.ReturnUserInformation;
 import com.example.mycommunity.NetworkModule;
 import com.example.mycommunity.R;
 import com.google.gson.Gson;
@@ -44,17 +44,33 @@ public class LoginActivity extends AppCompatActivity {
                         Toast.makeText(LoginActivity.this, "登录成功", Toast.LENGTH_SHORT).show();
                         Login.storageAuthorization(returnMsg.getData().getAuthorization(), LoginActivity.this);
                         Login.storagePassword(new UserInformation(userIdEditText.getText().toString(), passWordEditText.getText().toString()), LoginActivity.this);
-                        finish();
+                        NetworkModule.getWithAuthor("/user/find", findInfHandler, LoginActivity.this);
                         break;
                     default:
                         progressBar.setVisibility(View.INVISIBLE);
                         Toast.makeText(LoginActivity.this, returnMsg.getMessage(), Toast.LENGTH_SHORT).show();
                 }
-            }
-            else {
+            } else {
                 Toast.makeText(LoginActivity.this, "预期之外的错误", Toast.LENGTH_SHORT).show();
             }
-        return false;
+            return false;
+        }
+    });
+    private Handler findInfHandler = new Handler(new Handler.Callback() {
+        @Override
+        public boolean handleMessage(Message msg) {
+            switch (msg.what) {
+                case 0:
+                    ReturnUserInformation information = gson.fromJson((String) msg.obj, ReturnUserInformation.class);
+                    UserInformation userInformation = information.getData().getBase_info();
+                    Login.storageInformation(userInformation, LoginActivity.this);
+                    finish();
+                    break;
+                default:
+                    Toast.makeText(LoginActivity.this, "未定义的错误", Toast.LENGTH_SHORT).show();
+                    finish();
+            }
+            return false;
         }
     });
     private View.OnClickListener onClickListener = new View.OnClickListener() {
@@ -98,7 +114,7 @@ public class LoginActivity extends AppCompatActivity {
         progressBar = findViewById(R.id.check_information);
         Button login_button = findViewById(R.id.login_button);
         login_button.setOnClickListener(onClickListener);
-        if (Login.isRemember(LoginActivity.this)){
+        if (Login.isRemember(LoginActivity.this)) {
             UserInformation userInformation = Login.loadPassword(LoginActivity.this);
             userIdEditText.setText(userInformation.getNickname());
             passWordEditText.setText(userInformation.getPassword());

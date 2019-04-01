@@ -7,6 +7,7 @@ import android.os.Message;
 import android.support.annotation.Nullable;
 import android.widget.Toast;
 
+import com.example.mycommunity.JsonEntity.ReturnMsg;
 import com.example.mycommunity.JsonEntity.UserInformation;
 import com.example.mycommunity.Login.Login;
 import com.google.gson.Gson;
@@ -27,22 +28,37 @@ public class NetworkModule {
     private final static String baseUrl = "http://192.168.123.50:8585/chengfeng";
     private static Handler handler;
     private static Context context;
+    /*
+     * what = 0 正常返回
+     * what = 1 网络请求异常
+     * what = 2 登录时异常
+     * what = 3 已重新登录
+     * what = 4 请求时其他异常
+     * */
     private static Callback stateCheck = new Callback() {
         @Override
         public void onFailure(Call call, IOException e) {
-
+            Message message = handler.obtainMessage(1);
+            handler.sendMessage(message);
         }
 
         @Override
         public void onResponse(Call call, Response response) throws IOException {
             Gson gson = new Gson();
-            BaseReturnMsg baseReturnMsg = gson.fromJson(response.body().string(), BaseReturnMsg.class);
-            if (baseReturnMsg.getStatus() == 401) {
-                Login.login(loginCallback, context);
-            }
-            else {
-                Message message = handler.obtainMessage(0, baseReturnMsg);
-                handler.sendMessage(message);
+            String returnString = response.body().string();
+            BaseReturnMsg baseReturnMsg = gson.fromJson(returnString, BaseReturnMsg.class);
+            Message message;
+            switch (baseReturnMsg.getStatus()) {
+                case 401:
+                    Login.login(loginCallback, context);
+                    break;
+                case 10001:
+                    message = handler.obtainMessage(0, returnString);
+                    handler.sendMessage(message);
+                    break;
+                default:
+                    message = handler.obtainMessage(4, returnString);
+                    handler.sendMessage(message);
             }
         }
     };
@@ -50,24 +66,27 @@ public class NetworkModule {
     private static Callback loginCallback = new Callback() {
         @Override
         public void onFailure(Call call, IOException e) {
-
+            Message message = handler.obtainMessage(2);
+            handler.sendMessage(message);
         }
 
         @Override
         public void onResponse(Call call, Response response) throws IOException {
             Gson gson = new Gson();
-            BaseReturnMsg baseReturnMsg = gson.fromJson(response.body().string(), BaseReturnMsg.class);
-            if (baseReturnMsg.getStatus() == 401) {
-                ((Activity)context).runOnUiThread(new Runnable() {
+            String returnString = response.body().string();
+            final ReturnMsg returnMsg = gson.fromJson(returnString, ReturnMsg.class);
+            if (returnMsg.getStatus() == 401) {
+                ((Activity) context).runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
-                        Toast.makeText(context, "用户认证失败", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(context, returnMsg.getMessage(), Toast.LENGTH_SHORT).show();
+
                     }
                 });
                 Login.setLoggedIn(context, false);
-            }
-            else {
-                Message message = handler.obtainMessage(0, baseReturnMsg);
+            } else {
+                Login.storageAuthorization(returnMsg.getData().getAuthorization(), context);
+                Message message = handler.obtainMessage(3, returnString);
                 handler.sendMessage(message);
             }
         }
@@ -89,13 +108,32 @@ public class NetworkModule {
         client.newCall(request).enqueue(callback);
     }
 
-    public static void postWithAuthor(String url, String json,Handler mhandler , String authorization, Context mcontext) {
-        context = mcontext;
-        handler = mhandler;
+    public static void postWithAuthor(String url, String json, Handler mHandler, Context mContext) {
+        context = mContext;
+        handler = mHandler;
         OkHttpClient client = new OkHttpClient();
         url = baseUrl + url;
         RequestBody requestBody = FormBody.create(MediaType.parse("application/json; charset=utf-8"), json);
-        Request request = new Request.Builder().url(url).header("Authorization", authorization).post(requestBody).build();
+        Request request = new Request.Builder().url(url).header("Authorization", Login.getAuthorization(mContext)).post(requestBody).build();
+        client.newCall(request).enqueue(stateCheck);
+    }
+
+    public static void getWithAuthor(String url, Handler mHandler, Context mContext){
+        context = mContext;
+        handler = mHandler;
+        OkHttpClient client = new OkHttpClient();
+        url = baseUrl + url;
+        Request request = new Request.Builder().url(url).header("Authorization", Login.getAuthorization(mContext)).build();
+        client.newCall(request).enqueue(stateCheck);
+    }
+
+    public static void putWithAuthor(String url, String json, Handler mHandler, Context mContext) {
+        context = mContext;
+        handler = mHandler;
+        OkHttpClient client = new OkHttpClient();
+        url = baseUrl + url;
+        RequestBody requestBody = FormBody.create(MediaType.parse("application/json; charset=utf-8"), json);
+        Request request = new Request.Builder().url(url).header("Authorization", Login.getAuthorization(mContext)).put(requestBody).build();
         client.newCall(request).enqueue(stateCheck);
     }
 

@@ -18,6 +18,5 @@
         android:layout_height="wrap_content"
         android:layout_toEndOf="@id/common_text"
         android:background="@null"
-        android:layout_alignBaseline="@id/common_text"
-        />
+        android:layout_alignBaseline="@id/common_text" />
 </RelativeLayout>

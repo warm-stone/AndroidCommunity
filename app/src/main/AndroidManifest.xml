@@ -3,7 +3,7 @@
     package="com.example.mycommunity">
 
     <uses-permission android:name="android.permission.INTERNET" />
-
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
     <application
         android:name="org.litepal.LitePalApplication"
         android:allowBackup="true"
@@ -12,22 +12,25 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".Mine.ResetPasswordActivity"></activity>
-        <activity android:name=".Mine.UserAccountActivity" />
+        <activity android:name=".Mine.UserImg.SelectUserImgActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity android:name=".Mine.ResetPasswordActivity" />
+        <activity android:name=".Mine.UserAccountActivity">
+        </activity>
         <activity android:name=".Login.CommunityListActivity" />
         <activity
             android:name=".Main.MainCommunity"
             android:label="@string/title_activity_main_community">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
-        </activity>
+         </activity>
         <activity android:name=".test" />
         <activity android:name=".Login.ForgetPassWord" />
         <activity android:name=".Login.RegisterActivity" />
-        <activity android:name=".Login.LoginActivity" />
+        <activity android:name=".Login.LoginActivity" >
+        </activity>
         <activity android:name=".MainActivity" />
     </application>
 
