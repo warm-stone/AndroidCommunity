@@ -51,7 +51,7 @@ public class LoginActivity extends AppCompatActivity {
                         Toast.makeText(LoginActivity.this, returnMsg.getMessage(), Toast.LENGTH_SHORT).show();
                 }
             } else {
-                Toast.makeText(LoginActivity.this, "预期之外的错误", Toast.LENGTH_SHORT).show();
+                Toast.makeText(LoginActivity.this, "请检查网络后再试", Toast.LENGTH_SHORT).show();
             }
             return false;
         }
