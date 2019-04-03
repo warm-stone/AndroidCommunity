@@ -7,17 +7,19 @@ import android.os.Message;
 import android.support.annotation.Nullable;
 import android.widget.Toast;
 
-import com.example.mycommunity.JsonEntity.ReturnMsg;
-import com.example.mycommunity.JsonEntity.UserInformation;
-import com.example.mycommunity.Login.Login;
+import com.example.mycommunity.jsonEntity.ReturnMsg;
+import com.example.mycommunity.jsonEntity.UserInformation;
+import com.example.mycommunity.login.Login;
 import com.google.gson.Gson;
 
+import java.io.File;
 import java.io.IOException;
 
 import okhttp3.Call;
 import okhttp3.Callback;
 import okhttp3.FormBody;
 import okhttp3.MediaType;
+import okhttp3.MultipartBody;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.RequestBody;
@@ -34,6 +36,7 @@ public class NetworkModule {
      * what = 2 登录时异常
      * what = 3 已重新登录
      * what = 4 请求时其他异常
+     * what = 5 返回格式有误
      * */
     private static Callback stateCheck = new Callback() {
         @Override
@@ -46,19 +49,24 @@ public class NetworkModule {
         public void onResponse(Call call, Response response) throws IOException {
             Gson gson = new Gson();
             String returnString = response.body().string();
-            BaseReturnMsg baseReturnMsg = gson.fromJson(returnString, BaseReturnMsg.class);
             Message message;
-            switch (baseReturnMsg.getStatus()) {
-                case 401:
-                    Login.login(loginCallback, context);
-                    break;
-                case 10001:
-                    message = handler.obtainMessage(0, returnString);
-                    handler.sendMessage(message);
-                    break;
-                default:
-                    message = handler.obtainMessage(4, returnString);
-                    handler.sendMessage(message);
+            try {
+                BaseReturnMsg baseReturnMsg = gson.fromJson(returnString, BaseReturnMsg.class);
+                switch (baseReturnMsg.getStatus()) {
+                    case 401:
+                        Login.login(loginCallback, context);
+                        break;
+                    case 10001:
+                        message = handler.obtainMessage(0, returnString);
+                        handler.sendMessage(message);
+                        break;
+                    default:
+                        message = handler.obtainMessage(4, returnString);
+                        handler.sendMessage(message);
+                }
+            }catch (Exception e){
+                message = handler.obtainMessage(5);
+                handler.sendMessage(message);
             }
         }
     };
@@ -106,6 +114,16 @@ public class NetworkModule {
         RequestBody requestBody = FormBody.create(MediaType.parse("application/json; charset=utf-8"), json);
         Request request = new Request.Builder().url(url).post(requestBody).build();
         client.newCall(request).enqueue(callback);
+    }
+
+    public static void postImg(String url,String imgName, File file, Handler mHandler, Context mContext){
+        context = mContext;
+        handler = mHandler;
+        OkHttpClient client = new OkHttpClient();
+        RequestBody fileBody = RequestBody.create(MediaType.parse("image/jpg"), file);
+        RequestBody requestBody = new  MultipartBody.Builder().addFormDataPart("files", imgName, fileBody).build();
+        Request request = new Request.Builder().url(url).header("Authorization", Login.getAuthorization(mContext)).post(requestBody).build();
+        client.newCall(request).enqueue(stateCheck);
     }
 
     public static void postWithAuthor(String url, String json, Handler mHandler, Context mContext) {
