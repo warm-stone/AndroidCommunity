@@ -1,5 +1,4 @@
-package com.example.mycommunity.News;
-
+package com.example.mycommunity.news;
 
 import android.support.annotation.NonNull;
 import android.support.v4.view.PagerAdapter;
@@ -10,38 +9,38 @@ import android.widget.ImageView;
 
 import java.util.List;
 
-public class ImgViewpagerAdapter extends PagerAdapter {
-    private List<ImageView> imageViews;
+public class ImageViewpagerAdapter extends PagerAdapter {
+    private List<ImageView> images;
     private ViewPager viewPager;
-    public ImgViewpagerAdapter(List<ImageView> imageViews, ViewPager viewPager){
-        this.imageViews = imageViews;
+
+
+     ImageViewpagerAdapter(List<ImageView> images, ViewPager viewPager) {
+        this.images = images;
         this.viewPager = viewPager;
     }
 
     @Override
-    public boolean isViewFromObject(@NonNull View view, @NonNull Object o) {
-        return view == o;
+    public int getCount() {
+        return Integer.MAX_VALUE;
     }
 
+
     @Override
-    public int getCount(){
-        return 9;
+    public boolean isViewFromObject(@NonNull View view, @NonNull Object object) {
+        return view == object;
     }
 
     @NonNull
     @Override
     public Object instantiateItem(@NonNull ViewGroup container, int position) {
-        // 把position对应位置的ImageView添加到ViewPager中
-        ImageView iv = imageViews.get(position % imageViews.size());
+        ImageView iv = images.get(position % images.size());
         viewPager.addView(iv);
-        // 把当前添加ImageView返回回去.
         return iv;
     }
 
-    @NonNull
     @Override
     public void destroyItem(@NonNull ViewGroup container, int position,@NonNull Object object) {
-        // 把ImageView从ViewPager中移除掉
-        viewPager.removeView(imageViews.get(position % imageViews.size()));
+        viewPager.removeView(images.get(position % images.size()));
+
     }
 }
