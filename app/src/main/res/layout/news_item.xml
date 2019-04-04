@@ -3,9 +3,10 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_marginLeft="10dp"
-    android:layout_marginRight="10dp"
-    android:layout_marginBottom="10dp"
+    android:layout_marginStart="10dp"
+    android:layout_marginEnd="10dp"
+    android:layout_marginTop="5dp"
+    android:layout_marginBottom="5dp"
     app:cardCornerRadius="5dp">
 
     <RelativeLayout
@@ -26,7 +27,7 @@
             android:id="@+id/news_title_text_view"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
             android:ellipsize="end"
             android:maxWidth="200dp"
             android:maxLines="3"
@@ -51,7 +52,7 @@
             android:layout_width="12dp"
             android:layout_height="12dp"
             android:layout_above="@id/bottom_black_line"
-            android:layout_marginRight="5dp"
+            android:layout_marginEnd="5dp"
             android:layout_marginBottom="3dp"
             android:src="@drawable/ic_eye" />
 
@@ -61,7 +62,7 @@
             android:layout_height="12dp"
             android:layout_above="@id/bottom_black_line"
             android:layout_marginBottom="5dp"
-            android:layout_toRightOf="@id/ic_eye_img"
+            android:layout_toEndOf="@id/ic_eye_img"
             android:textSize="10sp" />
 
         <ImageView
@@ -69,7 +70,7 @@
             android:layout_width="12dp"
             android:layout_height="12dp"
             android:layout_above="@id/bottom_black_line"
-            android:layout_marginRight="5dp"
+            android:layout_marginEnd="5dp"
             android:layout_marginBottom="3dp"
             android:layout_toEndOf="@id/news_had_seen"
             android:src="@drawable/ic_heart" />
@@ -80,7 +81,7 @@
             android:layout_height="12dp"
             android:layout_above="@id/bottom_black_line"
             android:layout_marginBottom="5dp"
-            android:layout_toRightOf="@id/ic_heart"
+            android:layout_toEndOf="@id/ic_heart"
             android:textSize="10sp" />
 
         <TextView

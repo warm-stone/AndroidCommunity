@@ -1,6 +1,7 @@
-package com.example.mycommunity.news;
+package com.example.mycommunity.news.headLine;
 
 import com.example.mycommunity.BaseReturnMsg;
+import com.example.mycommunity.news.headLine.News;
 
 import java.util.List;
 

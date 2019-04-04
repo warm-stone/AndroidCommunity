@@ -3,7 +3,7 @@
     <dbname value="MyCommunity"/>
     <version value="1"/>
     <list>
-        <mapping class="com.example.mycommunity.news.News"/>
+        <mapping class="com.example.mycommunity.news.headLine.News"/>
         <mapping class="com.example.mycommunity.jsonEntity.UserInformation"/>
 
     </list>

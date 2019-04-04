@@ -28,8 +28,8 @@ import okhttp3.Response;
 public class NetworkModule {
 
     private final static String baseUrl = "http://192.168.123.50:8585/chengfeng";
-    private static Handler handler;
-    private static Context context;
+    private  Handler handler;
+    private  Context context;
     /*
      * what = 0 正常返回
      * what = 1 网络请求异常
@@ -38,7 +38,7 @@ public class NetworkModule {
      * what = 4 请求时其他异常
      * what = 5 返回格式有误
      * */
-    private static Callback stateCheck = new Callback() {
+    private  Callback stateCheck = new Callback() {
         @Override
         public void onFailure(Call call, IOException e) {
             Message message = handler.obtainMessage(1);
@@ -71,7 +71,7 @@ public class NetworkModule {
         }
     };
 
-    private static Callback loginCallback = new Callback() {
+    private  Callback loginCallback = new Callback() {
         @Override
         public void onFailure(Call call, IOException e) {
             Message message = handler.obtainMessage(2);
@@ -116,7 +116,7 @@ public class NetworkModule {
         client.newCall(request).enqueue(callback);
     }
 
-    public static void postImg(String url,String imgName, File file, Handler mHandler, Context mContext){
+    public  void postImg(String url,String imgName, File file, Handler mHandler, Context mContext){
         context = mContext;
         handler = mHandler;
         OkHttpClient client = new OkHttpClient();
@@ -126,7 +126,7 @@ public class NetworkModule {
         client.newCall(request).enqueue(stateCheck);
     }
 
-    public static void postWithAuthor(String url, String json, Handler mHandler, Context mContext) {
+    public void postWithAuthor(String url, String json, Handler mHandler, Context mContext) {
         context = mContext;
         handler = mHandler;
         OkHttpClient client = new OkHttpClient();
@@ -136,7 +136,7 @@ public class NetworkModule {
         client.newCall(request).enqueue(stateCheck);
     }
 
-    public static void getWithAuthor(String url, Handler mHandler, Context mContext){
+    public void getWithAuthor(String url, Handler mHandler, Context mContext){
         context = mContext;
         handler = mHandler;
         OkHttpClient client = new OkHttpClient();
@@ -145,7 +145,7 @@ public class NetworkModule {
         client.newCall(request).enqueue(stateCheck);
     }
 
-    public static void putWithAuthor(String url, String json, Handler mHandler, Context mContext) {
+    public void putWithAuthor(String url, String json, Handler mHandler, Context mContext) {
         context = mContext;
         handler = mHandler;
         OkHttpClient client = new OkHttpClient();

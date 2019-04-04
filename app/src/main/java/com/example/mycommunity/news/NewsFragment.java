@@ -15,6 +15,7 @@ import android.widget.ImageView;
 
 import com.bumptech.glide.Glide;
 import com.example.mycommunity.R;
+import com.example.mycommunity.news.headLine.NewsRecycleViewFragment;
 import com.google.gson.Gson;
 
 import java.util.ArrayList;

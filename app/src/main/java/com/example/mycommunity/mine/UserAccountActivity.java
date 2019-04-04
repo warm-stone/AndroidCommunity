@@ -52,22 +52,19 @@ public class UserAccountActivity extends AppCompatActivity {
                     Login.storageInformation(userInformation, UserAccountActivity.this);
                     break;
                 case 1:
-                    Toast.makeText(UserAccountActivity.this, "网络连接出现问题", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(UserAccountActivity.this, "请检查网络", Toast.LENGTH_SHORT).show();
                     break;
                 case 2:
-                    Toast.makeText(UserAccountActivity.this, "身份验证时出现问题", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(UserAccountActivity.this, returnMsg.getMessage(), Toast.LENGTH_SHORT).show();
                     break;
                 case 3:
-                    NetworkModule.putWithAuthor(
-                            "/user/update",
-                            json,
-                            handler,
-                            UserAccountActivity.this
-                    );
+                    netRequest();
                     break;
                 case 4:
                     Toast.makeText(UserAccountActivity.this, returnMsg.getData().getError(), Toast.LENGTH_SHORT).show();
                     break;
+                case 5:
+                    Toast.makeText(UserAccountActivity.this, "数据格式有误", Toast.LENGTH_SHORT).show();
 
             }
             return false;
@@ -104,14 +101,18 @@ public class UserAccountActivity extends AppCompatActivity {
             userInformation.setGender(null);
             Gson gson = new GsonBuilder().serializeNulls().create();
             json = gson.toJson(userInformation, UserInformation.class);
-            NetworkModule.putWithAuthor(
-                    "/user/update",
-                    json,
-                    handler,
-                    UserAccountActivity.this
-            );
+            netRequest();
         }
     };
+
+    private void netRequest(){
+        new NetworkModule().putWithAuthor(
+                "/user/update",
+                json,
+                handler,
+                UserAccountActivity.this
+        );
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

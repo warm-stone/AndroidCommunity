@@ -1,4 +1,4 @@
-package com.example.mycommunity.news;
+package com.example.mycommunity.news.headLine;
 
 import android.os.Bundle;
 import android.os.Handler;
@@ -11,6 +11,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import com.example.mycommunity.NetworkModule;
 import com.example.mycommunity.R;
@@ -22,19 +23,29 @@ import java.util.Random;
 public class NewsRecycleViewFragment extends Fragment {
 
     private RecyclerView newsRecycleView;
-    private NewsItemAdapter newsItemAdapter;
     private List<News> newsList;
-    private LinearLayoutManager layoutManager;
     private Handler newsHandler = new Handler(new Handler.Callback() {
         @Override
         public boolean handleMessage(Message msg) {
-            Gson gson = new Gson();
+            ReturnHeadline headline = new Gson().fromJson((String)msg.obj, ReturnHeadline.class);
             switch (msg.what){
                 case 0:
-                    ReturnHeadline headline = gson.fromJson((String)msg.obj, ReturnHeadline.class);
                     newsList = headline.getData();
-                    newsItemAdapter = new NewsItemAdapter(newsList);
+                    NewsItemAdapter newsItemAdapter = new NewsItemAdapter(newsList);
                     newsRecycleView.setAdapter(newsItemAdapter);
+                    break;
+                case 2:
+                    Toast.makeText(getContext(), headline.getMessage(), Toast.LENGTH_SHORT).show();
+                    break;
+                case 3:
+                    netRequest();
+                    break;
+                case 4:
+                    Toast.makeText(getContext(), headline.getMessage(), Toast.LENGTH_SHORT).show();
+                    break;
+                case 5:
+                    Toast.makeText(getContext(), "返回数据格式有误", Toast.LENGTH_SHORT).show();
+                    break;
             }
             return false;
         }
@@ -51,13 +62,13 @@ public class NewsRecycleViewFragment extends Fragment {
 
     private void initView(View view){
         newsRecycleView = (RecyclerView)view;
-        layoutManager = new LinearLayoutManager(getContext());
-        newsRecycleView.setLayoutManager(layoutManager);
+        newsRecycleView.setLayoutManager(new LinearLayoutManager(getContext()));
     }
 
     private void netRequest(){
-        NetworkModule.getWithAuthor("/headline/top5", newsHandler, getContext());
+        new NetworkModule().getWithAuthor("/headline/top5", newsHandler, getContext());
     }
+    //本地界面测试
     private void init(){
         News news;
         StringBuilder temp = new StringBuilder();

@@ -1,4 +1,4 @@
-package com.example.mycommunity.news;
+package com.example.mycommunity.news.communityNotice;
 
 public class CommunityNotice {
     /**

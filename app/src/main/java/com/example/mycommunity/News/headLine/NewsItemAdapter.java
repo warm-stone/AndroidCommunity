@@ -1,4 +1,4 @@
-package com.example.mycommunity.news;
+package com.example.mycommunity.news.headLine;
 
 import android.content.Context;
 import android.support.annotation.NonNull;
