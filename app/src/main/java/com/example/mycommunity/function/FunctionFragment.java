@@ -16,27 +16,29 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class FunctionFragment extends Fragment {
-    private static List<Function> functionList = new ArrayList<>();
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.function_layout, container, false);
-        init();
-        GridLayoutManager layoutManager = new GridLayoutManager(getActivity(), 4);
+        init(view);
+        return view;
+    }
+
+    //测试
+    private void init(View view) {
+        Function[] functions = new Function[]{
+                new Function(R.drawable.ic_user, "立即报修"),
+                new Function(R.drawable.ic_user, "送水服务"),
+                new Function(R.drawable.ic_user, "找书记")};
+        List<Function> functionList = new ArrayList<>();
+        for (int i = 0; i < 3; i++) {
+            functionList.add(functions[i]);
+        }
+        GridLayoutManager layoutManager = new GridLayoutManager(getContext(), 4);
         RecyclerView recyclerView = view.findViewById(R.id.function_recycle_view);
         recyclerView.setLayoutManager(layoutManager);
         FunctionCardAdapter functionCardAdapter = new FunctionCardAdapter(functionList);
         recyclerView.setAdapter(functionCardAdapter);
-        return view;
-    }
-    
-
-    private static void init() {
-        Function[] functions = {new Function(R.drawable.ic_user, "你好啦")};
-        functionList.clear();
-        for (int i = 0; i < 20; i++) {
-            functionList.add(functions[0]);
-        }
     }
 }

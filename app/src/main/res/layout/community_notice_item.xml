@@ -17,6 +17,7 @@
             android:id="@+id/community_notice_title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_margin="10dp"
             android:maxLines="2"
             android:textSize="16sp"/>
 
@@ -34,6 +35,8 @@
             android:layout_width="match_parent"
             android:layout_height="1sp"
             android:background="@color/gray"
+            android:layout_marginStart="10dp"
+            android:layout_marginEnd="10dp"
             android:layout_marginTop="6dp"
             android:layout_marginBottom="6dp"
             android:layout_alignParentBottom="true"/>

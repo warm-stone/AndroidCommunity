@@ -28,15 +28,19 @@ public class CommunityNoticeRecyclerViewFragment extends Fragment {
             ReturnCommunityNotice returnCommunityNotice = new Gson().fromJson((String)msg.obj, ReturnCommunityNotice.class);
             switch (msg.what){
                 case 0:
-                    List<CommunityNotice> notices = returnCommunityNotice.getData();
-                    CommunityNoticeAdapter adapter = new CommunityNoticeAdapter(notices);
-                    recyclerView.setAdapter(adapter);
+                    try {
+                        List<CommunityNotice> notices = returnCommunityNotice.getData();
+                        CommunityNoticeAdapter adapter = new CommunityNoticeAdapter(notices);
+                        recyclerView.setAdapter(adapter);
+                    }catch (Exception e){
+                        Toast.makeText(getContext(), "获取社区通知失败", Toast.LENGTH_SHORT).show();
+                    }
                     break;
                 case 1:
                     Toast.makeText(getContext(), "请检查网络后再试", Toast.LENGTH_SHORT).show();
                     break;
                 case 2:
-                    Toast.makeText(getContext(), returnCommunityNotice.getMessage(), Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getContext(), "登录异常", Toast.LENGTH_SHORT).show();
                     break;
                 case 3:
                     netRequest();
@@ -45,7 +49,7 @@ public class CommunityNoticeRecyclerViewFragment extends Fragment {
                     Toast.makeText(getContext(), returnCommunityNotice.getMessage(), Toast.LENGTH_SHORT).show();
                     break;
                 case 5:
-                    Toast.makeText(getContext(), "返回数据格式有误", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getContext(), "预期之外的错误", Toast.LENGTH_SHORT).show();
                     break;
             }
             return false;

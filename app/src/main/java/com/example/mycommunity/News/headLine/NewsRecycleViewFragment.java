@@ -30,12 +30,19 @@ public class NewsRecycleViewFragment extends Fragment {
             ReturnHeadline headline = new Gson().fromJson((String)msg.obj, ReturnHeadline.class);
             switch (msg.what){
                 case 0:
-                    newsList = headline.getData();
-                    NewsItemAdapter newsItemAdapter = new NewsItemAdapter(newsList);
-                    newsRecycleView.setAdapter(newsItemAdapter);
+                    try {
+                        newsList = headline.getData();
+                        NewsItemAdapter newsItemAdapter = new NewsItemAdapter(newsList);
+                        newsRecycleView.setAdapter(newsItemAdapter);
+                    }catch (Exception e){
+                        Toast.makeText(getContext(), "返回数据格式有误", Toast.LENGTH_SHORT).show();
+                    }
+                    break;
+                case 1:
+                    Toast.makeText(getContext(), "请检查网络", Toast.LENGTH_SHORT).show();
                     break;
                 case 2:
-                    Toast.makeText(getContext(), headline.getMessage(), Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getContext(), "登录异常", Toast.LENGTH_SHORT).show();
                     break;
                 case 3:
                     netRequest();
@@ -44,7 +51,7 @@ public class NewsRecycleViewFragment extends Fragment {
                     Toast.makeText(getContext(), headline.getMessage(), Toast.LENGTH_SHORT).show();
                     break;
                 case 5:
-                    Toast.makeText(getContext(), "返回数据格式有误", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getContext(), "预期之外的错误", Toast.LENGTH_SHORT).show();
                     break;
             }
             return false;

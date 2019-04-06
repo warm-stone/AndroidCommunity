@@ -108,6 +108,10 @@ public class Login {
         editor.apply();
     }
 
+    public static String getPhone(Context context){
+        preferences = PreferenceManager.getDefaultSharedPreferences(context);
+        return preferences.getString("phone", "");
+    }
     public static UserInformation loadPassword(Context context) {
         preferences = PreferenceManager.getDefaultSharedPreferences(context);
         UserInformation userInformation = new UserInformation();

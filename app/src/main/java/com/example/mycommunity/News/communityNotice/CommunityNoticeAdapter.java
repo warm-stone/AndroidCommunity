@@ -16,37 +16,39 @@ import java.util.List;
 public class CommunityNoticeAdapter extends RecyclerView.Adapter {
 
     private List<CommunityNotice> notices;
-    static class ViewHolder extends RecyclerView.ViewHolder{
+
+    static class ViewHolder extends RecyclerView.ViewHolder {
         TextView title;
         TextView showTime;
-        ViewHolder(View view){
+
+        ViewHolder(View view) {
             super(view);
             title = view.findViewById(R.id.community_notice_title);
             showTime = view.findViewById(R.id.community_notice_showtime);
         }
     }
 
-    public CommunityNoticeAdapter(List<CommunityNotice> notices){
+    CommunityNoticeAdapter(List<CommunityNotice> notices) {
         this.notices = notices;
     }
 
     @NonNull
     @Override
-    public RecyclerView.ViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i){
-        return new ViewHolder(LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.community_notice_item, viewGroup,false));
+    public RecyclerView.ViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
+        return new ViewHolder(LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.community_notice_item, viewGroup, false));
     }
 
     @Override
-    public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position){
+    public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position) {
         CommunityNotice notice = notices.get(position);
-        ViewHolder viewHolder = (ViewHolder)holder;
+        ViewHolder viewHolder = (ViewHolder) holder;
         viewHolder.title.setText(notice.getNotice());
         viewHolder.showTime.setText(
                 DateFormat.getDateInstance(2).format(new Date(notice.getShowtime())));
     }
 
     @Override
-    public int getItemCount(){
+    public int getItemCount() {
         return notices.size();
     }
 }
