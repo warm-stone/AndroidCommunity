@@ -1,79 +1,97 @@
 package com.example.mycommunity.community;
 
 public class CommunityPost {
-    private int userImg;
-    private String useName;
-    private String postTime;
-    private String postTitle;
-    private int postImg;
-    private String postHeartCount;
-    private String postCommentsCount;
+    /**
+     * id : 32
+     * title : Java 基础与提高干货系列—Java 反射机制
+     * description : Java反射机制是指在运行状态中，对于任意一个类，都能够知道这个类的所有属性和方法；对于任意一个对象，都能够调用它的任意一个方法和属性；这种动态获取的信息以及动态调用对象的方法的功能称为java语言的反射机制。用一句话总结就是反射可以实现在运行时可以知道任意一个类的属性和方法。
+     * imgUrl :
+     * star : 0
+     * comments : 0
+     * type : 1
+     * userId : 19
+     * newsDetail : 前面我们知道了怎么获取Class，那么我们可以通过这个Class干什么呢？总结如下：获取成员方法Method获取成员变量Field获取构造函数Constructor下面来具体介绍获取成员方法信息单独获取某一个方法是通过Class类的以下方法获得的：public Method getDeclaredMethod(String name, Class<?>... parameterTypes) // 得到该类所有的方法，不包括父类的public Method getMethod(String name, Class<?>... parameterTypes) // 得到该类所有的public方法，包括
+     */
 
-    public CommunityPost(){}
+    private int id;
+    private String title;
+    private String description;
+    private String imgUrl;
+    private int star;
+    private int comments;
+    private int type;
+    private int userId;
+    private String newsDetail;
 
-    public CommunityPost(int userImg, String useName, String postTime, String postTitle, int postImg, String postHeartCount, String postCommentsCount) {
-        this.userImg = userImg;
-        this.useName = useName;
-        this.postTime = postTime;
-        this.postTitle = postTitle;
-        this.postImg = postImg;
-        this.postHeartCount = postHeartCount;
-        this.postCommentsCount = postCommentsCount;
+    public int getId() {
+        return id;
     }
 
-    public int getUserImg() {
-        return userImg;
+    public void setId(int id) {
+        this.id = id;
     }
 
-    public void setUserImg(int userImg) {
-        this.userImg = userImg;
+    public String getTitle() {
+        return title;
     }
 
-    public String getUseName() {
-        return useName;
+    public void setTitle(String title) {
+        this.title = title;
     }
 
-    public void setUseName(String useName) {
-        this.useName = useName;
+    public String getDescription() {
+        return description;
     }
 
-    public String getPostTime() {
-        return postTime;
+    public void setDescription(String description) {
+        this.description = description;
     }
 
-    public void setPostTime(String postTime) {
-        this.postTime = postTime;
+    public String getImgUrl() {
+        return imgUrl;
     }
 
-    public String getPostTitle() {
-        return postTitle;
+    public void setImgUrl(String imgUrl) {
+        this.imgUrl = imgUrl;
     }
 
-    public void setPostTitle(String postTitle) {
-        this.postTitle = postTitle;
+    public int getStar() {
+        return star;
     }
 
-    public int getPostImg() {
-        return postImg;
+    public void setStar(int star) {
+        this.star = star;
     }
 
-    public void setPostImg(int postImg) {
-        this.postImg = postImg;
+    public int getComments() {
+        return comments;
     }
 
-    public String getPostHeartCount() {
-        return postHeartCount;
+    public void setComments(int comments) {
+        this.comments = comments;
     }
 
-    public void setPostHeartCount(String postHeartCount) {
-        this.postHeartCount = postHeartCount;
+    public int getType() {
+        return type;
     }
 
-    public String getPostCommentsCount() {
-        return postCommentsCount;
+    public void setType(int type) {
+        this.type = type;
     }
 
-    public void setPostCommentsCount(String postCommentsCount) {
-        this.postCommentsCount = postCommentsCount;
+    public int getUserId() {
+        return userId;
+    }
+
+    public void setUserId(int userId) {
+        this.userId = userId;
+    }
+
+    public String getNewsDetail() {
+        return newsDetail;
+    }
+
+    public void setNewsDetail(String newsDetail) {
+        this.newsDetail = newsDetail;
     }
 }

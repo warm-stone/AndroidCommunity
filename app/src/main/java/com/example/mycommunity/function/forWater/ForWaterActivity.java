@@ -141,7 +141,7 @@ public class ForWaterActivity extends AppCompatActivity {
         hopeTime = findViewById(R.id.for_water_hopeTime);
         selectBrand = findViewById(R.id.for_water_select_brand);
         count = findViewById(R.id.for_water_count);
-        final MyPopWheel myPopWheel = new MyPopWheel();
+        final MyPopWheel myPopWheel = new MyPopWheel(ForWaterActivity.this);
         View view = myPopWheel.getSelector();
         wheelView = view.findViewById(R.id.wheel_item_wheel);
         wheelView.setCyclic(false);

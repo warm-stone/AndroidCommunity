@@ -28,8 +28,10 @@ import okhttp3.Response;
 public class NetworkModule {
 
     private final static String baseUrl = "http://192.168.123.50:8585/chengfeng";
+    private static boolean isSigning = false;
     private  Handler handler;
     private  Context context;
+
     /*
      * what = 0 正常返回
      * what = 1 网络请求异常
@@ -54,7 +56,13 @@ public class NetworkModule {
                 BaseReturnMsg baseReturnMsg = gson.fromJson(returnString, BaseReturnMsg.class);
                 switch (baseReturnMsg.getStatus()) {
                     case 401:
-                        Login.login(loginCallback, context);
+                        if (!isSigning){
+                            Login.login(loginCallback, context);
+                            isSigning = true;
+                        }else {
+                            message = handler.obtainMessage(3, returnString);
+                            handler.sendMessage(message);
+                        }
                         break;
                     case 10001:
                         message = handler.obtainMessage(0, returnString);
@@ -75,6 +83,7 @@ public class NetworkModule {
         @Override
         public void onFailure(Call call, IOException e) {
             Message message = handler.obtainMessage(2);
+            isSigning = false;
             handler.sendMessage(message);
         }
 
@@ -97,6 +106,7 @@ public class NetworkModule {
                 Message message = handler.obtainMessage(3, returnString);
                 handler.sendMessage(message);
             }
+            isSigning = false;
         }
     };
 

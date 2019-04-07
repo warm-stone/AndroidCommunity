@@ -25,15 +25,16 @@ public class CommunityNoticeRecyclerViewFragment extends Fragment {
     private Handler handler = new Handler(new Handler.Callback() {
         @Override
         public boolean handleMessage(Message msg) {
-            ReturnCommunityNotice returnCommunityNotice = new Gson().fromJson((String)msg.obj, ReturnCommunityNotice.class);
+
             switch (msg.what){
                 case 0:
                     try {
+                        ReturnCommunityNotice returnCommunityNotice = new Gson().fromJson((String)msg.obj, ReturnCommunityNotice.class);
                         List<CommunityNotice> notices = returnCommunityNotice.getData();
                         CommunityNoticeAdapter adapter = new CommunityNoticeAdapter(notices);
                         recyclerView.setAdapter(adapter);
                     }catch (Exception e){
-                        Toast.makeText(getContext(), "获取社区通知失败", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(getContext(), "获取社区通知格式错误", Toast.LENGTH_SHORT).show();
                     }
                     break;
                 case 1:
@@ -46,7 +47,7 @@ public class CommunityNoticeRecyclerViewFragment extends Fragment {
                     netRequest();
                     break;
                 case 4:
-                    Toast.makeText(getContext(), returnCommunityNotice.getMessage(), Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getContext(), "获取社区通知异常", Toast.LENGTH_SHORT).show();
                     break;
                 case 5:
                     Toast.makeText(getContext(), "预期之外的错误", Toast.LENGTH_SHORT).show();

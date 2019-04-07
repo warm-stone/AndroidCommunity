@@ -19,6 +19,7 @@ public class CommunityPostAdapter extends RecyclerView.Adapter {
 
     private Context context;
     private List<CommunityPost> posts = new ArrayList<>();
+    private final static int COMMON_POST = 1;
     static class ViewHolder extends RecyclerView.ViewHolder{
         ImageView userImg;
         TextView userName;
@@ -40,12 +41,17 @@ public class CommunityPostAdapter extends RecyclerView.Adapter {
         }
     }
 
+    @Override
+    public int getItemViewType(int position) {
+        return posts.get(position).getType();
+    }
+
     public CommunityPostAdapter(List<CommunityPost> posts){
         this.posts = posts;
     }
     @NonNull
     @Override
-    public RecyclerView.ViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
+    public RecyclerView.ViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int viewType) {
         if(context == null){
             context = viewGroup.getContext();
         }
@@ -56,14 +62,18 @@ public class CommunityPostAdapter extends RecyclerView.Adapter {
     @Override
     public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position){
         CommunityPost communityPost = posts.get(position);
-        ViewHolder viewHolder = (ViewHolder)holder;
-        Glide.with(context).load(communityPost.getUserImg()).into(viewHolder.userImg);
-        viewHolder.userName.setText(communityPost.getUseName());
-        viewHolder.postTime.setText(communityPost.getPostTime());
-        viewHolder.postTitle.setText(communityPost.getPostTitle());
-        Glide.with(context).load(communityPost.getPostImg()).into(viewHolder.postImg);
-        viewHolder.heartCount.setText(communityPost.getPostHeartCount());
-        viewHolder.commentsCount.setText(communityPost.getPostCommentsCount());
+        switch (communityPost.getType()){
+            case 1:
+                ViewHolder viewHolder = (ViewHolder)holder;
+                //Glide.with(context).load(communityPost.getUserImg()).into(viewHolder.userImg);
+                viewHolder.userName.setText(String.valueOf(communityPost.getUserId()));
+                //viewHolder.postTime.setText(communityPost.getPostTime());
+                viewHolder.postTitle.setText(communityPost.getTitle());
+                Glide.with(context).load(communityPost.getImgUrl()).into(viewHolder.postImg);
+                viewHolder.heartCount.setText(String.valueOf(communityPost.getStar()));
+                viewHolder.commentsCount.setText(String.valueOf(communityPost.getComments()));
+                break;
+        }
     }
 
     @Override

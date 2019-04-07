@@ -11,13 +11,11 @@ import android.widget.PopupWindow;
 public class MyPopWheel {
     private View v;
     private PopupWindow popupWindow;
-    private Context context;
     private Activity activity;
 
-    public PopupWindow popWindow(Context context) {
-        activity = (Activity) context;
-        this.context = context;
+    public MyPopWheel(Context context) {
         v = LayoutInflater.from(context).inflate(R.layout.wheel_item_layout, null, false);
+        activity = (Activity) context;
         popupWindow = new PopupWindow(v, WindowManager.LayoutParams.MATCH_PARENT, WindowManager.LayoutParams.WRAP_CONTENT, true);
         popupWindow.setAnimationStyle(R.style.animTranslate);
         popupWindow.setOnDismissListener(new PopupWindow.OnDismissListener() {
@@ -29,8 +27,8 @@ public class MyPopWheel {
                 activity.getWindow().setAttributes(lp);
             }
         });
-        return popupWindow;
     }
+
 
     public View getSelector() {
         return v;
