@@ -1,6 +1,7 @@
 package com.example.mycommunity.news.headLine;
 
 import android.content.Context;
+import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -8,8 +9,10 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+
 import com.bumptech.glide.Glide;
 import com.example.mycommunity.R;
+import com.example.mycommunity.news.headLine.newsDetail.NewsDetailActivity;
 
 import java.util.List;
 
@@ -24,7 +27,7 @@ public class NewsItemAdapter extends RecyclerView.Adapter {
         TextView hadHeart;
         TextView publishTime;
 
-         ViewHolder(View view) {
+        ViewHolder(View view) {
             super(view);
             newsImg = view.findViewById(R.id.news_img);
             newsTitle = view.findViewById(R.id.news_title_text_view);
@@ -40,12 +43,23 @@ public class NewsItemAdapter extends RecyclerView.Adapter {
 
     @NonNull
     @Override
-    public RecyclerView.ViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
+    public RecyclerView.ViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int viewType) {
         if (context == null) {
             context = viewGroup.getContext();
         }
-            View view = LayoutInflater.from(context).inflate(R.layout.news_item, viewGroup, false);
-        return new ViewHolder(view);
+        View view = LayoutInflater.from(context).inflate(R.layout.news_item, viewGroup, false);
+        final ViewHolder holder = new ViewHolder(view);
+        view.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                int position = holder.getAdapterPosition();
+                Intent intent = new Intent(context, NewsDetailActivity.class);
+                News news = newsList.get(position);
+                intent.putExtra("journalismId", news.getId());
+                context.startActivity(intent);
+            }
+        });
+        return holder;
     }
 
     @Override
@@ -57,7 +71,7 @@ public class NewsItemAdapter extends RecyclerView.Adapter {
         viewHolder.hadHeart.setText(String.valueOf(news.getStarNums()));
         String temp = news.getPublishTime().split("T")[0];
         viewHolder.publishTime.setText(temp);
-        Glide.with(context).load(news.getImgId()).into(viewHolder.newsImg);
+        Glide.with(context).load(news.getImgId()).error(R.drawable.ic_load_fail).into(viewHolder.newsImg);
     }
 
     @Override

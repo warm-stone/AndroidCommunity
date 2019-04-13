@@ -18,14 +18,14 @@ class NewsDetailAdapter extends RecyclerView.Adapter {
 
     private List<NewsDetail> details;
     private Context context;
-    class ViewHolder extends RecyclerView.ViewHolder {
+    static class ViewHolder extends RecyclerView.ViewHolder {
 
         TextView detailText;
         ImageView detailImg;
         ViewHolder(View view){
             super(view);
             detailText = view.findViewById(R.id.news_detail_text);
-            detailImg = view.findViewById(R.id.news_img);
+            detailImg = view.findViewById(R.id.news_detail_img);
         }
     }
 
@@ -48,7 +48,9 @@ class NewsDetailAdapter extends RecyclerView.Adapter {
         NewsDetail detail = details.get(position);
         ViewHolder holder = (ViewHolder)viewHolder;
         holder.detailText.setText(detail.getContent());
-        Glide.with(context).load(detail.getImageUrl()).into(holder.detailImg);
+        if (detail.getImageUrl() != null){
+            Glide.with(context).load(detail.getImageUrl()).error(R.drawable.ic_load_fail).into(holder.detailImg);
+        }
     }
 
     @Override

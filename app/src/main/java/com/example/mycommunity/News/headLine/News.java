@@ -25,7 +25,15 @@ public class News  extends LitePalSupport {
     private int communityId;
     private int commentNums;
     private int starNums;
+    /**
+     * author : null
+     * images : null
+     * videos : null
+     */
 
+    private String author;
+    private String images;
+    private String videos;
     public News(){
 
     }
@@ -122,5 +130,29 @@ public class News  extends LitePalSupport {
 
     public void setStarNums(int starNums) {
         this.starNums = starNums;
+    }
+
+    public String getAuthor() {
+        return author;
+    }
+
+    public void setAuthor(String author) {
+        this.author = author;
+    }
+
+    public String getImages() {
+        return images;
+    }
+
+    public void setImages(String images) {
+        this.images = images;
+    }
+
+    public String getVideos() {
+        return videos;
+    }
+
+    public void setVideos(String videos) {
+        this.videos = videos;
     }
 }

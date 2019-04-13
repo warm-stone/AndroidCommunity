@@ -73,7 +73,7 @@ public class NewsRecycleViewFragment extends Fragment {
     }
 
     private void netRequest(){
-        new NetworkModule().getWithAuthor("/headline/top5", newsHandler, getContext());
+        new NetworkModule().getWithAuthor("/headline/all", newsHandler, getContext());
     }
     //本地界面测试
     private void init(){

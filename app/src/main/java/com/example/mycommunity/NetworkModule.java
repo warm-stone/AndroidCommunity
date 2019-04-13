@@ -27,7 +27,8 @@ import okhttp3.Response;
 
 public class NetworkModule {
 
-    private final static String baseUrl = "http://192.168.123.50:8585/chengfeng";
+    private final static String baseUrl = "http://www.fangxiaosong.me:8080/chengfeng";
+    private final static String baseUrl1 = "http://192.168.123.50:8585/chengfeng";
     private static boolean isSigning = false;
     private  Handler handler;
     private  Context context;
