@@ -173,7 +173,7 @@ public class NetworkModule {
                 .add("nickname", userInformation.getNickname())
                 .add("password", userInformation.getPassword())
                 .build();
-        Request request = new Request.Builder().url("http://192.168.123.50:8585/chengfeng/user/login").post(formBody).build();
+        Request request = new Request.Builder().url(url).post(formBody).build();
         client.newCall(request).enqueue(callback);
     }
 

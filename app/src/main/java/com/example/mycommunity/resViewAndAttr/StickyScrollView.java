@@ -1,4 +1,4 @@
-package com.example.mycommunity.resView;
+package com.example.mycommunity.resViewAndAttr;
 
 import java.util.ArrayList;
 

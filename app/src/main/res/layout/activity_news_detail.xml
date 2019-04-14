@@ -16,7 +16,7 @@
 
     </android.support.design.widget.AppBarLayout>
 
-    <com.example.mycommunity.resView.StickyScrollView
+    <com.example.mycommunity.resViewAndAttr.StickyScrollView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:layout_behavior="@string/appbar_scrolling_view_behavior">
@@ -45,7 +45,7 @@
                             android:layout_marginBottom="16dp">
 
                             <de.hdodenhof.circleimageview.CircleImageView
-                                android:id="@+id/news_detail_user_ic"
+                                android:id="@+id/post_detail_user_ic"
                                 android:layout_width="40dp"
                                 android:layout_height="40dp"
                                 android:layout_alignParentStart="true"
@@ -53,18 +53,18 @@
                                 android:layout_marginRight="10dp" />
 
                             <TextView
-                                android:id="@+id/news_detail_user_name"
+                                android:id="@+id/post_detail_user_name"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:layout_toEndOf="@+id/news_detail_user_ic" />
+                                android:layout_toEndOf="@+id/post_detail_user_ic" />
 
                             <TextView
                                 android:id="@+id/news_detail_pub_data"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:layout_below="@+id/news_detail_user_name"
+                                android:layout_below="@+id/post_detail_user_name"
                                 android:layout_alignParentBottom="true"
-                                android:layout_toEndOf="@id/news_detail_user_ic"
+                                android:layout_toEndOf="@id/post_detail_user_ic"
                                 android:textSize="10sp" />
 
                             <Button
@@ -116,12 +116,16 @@
             </android.support.v7.widget.CardView>
         </LinearLayout>
 
-    </com.example.mycommunity.resView.StickyScrollView>
+    </com.example.mycommunity.resViewAndAttr.StickyScrollView>
 
     <android.support.design.widget.FloatingActionButton
         android:id="@+id/news_detail_add_comment"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_gravity="end|bottom"
-        android:layout_margin="16dp" />
+        android:backgroundTint="@color/ic_plus_background"
+        android:layout_gravity="bottom|end"
+        android:layout_margin="16dp"
+        android:src="@mipmap/ic_plus_foreground"
+        app:borderWidth="0dip"
+        app:fabSize="mini" />
 </android.support.design.widget.CoordinatorLayout>

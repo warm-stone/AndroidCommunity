@@ -8,80 +8,129 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
-        <android.support.design.widget.CollapsingToolbarLayout
+        <android.support.v7.widget.Toolbar
+            android:id="@+id/post_detail_toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            app:layout_collapseMode="pin" />
+
+    </android.support.design.widget.AppBarLayout>
+
+    <com.example.mycommunity.resViewAndAttr.StickyScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior">
+
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
-            app:contentScrim="?attr/colorPrimary"
-            app:layout_scrollFlags="scroll|exitUntilCollapsed">
+            android:orientation="vertical">
 
-            <android.support.v7.widget.Toolbar
-                android:id="@+id/post_detail_toolbar"
+            <android.support.v7.widget.CardView
                 android:layout_width="match_parent"
-                android:layout_height="?attr/actionBarSize"
-                app:layout_collapseMode="pin" />
-            <LinearLayout
-                android:orientation="vertical"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_margin="10dp">
-
-                <RelativeLayout
+                android:layout_height="wrap_content">
+                <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginBottom="16dp">
-                    <de.hdodenhof.circleimageview.CircleImageView
-                        android:id="@+id/post_detail_ic"
-                        android:layout_width="40dp"
-                        android:layout_height="40dp"
-                        android:layout_alignParentStart="true"
-                        android:layout_alignParentTop="true"
-                        android:layout_marginRight="10dp"
-                        android:layout_centerVertical="true"/>
-                    <TextView
-                        android:id="@+id/post_detail_user_name"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_toEndOf="@+id/news_detail_user_ic"/>
+                    android:orientation="vertical">
 
-                    <TextView
-                        android:id="@+id/post_detail_pub_data"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_below="@+id/news_detail_user_name"
-                        android:layout_alignParentBottom="true"
-                        android:layout_toEndOf="@id/news_detail_user_ic"
-                        android:textSize="10sp" />
-                    <Button
-                        android:id="@+id/post_detail_follow"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_alignParentEnd="true"
-                        android:background="@color/blue"
-                        android:text="关注"
-                        android:textColor="@color/white"/>
-                </RelativeLayout>
+                        <RelativeLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_margin="10dp">
 
-                <LinearLayout
-                    android:orientation="vertical"
-                    android:id="@+id/post_detail_container"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
+                            <de.hdodenhof.circleimageview.CircleImageView
+                                android:id="@+id/post_detail_user_ic"
+                                android:layout_width="40dp"
+                                android:layout_height="40dp"
+                                android:layout_alignParentStart="true"
+                                android:layout_alignParentTop="true"
+                                android:layout_marginRight="10dp" />
 
-                    <TextView
-                        android:id="@+id/post_detail_title"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:textSize="22sp"
-                        android:layout_marginBottom="10dp"/>
+                            <TextView
+                                android:id="@+id/post_detail_user_name"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:textSize="18sp"
+                                android:textColor="@color/black"
+                                android:layout_toEndOf="@+id/post_detail_user_ic" />
+
+                            <TextView
+                                android:id="@+id/post_detail_pub_date"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_below="@+id/post_detail_user_name"
+                                android:layout_alignParentBottom="true"
+                                android:layout_toEndOf="@id/post_detail_user_ic"
+                                android:textSize="10sp" />
+
+                            <Button
+                                android:id="@+id/post_detail_follow"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_alignParentEnd="true"
+                                android:background="@color/blue"
+                                android:text="关注"
+                                android:textColor="@color/white" />
+                        </RelativeLayout>
+
 
                     <TextView
                         android:id="@+id/post_detail_newsDetail"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:minLines="4"/>
+                        android:layout_margin="10dp"
+                        android:textColor="@color/black"
+                        android:lineSpacingExtra="5dp"/>
+
+                    <android.support.v7.widget.RecyclerView
+                        android:id="@+id/post_detail_img_container"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="10dp" />
                 </LinearLayout>
-            </LinearLayout>
-        </android.support.design.widget.CollapsingToolbarLayout>
-    </android.support.design.widget.AppBarLayout>
+
+            </android.support.v7.widget.CardView>
+
+            <android.support.v7.widget.CardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp">
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="16dp"
+                        android:layout_marginBottom="10dp"
+                        android:background="@color/white"
+                        android:padding="16dp"
+                        android:tag="sticky"
+                        android:text="评论"
+                        android:textSize="16sp" />
+
+                    <android.support.v7.widget.RecyclerView
+                        android:id="@+id/post_detail_user_comments_container"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_margin="10dp" />
+                </LinearLayout>
+            </android.support.v7.widget.CardView>
+        </LinearLayout>
+
+    </com.example.mycommunity.resViewAndAttr.StickyScrollView>
+
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/post_detail_add_comment"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom|end"
+        android:layout_margin="16dp"
+        android:backgroundTint="@color/ic_plus_background"
+        android:src="@mipmap/ic_plus_foreground"
+        app:borderWidth="0dip"
+        app:fabSize="mini" />
 </android.support.design.widget.CoordinatorLayout>

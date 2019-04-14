@@ -23,14 +23,15 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:layout_behavior="@string/appbar_scrolling_view_behavior" />
+
     <android.support.design.widget.FloatingActionButton
         android:id="@+id/community_floating_action_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:src="@mipmap/ic_plus"
         android:backgroundTint="@color/ic_plus_background"
-        app:borderWidth="0dip"
-        app:fabSize="mini"
+        android:layout_gravity="bottom|end"
         android:layout_margin="16dp"
-        android:layout_gravity="bottom|end"/>
+        android:src="@mipmap/ic_plus_foreground"
+        app:borderWidth="0dip"
+        app:fabSize="mini" />
 </android.support.design.widget.CoordinatorLayout>

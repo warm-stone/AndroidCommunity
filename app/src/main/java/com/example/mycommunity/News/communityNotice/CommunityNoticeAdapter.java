@@ -45,6 +45,7 @@ public class CommunityNoticeAdapter extends RecyclerView.Adapter {
         viewHolder.title.setText(notice.getNotice());
         viewHolder.showTime.setText(
                 DateFormat.getDateInstance(2).format(new Date(notice.getShowtime())));
+
     }
 
     @Override

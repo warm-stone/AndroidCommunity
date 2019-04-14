@@ -25,12 +25,11 @@ public class FunctionFragment extends Fragment {
         return view;
     }
 
-    //测试
     private void init(View view) {
         Function[] functions = new Function[]{
-                new Function(R.drawable.ic_user, "立即报修"),
-                new Function(R.drawable.ic_user, "送水服务"),
-                new Function(R.drawable.ic_user, "找书记")};
+                new Function(R.drawable.ic_repair, "立即报修"),
+                new Function(R.drawable.ic_for_water, "送水服务"),
+                new Function(R.drawable.ic_secretary, "找书记")};
         List<Function> functionList = new ArrayList<>();
         for (int i = 0; i < 3; i++) {
             functionList.add(functions[i]);

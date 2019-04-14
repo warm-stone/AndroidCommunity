@@ -27,10 +27,12 @@ public class NewsRecycleViewFragment extends Fragment {
     private Handler newsHandler = new Handler(new Handler.Callback() {
         @Override
         public boolean handleMessage(Message msg) {
-            ReturnHeadline headline = new Gson().fromJson((String)msg.obj, ReturnHeadline.class);
+
+
             switch (msg.what){
                 case 0:
                     try {
+                        ReturnHeadline headline = new Gson().fromJson((String)msg.obj, ReturnHeadline.class);
                         newsList = headline.getData();
                         NewsItemAdapter newsItemAdapter = new NewsItemAdapter(newsList);
                         newsRecycleView.setAdapter(newsItemAdapter);
@@ -46,9 +48,6 @@ public class NewsRecycleViewFragment extends Fragment {
                     break;
                 case 3:
                     netRequest();
-                    break;
-                case 4:
-                    Toast.makeText(getContext(), headline.getMessage(), Toast.LENGTH_SHORT).show();
                     break;
                 case 5:
                     Toast.makeText(getContext(), "预期之外的错误", Toast.LENGTH_SHORT).show();

@@ -28,6 +28,7 @@ public class CommunityFragment extends Fragment {
     private List<CommunityPost> posts = new ArrayList<>();
     private CommunityPostAdapter communityPostAdapter;
     private RecyclerView recyclerView;
+    NetworkModule networkModule;
     private Handler handler = new Handler(new Handler.Callback() {
         @Override
         public boolean handleMessage(Message msg) {
@@ -35,10 +36,12 @@ public class CommunityFragment extends Fragment {
                 case 0:
                     ReturnPosts returnPosts = new Gson().fromJson((String) msg.obj, ReturnPosts.class);
                     posts = returnPosts.getData();
-                    communityPostAdapter = new CommunityPostAdapter(posts);
-                    LinearLayoutManager layoutManager = new LinearLayoutManager(getContext());
-                    recyclerView.setLayoutManager(layoutManager);
-                    recyclerView.setAdapter(communityPostAdapter);
+                    if (posts != null) {
+                        communityPostAdapter = new CommunityPostAdapter(posts);
+                        LinearLayoutManager layoutManager = new LinearLayoutManager(getContext());
+                        recyclerView.setLayoutManager(layoutManager);
+                        recyclerView.setAdapter(communityPostAdapter);
+                    }
             }
             return false;
         }
@@ -67,7 +70,9 @@ public class CommunityFragment extends Fragment {
     }
 
     private void netRequest(int page, int size) {
-        new NetworkModule().getWithAuthor("/news/all", handler, getContext());
+       networkModule = new NetworkModule();
+       // networkModule.getWithAuthor("/portal/notice/community/latest", handler, getContext());
+        networkModule.getWithAuthor("/news/all", handler, getContext());
     }
 
 //    private void init() {

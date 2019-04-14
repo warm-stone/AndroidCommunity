@@ -1,6 +1,8 @@
 package com.example.mycommunity.community;
 
-public class CommunityPost {
+import java.io.Serializable;
+
+public class CommunityPost implements Serializable {
     /**
      * id : 32
      * title : Java 基础与提高干货系列—Java 反射机制
@@ -22,6 +24,11 @@ public class CommunityPost {
     private int type;
     private int userId;
     private String newsDetail;
+    /**
+     * posted : 1554558536000
+     */
+
+    private long posted;
 
     public int getId() {
         return id;
@@ -93,5 +100,13 @@ public class CommunityPost {
 
     public void setNewsDetail(String newsDetail) {
         this.newsDetail = newsDetail;
+    }
+
+    public long getPosted() {
+        return posted;
+    }
+
+    public void setPosted(long posted) {
+        this.posted = posted;
     }
 }
