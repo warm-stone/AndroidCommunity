@@ -12,7 +12,7 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.example.mycommunity.R;
-import com.example.mycommunity.community.postDetail.commentPost.PostDetailActivity;
+import com.example.mycommunity.community.postDetail.commonPost.PostDetailActivity;
 
 import java.util.List;
 

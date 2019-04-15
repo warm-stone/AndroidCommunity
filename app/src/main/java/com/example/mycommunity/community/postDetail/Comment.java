@@ -1,6 +1,6 @@
-package com.example.mycommunity.community.postDetail.commentPost;
+package com.example.mycommunity.community.postDetail;
 
-public class comments {
+public class Comment {
     /**
      * id : 17
      * content : 评论回复小编，什么时候来点Netty相关的可以吗？我现在对Netty的认识还很浅，我个人认为可能就是在一些游戏行业或者即时聊天又或者TCP工具中会用，不知道其他那些场景可以使用Netty

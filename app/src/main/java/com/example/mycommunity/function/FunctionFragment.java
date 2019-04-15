@@ -34,7 +34,7 @@ public class FunctionFragment extends Fragment {
         for (int i = 0; i < 3; i++) {
             functionList.add(functions[i]);
         }
-        GridLayoutManager layoutManager = new GridLayoutManager(getContext(), 4);
+        GridLayoutManager layoutManager = new GridLayoutManager(getContext(), 3);
         RecyclerView recyclerView = view.findViewById(R.id.function_recycle_view);
         recyclerView.setLayoutManager(layoutManager);
         FunctionCardAdapter functionCardAdapter = new FunctionCardAdapter(functionList);
