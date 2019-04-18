@@ -1,6 +1,8 @@
 package com.example.mycommunity.news.communityNotice;
 
-public class CommunityNotice {
+import org.litepal.crud.LitePalSupport;
+
+public class CommunityNotice extends LitePalSupport {
     /**
      * id : 36
      * notice : 3月份补缴水费通知
