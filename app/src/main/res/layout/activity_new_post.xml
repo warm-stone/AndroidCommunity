@@ -18,11 +18,13 @@
             android:theme="@style/AppTheme.PopupOverlay"
             app:layout_scrollFlags="scroll|enterAlways|snap" />
     </android.support.design.widget.AppBarLayout>
+
     <android.support.v4.widget.NestedScrollView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="16dp"
         app:layout_behavior="@string/appbar_scrolling_view_behavior">
+
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
@@ -31,16 +33,17 @@
                 android:id="@+id/new_post_content"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="@color/white"
                 android:layout_marginBottom="16dp"
-                android:minLines="3"
-                android:hint="今天有什么新鲜事？"/>
+                android:background="@color/white"
+                android:hint="今天有什么新鲜事？"
+                android:minLines="3" />
+
             <ImageView
                 android:layout_width="80dp"
                 android:layout_height="80dp"
-                android:src="@drawable/ic_placeholder"
                 android:layout_below="@+id/new_post_content"
-                android:scaleType="centerCrop"/>
+                android:scaleType="centerCrop"
+                android:src="@drawable/ic_placeholder" />
         </RelativeLayout>
     </android.support.v4.widget.NestedScrollView>
 </android.support.design.widget.CoordinatorLayout>

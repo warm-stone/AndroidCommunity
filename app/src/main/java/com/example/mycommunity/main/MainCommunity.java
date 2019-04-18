@@ -17,6 +17,8 @@ import com.example.mycommunity.mine.MineFragment;
 import com.example.mycommunity.news.NewsFragment;
 import com.example.mycommunity.R;
 
+import org.litepal.LitePal;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -60,6 +62,11 @@ public class MainCommunity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main_community);
+        initView();
+        LitePal.getDatabase();
+    }
+
+    private void initView(){
         main_container = findViewById(R.id.main_container);
         newsFragment = new NewsFragment();
         functionFragment = new FunctionFragment();
