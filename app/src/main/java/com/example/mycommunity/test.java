@@ -13,6 +13,9 @@ import com.bigkoo.pickerview.adapter.ArrayWheelAdapter;
 import com.contrarywind.listener.OnItemSelectedListener;
 import com.contrarywind.view.WheelView;
 import com.example.mycommunity.login.Login;
+import com.example.mycommunity.news.headLine.News;
+
+import org.litepal.LitePal;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -33,7 +36,12 @@ public class test extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_test);
-        netRequest();
+        News n = new News();
+        n.setAuthor("asd");
+        n.setCommentNums(1);
+        n.setDescription("就是测试而已");
+        boolean t =  n.save();
+        List<News> news = LitePal.findAll(News.class);
     }
 
     View.OnClickListener onClickListener = new View.OnClickListener() {

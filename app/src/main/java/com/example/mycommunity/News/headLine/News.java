@@ -1,6 +1,8 @@
 package com.example.mycommunity.news.headLine;
 
 
+import com.google.gson.annotations.SerializedName;
+
 import org.litepal.crud.LitePalSupport;
 
 public class News  extends LitePalSupport {
@@ -17,8 +19,8 @@ public class News  extends LitePalSupport {
      * commentNums : 0
      * starNums : 65
      */
-
-    private String id;
+    @SerializedName("Id")
+    private String newsId;
     private String description;
     private String publishTime;
     private String publishName;
@@ -77,11 +79,11 @@ public class News  extends LitePalSupport {
     }
 
     public String getId() {
-        return id;
+        return newsId;
     }
 
     public void setId(String id) {
-        this.id = id;
+        newsId = id;
     }
 
     public String getDescription() {
