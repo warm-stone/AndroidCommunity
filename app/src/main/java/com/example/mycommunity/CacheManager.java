@@ -10,7 +10,7 @@ import java.util.List;
 
 public class CacheManager<T extends LitePalSupport> {
 
-    Class<T> clazz;
+    private Class<T> clazz;
 
     public CacheManager() {
         clazz = new RawDao<T>().clazz;
@@ -24,25 +24,32 @@ public class CacheManager<T extends LitePalSupport> {
      * */
     public boolean saveData(List<T> cache) {
         for (T t : cache) {
-            t.save();
+            if (!t.isSaved())
+                t.save();
+            else
+                return false;
         }
-        return false;
+        return true;
     }
 
     /*
      * 获取缓存数据并返回是否已到最后一条
      * Get cache and return true if the data exist.
      * @deviation 偏移量
-     * @page 页码
      * @size 页面规格
      *
      * @return 获取数据是否存在
      *         whether the data exists.
      *
      * */
-    public List<T> getData(int deviation, int page, int size) {
+    public List<T> getData(int deviation, int size) {
         List<T> data = new ArrayList<>();
-
+        try {
+            data = LitePal.limit(size)
+                    .offset(deviation).find(clazz);
+        } catch (NullPointerException e) {
+            return data;
+        }
         return data;
     }
 

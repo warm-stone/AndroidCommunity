@@ -29,33 +29,36 @@ public class NewsRecycleViewFragment extends Fragment {
         @Override
         public boolean handleMessage(Message msg) {
 
-
-            switch (msg.what){
-                case 0:
-                    try {
-                        ReturnHeadline headline = new Gson().fromJson((String)msg.obj, ReturnHeadline.class);
-                        newsList = headline.getData();
-                        NewsItemAdapter newsItemAdapter = new NewsItemAdapter(newsList);
-                        newsRecycleView.setAdapter(newsItemAdapter);
-                        CacheManager<News> manager = new CacheManager<>();
-                        manager.saveData(newsList);
-                    }catch (Exception e){
-                        Toast.makeText(getContext(), "返回数据格式有误", Toast.LENGTH_SHORT).show();
-                    }
-                    break;
-                case 1:
-                    Toast.makeText(getContext(), "请检查网络", Toast.LENGTH_SHORT).show();
-                    break;
-                case 2:
-                    Toast.makeText(getContext(), "登录异常", Toast.LENGTH_SHORT).show();
-                    break;
-                case 3:
-                    netRequest();
-                    break;
-                case 5:
-                    Toast.makeText(getContext(), "预期之外的错误", Toast.LENGTH_SHORT).show();
-                    break;
+            CacheManager<News> manager = new CacheManager<>();
+            newsList = manager.getData(0, 8);
+            if (msg.what == 0){
+                try {
+                    ReturnHeadline headline = new Gson().fromJson((String) msg.obj, ReturnHeadline.class);
+                    newsList = headline.getData();
+                    setListData(newsList);
+                    newsList = headline.getData();
+                    manager.saveData(newsList);
+                } catch (Exception e) {
+                    Toast.makeText(getContext(), "返回数据格式有误", Toast.LENGTH_SHORT).show();
+                }
+            } else {
+                switch (msg.what) {
+                    case 1:
+                        Toast.makeText(getContext(), "请检查网络", Toast.LENGTH_SHORT).show();
+                        break;
+                    case 2:
+                        Toast.makeText(getContext(), "登录异常", Toast.LENGTH_SHORT).show();
+                        break;
+                    case 3:
+                        netRequest();
+                        break;
+                    case 5:
+                        Toast.makeText(getContext(), "预期之外的错误", Toast.LENGTH_SHORT).show();
+                        break;
+                }
+                setListData(newsList);
             }
+
             return false;
         }
     });
@@ -63,33 +66,39 @@ public class NewsRecycleViewFragment extends Fragment {
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.news_recycle_view,container,false);
+        View view = inflater.inflate(R.layout.news_recycle_view, container, false);
         initView(view);
         netRequest();
         return view;
     }
 
-    private void initView(View view){
-        newsRecycleView = (RecyclerView)view;
+    private void initView(View view) {
+        newsRecycleView = (RecyclerView) view;
         newsRecycleView.setLayoutManager(new LinearLayoutManager(getContext()));
     }
 
-    private void netRequest(){
+    private void netRequest() {
         new NetworkModule().getWithAuthor("/headline/all", newsHandler, getContext());
     }
+
+    private void setListData(List<News> listData) {
+        NewsItemAdapter newsItemAdapter = new NewsItemAdapter(listData);
+        newsRecycleView.setAdapter(newsItemAdapter);
+    }
+
     //本地界面测试
-    private void init(){
+    private void init() {
         News news;
         StringBuilder temp = new StringBuilder();
         Random random = new Random();
         int length;
         for (int i = 0; i < 30; i++) {
             length = random.nextInt(20) + 1;
-            for (int j = 0;j < length; j++){
+            for (int j = 0; j < length; j++) {
                 temp.append("大新闻");
             }
-            news =new News(temp.toString(), 134, 43, R.drawable.ic_big_news);
-            newsList.add(i,news);
+            news = new News(temp.toString(), 134, 43, R.drawable.ic_big_news);
+            newsList.add(i, news);
         }
     }
 }

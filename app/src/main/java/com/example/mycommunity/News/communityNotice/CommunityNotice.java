@@ -1,5 +1,7 @@
 package com.example.mycommunity.news.communityNotice;
 
+import com.google.gson.annotations.SerializedName;
+
 import org.litepal.crud.LitePalSupport;
 
 public class CommunityNotice extends LitePalSupport {
@@ -10,19 +12,19 @@ public class CommunityNotice extends LitePalSupport {
      * communityId : 1
      * description : 万事起于忽微，量变引起质变
      */
-
-    private int id;
+    @SerializedName("id")
+    private int noticeId;
     private String notice;
     private long showtime;
     private int communityId;
     private String description;
 
     public int getId() {
-        return id;
+        return noticeId;
     }
 
     public void setId(int id) {
-        this.id = id;
+        noticeId = id;
     }
 
     public String getNotice() {
