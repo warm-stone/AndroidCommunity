@@ -46,7 +46,7 @@ public class Login {
         editor.putLong("id", information.getId());
         editor.putString("idcard", information.getIdCard());
         editor.putLong("signUp", information.getSignUp());
-
+        editor.putString("password", information.getPassword());
         editor.putString("nickname", information.getNickname());
         editor.putString("phone", information.getPhone());
         editor.putString("avatar", information.getAvatar());

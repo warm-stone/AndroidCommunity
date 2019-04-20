@@ -13,6 +13,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
+import com.example.mycommunity.CacheManager;
 import com.example.mycommunity.NetworkModule;
 import com.example.mycommunity.R;
 import com.google.gson.Gson;
@@ -36,6 +37,8 @@ public class NewsRecycleViewFragment extends Fragment {
                         newsList = headline.getData();
                         NewsItemAdapter newsItemAdapter = new NewsItemAdapter(newsList);
                         newsRecycleView.setAdapter(newsItemAdapter);
+                        CacheManager<News> manager = new CacheManager<>();
+                        manager.saveData(newsList);
                     }catch (Exception e){
                         Toast.makeText(getContext(), "返回数据格式有误", Toast.LENGTH_SHORT).show();
                     }
