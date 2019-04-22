@@ -5,7 +5,6 @@ import android.content.Context;
 import android.os.Handler;
 import android.os.Message;
 import android.support.annotation.Nullable;
-import android.widget.Toast;
 
 import com.example.mycommunity.jsonEntity.ReturnMsg;
 import com.example.mycommunity.jsonEntity.UserInformation;
@@ -91,14 +90,13 @@ public class NetworkModule {
         @Override
         public void onResponse(Call call, Response response) throws IOException {
             Gson gson = new Gson();
-            String returnString = response.body().string();
+            final String returnString = response.body().string();
             final ReturnMsg returnMsg = gson.fromJson(returnString, ReturnMsg.class);
             if (returnMsg.getStatus() == 401) {
                 ((Activity) context).runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
-                        Toast.makeText(context, returnMsg.getMessage(), Toast.LENGTH_SHORT).show();
-
+                        UserNotice.showToast(context, returnMsg.getMessage());
                     }
                 });
                 Login.setLoggedIn(context, false);
@@ -137,7 +135,7 @@ public class NetworkModule {
         client.newCall(request).enqueue(stateCheck);
     }
 
-    public void postWithAuthor(String url, String json, Handler mHandler, Context mContext) {
+    public void post(String url, String json, Handler mHandler, Context mContext) {
         context = mContext;
         handler = mHandler;
         OkHttpClient client = new OkHttpClient();
@@ -147,7 +145,7 @@ public class NetworkModule {
         client.newCall(request).enqueue(stateCheck);
     }
 
-    public void getWithAuthor(String url, Handler mHandler, Context mContext){
+    public void get(String url, Handler mHandler, Context mContext){
         context = mContext;
         handler = mHandler;
         OkHttpClient client = new OkHttpClient();
@@ -156,7 +154,7 @@ public class NetworkModule {
         client.newCall(request).enqueue(stateCheck);
     }
 
-    public void putWithAuthor(String url, String json, Handler mHandler, Context mContext) {
+    public void put(String url, String json, Handler mHandler, Context mContext) {
         context = mContext;
         handler = mHandler;
         OkHttpClient client = new OkHttpClient();

@@ -71,8 +71,8 @@ public class CommunityFragment extends Fragment {
 
     private void netRequest(int page, int size) {
        networkModule = new NetworkModule();
-       // networkModule.getWithAuthor("/portal/notice/community/latest", handler, getContext());
-        networkModule.getWithAuthor("/news/all", handler, getContext());
+       // networkModule.get("/portal/notice/community/latest", handler, getContext());
+        networkModule.get("/news/all", handler, getContext());
     }
 
 //    private void init() {

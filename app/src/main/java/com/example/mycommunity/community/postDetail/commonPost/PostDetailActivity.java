@@ -59,6 +59,6 @@ public class PostDetailActivity extends AppCompatActivity {
     }
 
     private void netRequest(int id){
-        new NetworkModule().getWithAuthor("/news/detail/", handler, PostDetailActivity.this);
+        new NetworkModule().get("/news/detail/", handler, PostDetailActivity.this);
     }
 }

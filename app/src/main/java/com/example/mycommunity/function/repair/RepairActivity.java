@@ -8,14 +8,13 @@ import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.Toast;
-
 import com.bigkoo.pickerview.builder.TimePickerBuilder;
 import com.bigkoo.pickerview.listener.OnTimeSelectListener;
 import com.bigkoo.pickerview.view.TimePickerView;
 import com.example.mycommunity.BaseReturnMsg;
 import com.example.mycommunity.NetworkModule;
 import com.example.mycommunity.R;
+import com.example.mycommunity.UserNotice;
 import com.example.mycommunity.login.Login;
 import com.google.gson.Gson;
 
@@ -38,14 +37,14 @@ public class RepairActivity extends AppCompatActivity {
             BaseReturnMsg returnMsg = new Gson().fromJson((String) msg.obj, BaseReturnMsg.class);
             switch (msg.what) {
                 case 0:
-                    Toast.makeText(RepairActivity.this, returnMsg.getMessage(), Toast.LENGTH_SHORT).show();
+                    UserNotice.showToast(RepairActivity.this, returnMsg.getMessage());
                     finish();
                     break;
                 case 3:
                     netRequest();
                     break;
                 default:
-                    Toast.makeText(RepairActivity.this, "出现其他错误", Toast.LENGTH_SHORT).show();
+                    UserNotice.showToast(RepairActivity.this, UserNotice.UNEXPECTED_STATE);
             }
             return false;
         }
@@ -78,7 +77,7 @@ public class RepairActivity extends AppCompatActivity {
     }
 
     private void netRequest() {
-        new NetworkModule().postWithAuthor("/portal/book/repair", new Gson().toJson(information), handler, RepairActivity.this);
+        new NetworkModule().post("/portal/book/repair", new Gson().toJson(information), handler, RepairActivity.this);
     }
 
     private void initView() {

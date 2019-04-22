@@ -8,10 +8,10 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.ProgressBar;
-import android.widget.Toast;
 
 import com.example.mycommunity.NetworkModule;
 import com.example.mycommunity.R;
+import com.example.mycommunity.UserNotice;
 import com.google.gson.Gson;
 
 import java.io.IOException;
@@ -40,11 +40,11 @@ public class CommunityListActivity extends AppCompatActivity {
                         recyclerView.setAdapter(adapter);
                         break;
                     default:
-                        Toast.makeText(CommunityListActivity.this, returnMsg.getMessage(), Toast.LENGTH_SHORT).show();
+                        UserNotice.showToast(CommunityListActivity.this, returnMsg.getMessage());
                 }
             }
             else {
-                Toast.makeText(CommunityListActivity.this, "预期之外的错误", Toast.LENGTH_SHORT).show();
+                UserNotice.showToast(CommunityListActivity.this, UserNotice.UNEXPECTED_STATE);
             }
             return false;
         }

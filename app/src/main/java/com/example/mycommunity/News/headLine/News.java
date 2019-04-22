@@ -5,11 +5,27 @@ import com.google.gson.annotations.SerializedName;
 
 import org.litepal.crud.LitePalSupport;
 
+import java.util.Objects;
+
 public class News  extends LitePalSupport {
     private String title;
     private int news_had_seen;
     private int imgId;
     private String news_content;
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        News news = (News) o;
+        return imgId == news.imgId;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(imgId);
+    }
+
     /**
      * id : 8
      * description : 这里是航空航天大学新闻
@@ -19,7 +35,7 @@ public class News  extends LitePalSupport {
      * commentNums : 0
      * starNums : 65
      */
-    @SerializedName("Id")
+    @SerializedName("id")
     private String newsId;
     private String description;
     private String publishTime;

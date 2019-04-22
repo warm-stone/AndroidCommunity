@@ -1,6 +1,10 @@
 package com.example.mycommunity.news.headLine.newsDetail;
 
-public class NewsDetail {
+import org.litepal.crud.LitePalSupport;
+
+import java.util.Objects;
+
+public class NewsDetail extends LitePalSupport {
     /**
      * id : 1
      * imageUrl : http://123.207.157.129/banner3.webp
@@ -14,6 +18,19 @@ public class NewsDetail {
     private String videoUrl;
     private Object journalismId;
     private String content;
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        NewsDetail detail = (NewsDetail) o;
+        return id == detail.id;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id);
+    }
 
     public int getId() {
         return id;

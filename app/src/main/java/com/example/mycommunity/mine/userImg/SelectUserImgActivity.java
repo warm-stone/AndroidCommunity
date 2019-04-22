@@ -22,8 +22,8 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
-import android.widget.Toast;
 
+import com.example.mycommunity.UserNotice;
 import com.example.mycommunity.mine.ReturnImgUrl;
 import com.example.mycommunity.R;
 import com.google.gson.Gson;
@@ -99,7 +99,7 @@ public class SelectUserImgActivity extends AppCompatActivity {
                 if (grantResult.length > 0 && grantResult[0] == PackageManager.PERMISSION_GRANTED) {
                     openAlbum();
                 } else {
-                    Toast.makeText(SelectUserImgActivity.this, "请允许应用访问相册", Toast.LENGTH_SHORT).show();
+                    UserNotice.showToast(this, "请允许应用访问相册");
                 }
                 break;
         }

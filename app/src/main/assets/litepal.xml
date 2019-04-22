@@ -34,6 +34,7 @@
     <list>
         <mapping class="com.example.mycommunity.news.headLine.News" />
         <mapping class="com.example.mycommunity.news.communityNotice.CommunityNotice" />
+        <mapping class="com.example.mycommunity.news.headLine.newsDetail.NewsDetail" />
     </list>
 
     <!--

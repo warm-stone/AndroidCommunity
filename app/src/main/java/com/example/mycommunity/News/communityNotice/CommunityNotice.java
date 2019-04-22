@@ -4,6 +4,8 @@ import com.google.gson.annotations.SerializedName;
 
 import org.litepal.crud.LitePalSupport;
 
+import java.util.Objects;
+
 public class CommunityNotice extends LitePalSupport {
     /**
      * id : 36
@@ -18,6 +20,19 @@ public class CommunityNotice extends LitePalSupport {
     private long showtime;
     private int communityId;
     private String description;
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        CommunityNotice notice = (CommunityNotice) o;
+        return noticeId == notice.noticeId;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(noticeId);
+    }
 
     public int getId() {
         return noticeId;

@@ -11,11 +11,11 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Toast;
 
 import com.example.mycommunity.CacheManager;
 import com.example.mycommunity.NetworkModule;
 import com.example.mycommunity.R;
+import com.example.mycommunity.UserNotice;
 import com.google.gson.Gson;
 
 import java.util.List;
@@ -29,7 +29,7 @@ public class NewsRecycleViewFragment extends Fragment {
         @Override
         public boolean handleMessage(Message msg) {
 
-            CacheManager<News> manager = new CacheManager<>();
+            CacheManager<News> manager = new CacheManager<>(News.class);
             newsList = manager.getData(0, 8);
             if (msg.what == 0){
                 try {
@@ -39,21 +39,21 @@ public class NewsRecycleViewFragment extends Fragment {
                     newsList = headline.getData();
                     manager.saveData(newsList);
                 } catch (Exception e) {
-                    Toast.makeText(getContext(), "返回数据格式有误", Toast.LENGTH_SHORT).show();
+                    UserNotice.showToast(getContext(),UserNotice.UNFORMATTED_DATA);
                 }
             } else {
                 switch (msg.what) {
                     case 1:
-                        Toast.makeText(getContext(), "请检查网络", Toast.LENGTH_SHORT).show();
+                        UserNotice.showToast(getContext(), UserNotice.NETWORK_CONNECT_FAILURE);
                         break;
                     case 2:
-                        Toast.makeText(getContext(), "登录异常", Toast.LENGTH_SHORT).show();
+                        UserNotice.showToast(getContext(), UserNotice.USER_AUTHENTICATION_FAILURE);
                         break;
                     case 3:
                         netRequest();
                         break;
                     case 5:
-                        Toast.makeText(getContext(), "预期之外的错误", Toast.LENGTH_SHORT).show();
+                        UserNotice.showToast(getContext(), UserNotice.UNEXPECTED_STATE);
                         break;
                 }
                 setListData(newsList);
@@ -78,7 +78,7 @@ public class NewsRecycleViewFragment extends Fragment {
     }
 
     private void netRequest() {
-        new NetworkModule().getWithAuthor("/headline/all", newsHandler, getContext());
+        new NetworkModule().get("/headline/all", newsHandler, getContext());
     }
 
     private void setListData(List<News> listData) {

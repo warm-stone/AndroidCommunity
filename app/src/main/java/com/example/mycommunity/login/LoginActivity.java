@@ -44,7 +44,7 @@ public class LoginActivity extends AppCompatActivity {
                         Toast.makeText(LoginActivity.this, "登录成功", Toast.LENGTH_SHORT).show();
                         Login.storageAuthorization(returnMsg.getData().getAuthorization(), LoginActivity.this);
                         Login.storagePassword(new UserInformation(userIdEditText.getText().toString(), passWordEditText.getText().toString()), LoginActivity.this);
-                        new NetworkModule().getWithAuthor("/user/find", findInfHandler, LoginActivity.this);
+                        new NetworkModule().get("/user/find", findInfHandler, LoginActivity.this);
                         break;
                     default:
                         progressBar.setVisibility(View.INVISIBLE);

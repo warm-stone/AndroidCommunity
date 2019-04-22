@@ -11,10 +11,11 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Toast;
 
+import com.example.mycommunity.CacheManager;
 import com.example.mycommunity.NetworkModule;
 import com.example.mycommunity.R;
+import com.example.mycommunity.UserNotice;
 import com.google.gson.Gson;
 
 import java.util.List;
@@ -33,24 +34,22 @@ public class CommunityNoticeRecyclerViewFragment extends Fragment {
                         List<CommunityNotice> notices = returnCommunityNotice.getData();
                         CommunityNoticeAdapter adapter = new CommunityNoticeAdapter(notices);
                         recyclerView.setAdapter(adapter);
+                        new CacheManager<CommunityNotice>(CommunityNotice.class).saveData(notices);
                     }catch (Exception e){
-                        Toast.makeText(getContext(), "获取社区通知格式错误", Toast.LENGTH_SHORT).show();
+                        UserNotice.showToast(getContext(), UserNotice.UNFORMATTED_DATA);
                     }
                     break;
                 case 1:
-                    Toast.makeText(getContext(), "请检查网络后再试", Toast.LENGTH_SHORT).show();
+                    UserNotice.showToast(getContext(), UserNotice.NETWORK_CONNECT_FAILURE);
                     break;
                 case 2:
-                    Toast.makeText(getContext(), "登录异常", Toast.LENGTH_SHORT).show();
+                    UserNotice.showToast(getContext(), UserNotice.USER_AUTHENTICATION_FAILURE);
                     break;
                 case 3:
                     netRequest();
                     break;
-                case 4:
-                    Toast.makeText(getContext(), "获取社区通知异常", Toast.LENGTH_SHORT).show();
-                    break;
                 case 5:
-                    Toast.makeText(getContext(), "预期之外的错误", Toast.LENGTH_SHORT).show();
+                    UserNotice.showToast(getContext(), UserNotice.UNEXPECTED_STATE);
                     break;
             }
             return false;
@@ -66,6 +65,6 @@ public class CommunityNoticeRecyclerViewFragment extends Fragment {
     }
 
     private void netRequest(){
-        new NetworkModule().getWithAuthor("/portal/notice/community/latest", handler, getContext());
+        new NetworkModule().get("/portal/notice/community/latest", handler, getContext());
     }
 }

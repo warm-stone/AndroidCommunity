@@ -11,8 +11,8 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
+import com.example.mycommunity.UserNotice;
 import com.example.mycommunity.jsonEntity.Data;
 import com.example.mycommunity.jsonEntity.ReturnMsg;
 import com.example.mycommunity.jsonEntity.UserInformation;
@@ -41,7 +41,7 @@ public class UserAccountActivity extends AppCompatActivity {
             ReturnMsg returnMsg = gson.fromJson(((String) msg.obj), ReturnMsg.class);
             switch (msg.what) {
                 case 0:
-                    Toast.makeText(UserAccountActivity.this, returnMsg.getMessage(), Toast.LENGTH_SHORT).show();
+                    UserNotice.showToast( UserAccountActivity.this, returnMsg.getMessage());
                     Data data = returnMsg.getData();
                     userInformation.setNickname(data.getNickname());
                     userInformation.setUsername(data.getUsername());
@@ -52,19 +52,16 @@ public class UserAccountActivity extends AppCompatActivity {
                     Login.storageInformation(userInformation, UserAccountActivity.this);
                     break;
                 case 1:
-                    Toast.makeText(UserAccountActivity.this, "请检查网络", Toast.LENGTH_SHORT).show();
+                    UserNotice.showToast(UserAccountActivity.this, UserNotice.NETWORK_CONNECT_FAILURE);
                     break;
                 case 2:
-                    Toast.makeText(UserAccountActivity.this, returnMsg.getMessage(), Toast.LENGTH_SHORT).show();
+                    UserNotice.showToast(UserAccountActivity.this, UserNotice.USER_AUTHENTICATION_FAILURE);
                     break;
                 case 3:
                     netRequest();
                     break;
-                case 4:
-                    Toast.makeText(UserAccountActivity.this, returnMsg.getData().getError(), Toast.LENGTH_SHORT).show();
-                    break;
                 case 5:
-                    Toast.makeText(UserAccountActivity.this, "数据格式有误", Toast.LENGTH_SHORT).show();
+                    UserNotice.showToast(UserAccountActivity.this, UserNotice.UNFORMATTED_DATA);
 
             }
             return false;
@@ -106,7 +103,7 @@ public class UserAccountActivity extends AppCompatActivity {
     };
 
     private void netRequest(){
-        new NetworkModule().putWithAuthor(
+        new NetworkModule().put(
                 "/user/update",
                 json,
                 handler,

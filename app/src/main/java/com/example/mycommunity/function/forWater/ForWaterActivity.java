@@ -11,7 +11,6 @@ import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.bigkoo.pickerview.adapter.ArrayWheelAdapter;
 import com.bigkoo.pickerview.builder.TimePickerBuilder;
@@ -23,6 +22,7 @@ import com.example.mycommunity.BaseReturnMsg;
 import com.example.mycommunity.MyPopWheel;
 import com.example.mycommunity.NetworkModule;
 import com.example.mycommunity.R;
+import com.example.mycommunity.UserNotice;
 import com.example.mycommunity.login.Login;
 import com.google.gson.Gson;
 
@@ -50,11 +50,11 @@ public class ForWaterActivity extends AppCompatActivity {
             switch (msg.what) {
                 case 0:
                     BaseReturnMsg returnMsg = gson.fromJson((String) msg.obj, BaseReturnMsg.class);
-                    Toast.makeText(ForWaterActivity.this, returnMsg.getMessage(), Toast.LENGTH_SHORT).show();
+                    UserNotice.showToast(ForWaterActivity.this, returnMsg.getMessage());
                     finish();
                     break;
                 default:
-                    Toast.makeText(ForWaterActivity.this, "出现其他错误", Toast.LENGTH_SHORT).show();
+                    UserNotice.showToast(ForWaterActivity.this, UserNotice.UNEXPECTED_STATE);
             }
             return false;
         }
@@ -81,14 +81,14 @@ public class ForWaterActivity extends AppCompatActivity {
                             }
                         });
                     } else {
-                        Toast.makeText(ForWaterActivity.this, "未获取到品牌数据", Toast.LENGTH_SHORT).show();
+                        UserNotice.showToast(ForWaterActivity.this, "未获取到品牌数据");
                     }
                     break;
                 case 3:
                     requestWaterBrands();
                     break;
                 default:
-                    Toast.makeText(ForWaterActivity.this, "出现其他错误", Toast.LENGTH_SHORT).show();
+                    UserNotice.showToast(ForWaterActivity.this, UserNotice.UNEXPECTED_STATE);
 
             }
             return false;
@@ -127,11 +127,11 @@ public class ForWaterActivity extends AppCompatActivity {
     }
 
     private void requestForWater(PostWaterOrderInf orderInf) {
-        new NetworkModule().postWithAuthor("/portal/book/water", new Gson().toJson(orderInf), postInfHandler, ForWaterActivity.this);
+        new NetworkModule().post("/portal/book/water", new Gson().toJson(orderInf), postInfHandler, ForWaterActivity.this);
     }
 
     private void requestWaterBrands() {
-        new NetworkModule().getWithAuthor("/portal/water/brands", getBrandsHandler, ForWaterActivity.this);
+        new NetworkModule().get("/portal/water/brands", getBrandsHandler, ForWaterActivity.this);
     }
 
     private void initView() {

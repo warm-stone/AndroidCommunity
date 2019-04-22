@@ -13,8 +13,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
+import com.example.mycommunity.UserNotice;
 import com.example.mycommunity.login.Login;
 import com.example.mycommunity.NetworkModule;
 import com.example.mycommunity.R;
@@ -32,7 +32,7 @@ public class MineFragment extends Fragment {
     private Handler handler = new Handler(new Handler.Callback() {
         @Override
         public boolean handleMessage(Message msg) {
-            Toast.makeText(getContext(), "已退出", Toast.LENGTH_SHORT).show();
+            UserNotice.showToast(getContext(), "退出成功");
             Login.setLoggedIn(getContext(), false);
             return false;
         }
@@ -41,7 +41,7 @@ public class MineFragment extends Fragment {
         @Override
         public void onClick(View v) {
             String url = "/logout";
-            new NetworkModule().postWithAuthor(url, "", handler, getContext());
+            new NetworkModule().post(url, "", handler, getContext());
         }
     };
 
@@ -51,7 +51,7 @@ public class MineFragment extends Fragment {
             ((Activity)getContext()).runOnUiThread(new Runnable() {
                 @Override
                 public void run() {
-                    Toast.makeText(getContext(), "预期之外的错误", Toast.LENGTH_SHORT).show();
+                    UserNotice.showToast(getContext(), UserNotice.UNEXPECTED_STATE);
                 }
             });
         }
@@ -61,7 +61,7 @@ public class MineFragment extends Fragment {
             ((Activity)getContext()).runOnUiThread(new Runnable() {
                 @Override
                 public void run() {
-                    Toast.makeText(getContext(), "已退出", Toast.LENGTH_SHORT).show();
+                    UserNotice.showToast(getContext(), "已退出");
                 }
             });
             Login.setLoggedIn(getContext(), false);

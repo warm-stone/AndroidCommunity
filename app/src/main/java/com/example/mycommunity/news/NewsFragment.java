@@ -12,11 +12,11 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
-import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.example.mycommunity.NetworkModule;
 import com.example.mycommunity.R;
+import com.example.mycommunity.UserNotice;
 import com.example.mycommunity.news.communityNotice.CommunityNoticeRecyclerViewFragment;
 import com.example.mycommunity.news.headLine.NewsRecycleViewFragment;
 import com.google.gson.Gson;
@@ -44,39 +44,35 @@ public class NewsFragment extends Fragment {
                     case 0:
                         List<RotationCharData> rotationCharData = returnRotationchar.getData();
                         List<ImageView> imageViews = new ArrayList<>();
-                        if (imageViews != null) {
-                            for (RotationCharData data : rotationCharData) {
-                                data = rotationCharData.get(0);
-                                int i = 0;
-                                imageView = new ImageView(getContext());
-                                Glide.with(getContext()).load(data.getImageUrl()).into(imageView);
-                                imageViews.add(i, imageView);
-                            }
-                            ImageViewpagerAdapter adapter = new ImageViewpagerAdapter(imageViews, hotNewsViewPager);
-                            hotNewsViewPager.setAdapter(adapter);
-                        } else {
-                            Toast.makeText(getContext(), "获取热点信息失败", Toast.LENGTH_SHORT).show();
+                        for (RotationCharData data : rotationCharData) {
+                            data = rotationCharData.get(0);
+                            int i = 0;
+                            imageView = new ImageView(getContext());
+                            Glide.with(getContext()).load(data.getImageUrl()).into(imageView);
+                            imageViews.add(i, imageView);
                         }
+                        ImageViewpagerAdapter adapter = new ImageViewpagerAdapter(imageViews, hotNewsViewPager);
+                        hotNewsViewPager.setAdapter(adapter);
                         break;
                     case 1:
-                        Toast.makeText(getContext(), "请检查网络", Toast.LENGTH_SHORT).show();
+                        UserNotice.showToast(getContext(), UserNotice.NETWORK_CONNECT_FAILURE);
                         break;
                     case 2:
-                        Toast.makeText(getContext(), returnRotationchar.getMessage(), Toast.LENGTH_SHORT).show();
+                        UserNotice.showToast(getContext(), UserNotice.USER_AUTHENTICATION_FAILURE);
                         break;
                     case 3:
                         netRequest();
                         break;
                     case 4:
-                        Toast.makeText(getContext(), returnRotationchar.getMessage(), Toast.LENGTH_SHORT).show();
+                        UserNotice.showToast(getContext(), returnRotationchar.getMessage());
                         break;
                     case 5:
-                        Toast.makeText(getContext(), "预期之外的错误", Toast.LENGTH_SHORT).show();
+                        UserNotice.showToast(getContext(), UserNotice.UNEXPECTED_STATE);
                         break;
                 }
             } catch (Exception e) {
-
-                Toast.makeText(getContext(), "返回格式有误", Toast.LENGTH_SHORT).show();
+                UserNotice.showToast(getContext(), UserNotice.UNFORMATTED_DATA);
+                e.printStackTrace();
             }
             return false;
         }
@@ -93,7 +89,7 @@ public class NewsFragment extends Fragment {
 
     private void netRequest() {
         //请求轮播图
-        new NetworkModule().getWithAuthor("/portal/carousal", hotNewsHandler, getContext());
+        new NetworkModule().get("/portal/carousal", hotNewsHandler, getContext());
     }
 
     private void initView(View view) {
