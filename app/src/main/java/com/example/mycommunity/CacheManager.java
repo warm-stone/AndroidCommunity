@@ -40,7 +40,7 @@ public class CacheManager<T extends LitePalSupport> {
                     }
                 }
             }
-        });
+        }).start();
     }
 
     /*
@@ -58,7 +58,7 @@ public class CacheManager<T extends LitePalSupport> {
         try {
             data = LitePal.limit(size)
                     .offset(deviation).find(clazz);
-        } catch (NullPointerException e) {
+        } catch (Exception e) {
             e.printStackTrace();
         }
         return data;

@@ -33,6 +33,7 @@ public class LoginActivity extends AppCompatActivity {
     private EditText passWordEditText;
     private ProgressBar progressBar;
     private Gson gson = new Gson();
+    private UserInformation userInformation;
     private Handler handler = new Handler(new Handler.Callback() {
         @Override
         public boolean handleMessage(Message message) {
@@ -43,7 +44,8 @@ public class LoginActivity extends AppCompatActivity {
                         progressBar.setVisibility(View.INVISIBLE);
                         Toast.makeText(LoginActivity.this, "登录成功", Toast.LENGTH_SHORT).show();
                         Login.storageAuthorization(returnMsg.getData().getAuthorization(), LoginActivity.this);
-                        Login.storagePassword(new UserInformation(userIdEditText.getText().toString(), passWordEditText.getText().toString()), LoginActivity.this);
+                        userInformation = new UserInformation(userIdEditText.getText().toString(), passWordEditText.getText().toString());
+                        Login.storagePassword(userInformation, LoginActivity.this);
                         new NetworkModule().get("/user/find", findInfHandler, LoginActivity.this);
                         break;
                     default:
@@ -62,7 +64,9 @@ public class LoginActivity extends AppCompatActivity {
             switch (msg.what) {
                 case 0:
                     ReturnUserInformation information = gson.fromJson((String) msg.obj, ReturnUserInformation.class);
-                    UserInformation userInformation = information.getData().getBase_info();
+                    UserInformation base_info = information.getData().getBase_info();
+                    userInformation.setId(base_info.getId());
+                    userInformation.setCommunityId(base_info.getCommunityId());
                     Login.storageInformation(userInformation, LoginActivity.this);
                     finish();
                     break;

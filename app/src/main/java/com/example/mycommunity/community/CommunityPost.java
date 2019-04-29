@@ -1,8 +1,10 @@
 package com.example.mycommunity.community;
 
+import org.litepal.crud.LitePalSupport;
+
 import java.io.Serializable;
 
-public class CommunityPost implements Serializable {
+public class CommunityPost extends LitePalSupport implements Serializable {
     /**
      * id : 32
      * title : Java 基础与提高干货系列—Java 反射机制

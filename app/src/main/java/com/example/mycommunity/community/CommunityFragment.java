@@ -8,14 +8,16 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
-import android.support.v7.widget.LinearLayoutManager;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.example.mycommunity.CacheManager;
 import com.example.mycommunity.NetworkModule;
 import com.example.mycommunity.R;
+import com.example.mycommunity.UserNotice;
 import com.example.mycommunity.community.newPost.NewPostActivity;
 import com.google.gson.Gson;
 
@@ -32,17 +34,38 @@ public class CommunityFragment extends Fragment {
     private Handler handler = new Handler(new Handler.Callback() {
         @Override
         public boolean handleMessage(Message msg) {
-            switch (msg.what) {
-                case 0:
+
+            CacheManager<CommunityPost> manager = new CacheManager<>(CommunityPost.class);
+            if (msg.what == 0) {
+                try {
                     ReturnPosts returnPosts = new Gson().fromJson((String) msg.obj, ReturnPosts.class);
+                    List<CommunityPost> posts = returnPosts.getData();
+                    setListData(posts);
                     posts = returnPosts.getData();
-                    if (posts != null) {
-                        communityPostAdapter = new CommunityPostAdapter(posts);
-                        LinearLayoutManager layoutManager = new LinearLayoutManager(getContext());
-                        recyclerView.setLayoutManager(layoutManager);
-                        recyclerView.setAdapter(communityPostAdapter);
-                    }
+                    manager.saveData(posts);
+                } catch (Exception e) {
+                    UserNotice.showToast(getContext(), UserNotice.UNFORMATTED_DATA);
+                }
+            } else {
+                switch (msg.what) {
+                    case 1:
+                        UserNotice.showToast(getContext(), UserNotice.NETWORK_CONNECT_FAILURE);
+                        break;
+                    case 2:
+                        UserNotice.showToast(getContext(), UserNotice.USER_AUTHENTICATION_FAILURE);
+                        break;
+                    case 3:
+                        netRequest(1, 8);
+                        break;
+                    case 5:
+                        UserNotice.showToast(getContext(), UserNotice.UNEXPECTED_STATE);
+                        break;
+                    default:
+                        UserNotice.showToast(getContext(), UserNotice.UNEXPECTED_STATE);
+                }
+                setListData(manager.getData(0, 8));
             }
+
             return false;
         }
     });
@@ -57,7 +80,15 @@ public class CommunityFragment extends Fragment {
     }
 
     private void initView(View view) {
+        final SwipeRefreshLayout refreshLayout = view.findViewById(R.id.community_refresh_layout);
         FloatingActionButton actionButton = view.findViewById(R.id.community_floating_action_button);
+        refreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                netRequest(1, 8);
+                refreshLayout.setRefreshing(false);
+            }
+        });
         actionButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -69,12 +100,16 @@ public class CommunityFragment extends Fragment {
 
     }
 
-    private void netRequest(int page, int size) {
-       networkModule = new NetworkModule();
-       // networkModule.get("/portal/notice/community/latest", handler, getContext());
+    public void netRequest(int page, int size) {
+        networkModule = new NetworkModule();
+        // networkModule.get("/portal/notice/community/latest", handler, getContext());
         networkModule.get("/news/all", handler, getContext());
     }
 
+    private void setListData(List<CommunityPost> listData) {
+        CommunityPostAdapter newsItemAdapter = new CommunityPostAdapter(listData);
+        recyclerView.setAdapter(newsItemAdapter);
+    }
 //    private void init() {
 //        Random random = new Random();
 //        StringBuilder builder = new StringBuilder();

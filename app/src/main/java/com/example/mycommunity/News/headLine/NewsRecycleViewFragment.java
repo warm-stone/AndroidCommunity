@@ -6,8 +6,10 @@ import android.os.Message;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -24,22 +26,20 @@ import java.util.Random;
 public class NewsRecycleViewFragment extends Fragment {
 
     private RecyclerView newsRecycleView;
-    private List<News> newsList;
     private Handler newsHandler = new Handler(new Handler.Callback() {
         @Override
         public boolean handleMessage(Message msg) {
 
             CacheManager<News> manager = new CacheManager<>(News.class);
-            newsList = manager.getData(0, 8);
-            if (msg.what == 0){
+            if (msg.what == 0) {
                 try {
                     ReturnHeadline headline = new Gson().fromJson((String) msg.obj, ReturnHeadline.class);
-                    newsList = headline.getData();
+                    List<News> newsList = headline.getData();
                     setListData(newsList);
                     newsList = headline.getData();
                     manager.saveData(newsList);
                 } catch (Exception e) {
-                    UserNotice.showToast(getContext(),UserNotice.UNFORMATTED_DATA);
+                    UserNotice.showToast(getContext(), UserNotice.UNFORMATTED_DATA);
                 }
             } else {
                 switch (msg.what) {
@@ -56,7 +56,7 @@ public class NewsRecycleViewFragment extends Fragment {
                         UserNotice.showToast(getContext(), UserNotice.UNEXPECTED_STATE);
                         break;
                 }
-                setListData(newsList);
+                setListData(manager.getData(0, 8));
             }
 
             return false;
@@ -73,8 +73,17 @@ public class NewsRecycleViewFragment extends Fragment {
     }
 
     private void initView(View view) {
-        newsRecycleView = (RecyclerView) view;
+        final SwipeRefreshLayout refreshLayout = (SwipeRefreshLayout) view;
+        newsRecycleView = refreshLayout.findViewById(R.id.news_recycle_view);
         newsRecycleView.setLayoutManager(new LinearLayoutManager(getContext()));
+        refreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                netRequest();
+                refreshLayout.setRefreshing(false);
+            }
+        });
+        Log.w("test" , "已初始化");
     }
 
     private void netRequest() {
@@ -98,7 +107,7 @@ public class NewsRecycleViewFragment extends Fragment {
                 temp.append("大新闻");
             }
             news = new News(temp.toString(), 134, 43, R.drawable.ic_big_news);
-            newsList.add(i, news);
+
         }
     }
 }

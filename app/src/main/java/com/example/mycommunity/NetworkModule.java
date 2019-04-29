@@ -37,7 +37,7 @@ public class NetworkModule {
      * what = 1 网络请求异常
      * what = 2 登录时异常
      * what = 3 已重新登录
-     * what = 4 请求时其他异常
+     * what = 4 返回状态异常（状态码未定义）
      * what = 5 返回格式有误
      * */
     private  Callback stateCheck = new Callback() {

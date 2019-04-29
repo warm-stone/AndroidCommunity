@@ -19,6 +19,7 @@ import com.example.mycommunity.R;
 import com.example.mycommunity.UserNotice;
 import com.example.mycommunity.news.communityNotice.CommunityNoticeRecyclerViewFragment;
 import com.example.mycommunity.news.headLine.NewsRecycleViewFragment;
+import com.example.mycommunity.news.popertyNotice.PropertyNoticeFragment;
 import com.google.gson.Gson;
 
 import java.util.ArrayList;
@@ -98,7 +99,7 @@ public class NewsFragment extends Fragment {
         newsViewPager = view.findViewById(R.id.news_view_pager);
         fragments.add(0, new NewsRecycleViewFragment());
         fragments.add(1, new CommunityNoticeRecyclerViewFragment());
-        fragments.add(2, new NewsRecycleViewFragment());
+        fragments.add(2, new PropertyNoticeFragment());
         newsPagerAdapter = new NewsPagerAdapter(getFragmentManager(), fragments);
         newsViewPager.setAdapter(newsPagerAdapter);
         for (int i = 0; i < 3; i++) {
@@ -109,7 +110,6 @@ public class NewsFragment extends Fragment {
         for (int i = 0; i < 3; i++) {
             newsTabLayout.getTabAt(i).setText(tabString[i]);
         }
-        ;
 
     }
 }
