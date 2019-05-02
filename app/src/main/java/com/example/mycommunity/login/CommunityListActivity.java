@@ -71,7 +71,7 @@ public class CommunityListActivity extends AppCompatActivity {
         String url = "/community/listall";
         progressBar = findViewById(R.id.community_list_progress_bar);
         recyclerView = findViewById(R.id.community_list_recycler_view);
-        NetworkModule.get(url, callback);
+        new NetworkModule().get(url, callback);
 
     }
 }

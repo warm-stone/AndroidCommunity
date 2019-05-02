@@ -46,7 +46,7 @@ public class RegisterActivity extends AppCompatActivity {
                 userInformation.setPhone(phoneEditText.getText().toString());
                 final String json = gson.toJson(userInformation);
                 String url = "/user/registry";
-                NetworkModule.post(url, json, new Callback() {
+                new NetworkModule().post(url, json, new Callback() {
                     @Override
                     public void onFailure(Call call, final IOException e) {
                         Log.w("test", e.toString());

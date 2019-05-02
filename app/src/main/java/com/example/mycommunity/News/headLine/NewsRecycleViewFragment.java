@@ -74,19 +74,19 @@ public class NewsRecycleViewFragment extends Fragment {
 
     private void initView(View view) {
         final SwipeRefreshLayout refreshLayout = (SwipeRefreshLayout) view;
-        newsRecycleView = refreshLayout.findViewById(R.id.news_recycle_view);
+        newsRecycleView = (RecyclerView) view;
         newsRecycleView.setLayoutManager(new LinearLayoutManager(getContext()));
-        refreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
-            @Override
-            public void onRefresh() {
-                netRequest();
-                refreshLayout.setRefreshing(false);
-            }
-        });
+//        refreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+//            @Override
+//            public void onRefresh() {
+//                netRequest();
+//                refreshLayout.setRefreshing(false);
+//            }
+//        });
         Log.w("test" , "已初始化");
     }
 
-    private void netRequest() {
+    public void netRequest() {
         new NetworkModule().get("/headline/all", newsHandler, getContext());
     }
 

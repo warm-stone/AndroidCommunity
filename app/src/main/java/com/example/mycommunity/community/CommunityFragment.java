@@ -41,7 +41,6 @@ public class CommunityFragment extends Fragment {
                     ReturnPosts returnPosts = new Gson().fromJson((String) msg.obj, ReturnPosts.class);
                     List<CommunityPost> posts = returnPosts.getData();
                     setListData(posts);
-                    posts = returnPosts.getData();
                     manager.saveData(posts);
                 } catch (Exception e) {
                     UserNotice.showToast(getContext(), UserNotice.UNFORMATTED_DATA);

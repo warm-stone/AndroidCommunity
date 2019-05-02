@@ -49,11 +49,10 @@ public class NetworkModule {
 
         @Override
         public void onResponse(Call call, Response response) throws IOException {
-            Gson gson = new Gson();
             String returnString = response.body().string();
             Message message;
             try {
-                BaseReturnMsg baseReturnMsg = gson.fromJson(returnString, BaseReturnMsg.class);
+                BaseReturnMsg baseReturnMsg = new Gson().fromJson(returnString, BaseReturnMsg.class);
                 switch (baseReturnMsg.getStatus()) {
                     case 401:
                         if (!isSigning){
@@ -110,14 +109,14 @@ public class NetworkModule {
     };
 
 
-    public static void get(String url, Callback callback) {
+    public void get(String url, Callback callback) {
         url = baseUrl + url;
         OkHttpClient client = new OkHttpClient();
         Request request = new Request.Builder().url(url).build();
         client.newCall(request).enqueue(callback);
     }
 
-    public static void post(String url, String json, Callback callback) {
+    public void post(String url, String json, Callback callback) {
         OkHttpClient client = new OkHttpClient();
         url = baseUrl + url;
         RequestBody requestBody = FormBody.create(MediaType.parse("application/json; charset=utf-8"), json);

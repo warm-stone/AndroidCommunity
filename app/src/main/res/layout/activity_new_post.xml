@@ -16,7 +16,28 @@
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
             android:theme="@style/AppTheme.PopupOverlay"
-            app:layout_scrollFlags="scroll|enterAlways|snap" />
+            app:layout_scrollFlags="scroll|enterAlways|snap">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:text="发布到社区"
+                android:textColor="@color/black"
+                android:textSize="16dp" />
+
+            <TextView
+                android:id="@+id/new_post_post"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="end"
+                android:text="发布    "
+                android:textColor="@color/gray" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+        </android.support.v7.widget.Toolbar>
     </android.support.design.widget.AppBarLayout>
 
     <android.support.v4.widget.NestedScrollView
@@ -30,13 +51,22 @@
             android:layout_height="wrap_content">
 
             <EditText
-                android:id="@+id/new_post_content"
+                android:id="@+id/new_post_title"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="16dp"
                 android:background="@color/white"
-                android:hint="今天有什么新鲜事？"
+                android:hint="标题"
                 android:minLines="3" />
+
+            <EditText
+                android:id="@+id/new_post_content"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="今天有什么新鲜事？"
+                android:layout_marginBottom="16dp"
+                android:layout_below="@+id/new_post_title"
+                android:background="@color/white" />
 
             <ImageView
                 android:layout_width="80dp"

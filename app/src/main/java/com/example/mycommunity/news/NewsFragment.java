@@ -3,11 +3,13 @@ package com.example.mycommunity.news;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
+import android.preference.PreferenceManager;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -97,9 +99,27 @@ public class NewsFragment extends Fragment {
         hotNewsViewPager = view.findViewById(R.id.hot_show_view_pager);
         newsTabLayout = view.findViewById(R.id.news_tab_layout);
         newsViewPager = view.findViewById(R.id.news_view_pager);
-        fragments.add(0, new NewsRecycleViewFragment());
-        fragments.add(1, new CommunityNoticeRecyclerViewFragment());
-        fragments.add(2, new PropertyNoticeFragment());
+        final SwipeRefreshLayout refreshLayout = view.findViewById(R.id.news_refresh_layout);
+        final NewsRecycleViewFragment newsFragment = new NewsRecycleViewFragment();
+        final CommunityNoticeRecyclerViewFragment communityFragment = new CommunityNoticeRecyclerViewFragment();
+        final PropertyNoticeFragment propertyNoticeFragment = new PropertyNoticeFragment();
+        fragments.add(0, newsFragment);
+        fragments.add(1, communityFragment);
+        fragments.add(2, propertyNoticeFragment);
+        refreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                netRequest();
+                try {
+                    newsFragment.netRequest();
+                    communityFragment.netRequest();
+                    propertyNoticeFragment.netRequest();
+                } catch (NullPointerException e) {
+                    e.printStackTrace();
+                }
+                refreshLayout.setRefreshing(false);
+            }
+        });
         newsPagerAdapter = new NewsPagerAdapter(getFragmentManager(), fragments);
         newsViewPager.setAdapter(newsPagerAdapter);
         for (int i = 0; i < 3; i++) {

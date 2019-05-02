@@ -69,16 +69,16 @@ public class CommunityNoticeRecyclerViewFragment extends Fragment {
     }
 
     private void initView(View view) {
-        final SwipeRefreshLayout refreshLayout = (SwipeRefreshLayout) view;
-        recyclerView = refreshLayout.findViewById(R.id.news_recycle_view);
+
+        recyclerView = (RecyclerView)view;
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
-        refreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
-            @Override
-            public void onRefresh() {
-                netRequest();
-                refreshLayout.setRefreshing(false);
-            }
-        });
+//        refreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+//            @Override
+//            public void onRefresh() {
+//                netRequest();
+//                refreshLayout.setRefreshing(false);
+//            }
+//        });
     }
 
     private void setListData(List<CommunityNotice> listData) {
@@ -86,7 +86,7 @@ public class CommunityNoticeRecyclerViewFragment extends Fragment {
         recyclerView.setAdapter(adapter);
     }
 
-    private void netRequest() {
+    public void netRequest() {
         new NetworkModule().get("/portal/notice/community/latest", handler, getContext());
     }
 }
