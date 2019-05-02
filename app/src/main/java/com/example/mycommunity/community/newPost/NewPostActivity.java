@@ -85,6 +85,7 @@ public class NewPostActivity extends AppCompatActivity {
             public void onClick(View v) {
                 post.setTitle(postTitle.getText().toString());
                 post.setDescription(postDescription.getText().toString());
+                netRequest();
             }
         });
     }
