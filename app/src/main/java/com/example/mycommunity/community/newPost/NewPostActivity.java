@@ -19,7 +19,7 @@ import com.google.gson.Gson;
 
 public class NewPostActivity extends AppCompatActivity {
 
-    private CommunityPost post;
+    private CommunityPost post = new CommunityPost();
     private Handler handler = new Handler(new Handler.Callback() {
         @Override
         public boolean handleMessage(Message msg) {
