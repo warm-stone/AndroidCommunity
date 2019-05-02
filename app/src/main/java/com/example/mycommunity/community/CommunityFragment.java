@@ -62,6 +62,7 @@ public class CommunityFragment extends Fragment {
                     default:
                         UserNotice.showToast(getContext(), UserNotice.UNEXPECTED_STATE);
                 }
+                List<CommunityPost> posts = manager.getData(0, 8);
                 setListData(manager.getData(0, 8));
             }
 
