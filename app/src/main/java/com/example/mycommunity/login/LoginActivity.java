@@ -13,11 +13,11 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.mycommunity.NetworkModule;
+import com.example.mycommunity.R;
 import com.example.mycommunity.jsonEntity.ReturnMsg;
 import com.example.mycommunity.jsonEntity.UserInformation;
 import com.example.mycommunity.mine.ReturnUserInformation;
-import com.example.mycommunity.NetworkModule;
-import com.example.mycommunity.R;
 import com.google.gson.Gson;
 
 import java.io.IOException;

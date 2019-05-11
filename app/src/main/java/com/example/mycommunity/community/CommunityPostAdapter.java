@@ -2,6 +2,8 @@ package com.example.mycommunity.community;
 
 import android.content.Context;
 import android.content.Intent;
+import android.os.Handler;
+import android.os.Message;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -11,6 +13,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
+import com.example.mycommunity.NetworkModule;
 import com.example.mycommunity.R;
 import com.example.mycommunity.community.postDetail.commonPost.PostDetailActivity;
 
@@ -21,6 +24,13 @@ public class CommunityPostAdapter extends RecyclerView.Adapter {
     private Context context;
     private List<CommunityPost> posts;
     private final static int COMMON_POST = 1;
+    private Handler handler = new Handler(new Handler.Callback() {
+        @Override
+        public boolean handleMessage(Message msg) {
+
+            return false;
+        }
+    });
 
     static class ViewHolder extends RecyclerView.ViewHolder {
         ImageView userImg;
@@ -29,6 +39,8 @@ public class CommunityPostAdapter extends RecyclerView.Adapter {
         TextView postTitle;
         TextView postContent;
         ImageView postImg;
+        ImageView heart;
+        ImageView comments;
         TextView heartCount;
         TextView commentsCount;
 
@@ -40,6 +52,8 @@ public class CommunityPostAdapter extends RecyclerView.Adapter {
             postTitle = view.findViewById(R.id.community_post_title);
             postContent = view.findViewById(R.id.community_post_content);
             postImg = view.findViewById(R.id.community_post_img);
+            heart = view.findViewById(R.id.community_icon_heart);
+            comments = view.findViewById(R.id.community_icon_comment);
             heartCount = view.findViewById(R.id.community_heart_count_text_view);
             commentsCount = view.findViewById(R.id.community_comments_count_text_View);
         }
@@ -62,6 +76,7 @@ public class CommunityPostAdapter extends RecyclerView.Adapter {
         }
         View view = LayoutInflater.from(context).inflate(R.layout.community_post_item, viewGroup, false);
         final ViewHolder holder = new ViewHolder(view);
+        final int position = holder.getAdapterPosition();
         view.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -71,14 +86,18 @@ public class CommunityPostAdapter extends RecyclerView.Adapter {
                 context.startActivity(intent);
             }
         });
+        holder.heart.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                new NetworkModule().post("/news/collect/" + position, "", handler, context);
+            }
+        });
         return holder;
     }
 
     @Override
     public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position) {
         CommunityPost communityPost = posts.get(position);
-        switch (communityPost.getType()) {
-            case 1:
                 ViewHolder viewHolder = (ViewHolder) holder;
                 //Glide.with(context).load(communityPost.getUserImg()).into(viewHolder.userImg);
                 viewHolder.userName.setText(String.valueOf(communityPost.getUserId()));
@@ -88,12 +107,10 @@ public class CommunityPostAdapter extends RecyclerView.Adapter {
                 Glide.with(context).load(communityPost.getImgUrl()).into(viewHolder.postImg);
                 viewHolder.heartCount.setText(String.valueOf(communityPost.getStar()));
                 viewHolder.commentsCount.setText(String.valueOf(communityPost.getComments()));
-                break;
-        }
     }
 
     @Override
     public int getItemCount() {
-        return posts.size();
+         return posts.size();
     }
 }

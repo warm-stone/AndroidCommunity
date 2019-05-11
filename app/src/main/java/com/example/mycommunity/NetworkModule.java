@@ -26,11 +26,12 @@ import okhttp3.Response;
 
 public class NetworkModule {
 
-    private final static String baseUrl = "http://www.fangxiaosong.me:8080/chengfeng";
-    private final static String baseUrl1 = "http://192.168.123.50:8585/chengfeng";
+    private final static String baseUrl1 = "http://www.fangxiaosong.me:8080/chengfeng";
+    private final static String baseUrl = "http://192.168.123.50:8585/chengfeng";
     private static boolean isSigning = false;
     private  Handler handler;
     private  Context context;
+    private static OkHttpClient client = new OkHttpClient();
 
     /*
      * what = 0 正常返回
@@ -111,13 +112,11 @@ public class NetworkModule {
 
     public void get(String url, Callback callback) {
         url = baseUrl + url;
-        OkHttpClient client = new OkHttpClient();
         Request request = new Request.Builder().url(url).build();
         client.newCall(request).enqueue(callback);
     }
 
     public void post(String url, String json, Callback callback) {
-        OkHttpClient client = new OkHttpClient();
         url = baseUrl + url;
         RequestBody requestBody = FormBody.create(MediaType.parse("application/json; charset=utf-8"), json);
         Request request = new Request.Builder().url(url).post(requestBody).build();
@@ -127,7 +126,6 @@ public class NetworkModule {
     public  void postImg(String url,String imgName, File file, Handler mHandler, Context mContext){
         context = mContext;
         handler = mHandler;
-        OkHttpClient client = new OkHttpClient();
         RequestBody fileBody = RequestBody.create(MediaType.parse("image/jpg"), file);
         RequestBody requestBody = new  MultipartBody.Builder().addFormDataPart("files", imgName, fileBody).build();
         Request request = new Request.Builder().url(url).header("Authorization", Login.getAuthorization(mContext)).post(requestBody).build();
@@ -137,7 +135,6 @@ public class NetworkModule {
     public void post(String url, String json, Handler mHandler, Context mContext) {
         context = mContext;
         handler = mHandler;
-        OkHttpClient client = new OkHttpClient();
         url = baseUrl + url;
         RequestBody requestBody = FormBody.create(MediaType.parse("application/json; charset=utf-8"), json);
         Request request = new Request.Builder().url(url).header("Authorization", Login.getAuthorization(mContext)).post(requestBody).build();
@@ -147,7 +144,6 @@ public class NetworkModule {
     public void get(String url, Handler mHandler, Context mContext){
         context = mContext;
         handler = mHandler;
-        OkHttpClient client = new OkHttpClient();
         url = baseUrl + url;
         Request request = new Request.Builder().url(url).header("Authorization", Login.getAuthorization(mContext)).build();
         client.newCall(request).enqueue(stateCheck);
@@ -156,7 +152,6 @@ public class NetworkModule {
     public void put(String url, String json, Handler mHandler, Context mContext) {
         context = mContext;
         handler = mHandler;
-        OkHttpClient client = new OkHttpClient();
         url = baseUrl + url;
         RequestBody requestBody = FormBody.create(MediaType.parse("application/json; charset=utf-8"), json);
         Request request = new Request.Builder().url(url).header("Authorization", Login.getAuthorization(mContext)).put(requestBody).build();
@@ -164,7 +159,6 @@ public class NetworkModule {
     }
 
     public static void postForm(String url, UserInformation userInformation, @Nullable Callback callback) {
-        OkHttpClient client = new OkHttpClient();
         url = baseUrl + url;
         FormBody formBody = new FormBody.Builder()
                 .add("nickname", userInformation.getNickname())

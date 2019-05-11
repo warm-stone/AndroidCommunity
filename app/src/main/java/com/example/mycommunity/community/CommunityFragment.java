@@ -1,5 +1,6 @@
 package com.example.mycommunity.community;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
@@ -9,6 +10,7 @@ import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.support.v4.widget.SwipeRefreshLayout;
+import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -21,16 +23,14 @@ import com.example.mycommunity.UserNotice;
 import com.example.mycommunity.community.newPost.NewPostActivity;
 import com.google.gson.Gson;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class CommunityFragment extends Fragment {
 
     private static final int NEW_POST_REQUEST = 1;
-    private List<CommunityPost> posts = new ArrayList<>();
-    private CommunityPostAdapter communityPostAdapter;
     private RecyclerView recyclerView;
-    NetworkModule networkModule;
+    private List<CommunityPost> posts;
+    private SwipeRefreshLayout refreshLayout;
     private Handler handler = new Handler(new Handler.Callback() {
         @Override
         public boolean handleMessage(Message msg) {
@@ -39,9 +39,10 @@ public class CommunityFragment extends Fragment {
             if (msg.what == 0) {
                 try {
                     ReturnPosts returnPosts = new Gson().fromJson((String) msg.obj, ReturnPosts.class);
-                    List<CommunityPost> posts = returnPosts.getData();
+                    posts = returnPosts.getData();
                     setListData(posts);
                     manager.saveData(posts);
+                    refreshLayout.setRefreshing(false);
                 } catch (Exception e) {
                     UserNotice.showToast(getContext(), UserNotice.UNFORMATTED_DATA);
                 }
@@ -62,7 +63,6 @@ public class CommunityFragment extends Fragment {
                     default:
                         UserNotice.showToast(getContext(), UserNotice.UNEXPECTED_STATE);
                 }
-                List<CommunityPost> posts = manager.getData(0, 8);
                 setListData(manager.getData(0, 8));
             }
 
@@ -80,7 +80,7 @@ public class CommunityFragment extends Fragment {
     }
 
     private void initView(View view) {
-        final SwipeRefreshLayout refreshLayout = view.findViewById(R.id.community_refresh_layout);
+        refreshLayout = view.findViewById(R.id.community_refresh_layout);
         FloatingActionButton actionButton = view.findViewById(R.id.community_floating_action_button);
         refreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
@@ -92,18 +92,32 @@ public class CommunityFragment extends Fragment {
         actionButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivityForResult(new Intent(getContext(), NewPostActivity.class), NEW_POST_REQUEST);
+                startActivityForResult(
+                        new Intent(getContext(), NewPostActivity.class),
+                        NEW_POST_REQUEST
+                );
             }
         });
         recyclerView = view.findViewById(R.id.community_recycler_view);
-
+        recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
 
     }
 
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (requestCode == NEW_POST_REQUEST) {
+            switch (resultCode) {
+                case Activity.RESULT_OK:
+                    refreshLayout.setRefreshing(true);
+                    netRequest(0, 8);
+//                    posts.add(0, (CommunityPost) data.getSerializableExtra("post"));
+//                    setListData(posts);
+            }
+        }
+    }
+
     public void netRequest(int page, int size) {
-        networkModule = new NetworkModule();
-        // networkModule.get("/portal/notice/community/latest", handler, getContext());
-        networkModule.get("/news/all", handler, getContext());
+        new NetworkModule().get("/news/all", handler, getContext());
     }
 
     private void setListData(List<CommunityPost> listData) {

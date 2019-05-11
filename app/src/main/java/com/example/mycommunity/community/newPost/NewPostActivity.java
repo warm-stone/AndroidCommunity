@@ -31,8 +31,14 @@ public class NewPostActivity extends AppCompatActivity {
                 UserNotice.showToast(NewPostActivity.this, UserNotice.UNFORMATTED_DATA);
             }
             if (msg.what == 0) {
-                if (returnPosts != null)
+                if (returnPosts != null){
                     post = returnPosts.getData();
+                    Intent intent = new Intent();
+                    intent.putExtra("post", post);
+                    setResult(RESULT_OK, intent);
+                    NewPostActivity.this.finish();
+                }
+
 
             } else {
                 switch (msg.what) {
