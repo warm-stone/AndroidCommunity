@@ -123,5 +123,4 @@ public class CommunityFragment extends Fragment {
         CommunityPostAdapter newsItemAdapter = new CommunityPostAdapter(listData);
         recyclerView.setAdapter(newsItemAdapter);
     }
-
 }

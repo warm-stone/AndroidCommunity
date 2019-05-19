@@ -4,7 +4,6 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
-import android.support.annotation.Nullable;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.view.MenuItem;
@@ -30,37 +29,31 @@ public class NewPostActivity extends AppCompatActivity {
             } catch (Exception e) {
                 UserNotice.showToast(NewPostActivity.this, UserNotice.UNFORMATTED_DATA);
             }
-            if (msg.what == 0) {
-                if (returnPosts != null){
-                    post = returnPosts.getData();
-                    Intent intent = new Intent();
-                    intent.putExtra("post", post);
-                    setResult(RESULT_OK, intent);
-                    NewPostActivity.this.finish();
-                }
-
-
-            } else {
-                switch (msg.what) {
-                    case 1:
-                        UserNotice.showToast(NewPostActivity.this, UserNotice.NETWORK_CONNECT_FAILURE);
-                        break;
-                    case 2:
-                        UserNotice.showToast(NewPostActivity.this, UserNotice.USER_AUTHENTICATION_FAILURE);
-                        break;
-                    case 3:
-                        netRequest();
-                        break;
-                    case 4:
-                        if (returnPosts != null)
-                            UserNotice.showToast(NewPostActivity.this, returnPosts.getMessage());
-                        break;
-                    case 5:
-                        UserNotice.showToast(NewPostActivity.this, UserNotice.UNEXPECTED_STATE);
-                        break;
-                    default:
-                        UserNotice.showToast(NewPostActivity.this, UserNotice.UNEXPECTED_STATE);
-                }
+            switch (msg.what) {
+                case 0:
+                    if (returnPosts != null) {
+                        post = returnPosts.getData();
+                        Intent intent = new Intent();
+                        intent.putExtra("post", post);
+                        setResult(RESULT_OK, intent);
+                        NewPostActivity.this.finish();
+                    }
+                    break;
+                case 1:
+                    UserNotice.showToast(NewPostActivity.this, UserNotice.NETWORK_CONNECT_FAILURE);
+                    break;
+                case 2:
+                    UserNotice.showToast(NewPostActivity.this, UserNotice.USER_AUTHENTICATION_FAILURE);
+                    break;
+                case 3:
+                    netRequest();
+                    break;
+                case 4:
+                    if (returnPosts != null)
+                        UserNotice.showToast(NewPostActivity.this, returnPosts.getMessage());
+                    break;
+                default:
+                    UserNotice.showToast(NewPostActivity.this, UserNotice.UNEXPECTED_STATE);
             }
             return false;
         }
@@ -97,9 +90,8 @@ public class NewPostActivity extends AppCompatActivity {
     }
 
     private void netRequest() {
-        String json;
         if (post != null) {
-            json = new Gson().toJson(post);
+            String json = new Gson().toJson(post);
             new NetworkModule().post("/news/create", json, handler, this);
         }
     }
