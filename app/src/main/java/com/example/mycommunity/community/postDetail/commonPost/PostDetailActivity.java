@@ -7,6 +7,7 @@ import android.os.Message;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.RecyclerView;
 import android.widget.Button;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.example.mycommunity.NetworkModule;
@@ -48,17 +49,22 @@ public class PostDetailActivity extends AppCompatActivity {
             TextView date = findViewById(R.id.post_detail_pub_date);
             TextView postDetailText = findViewById(R.id.post_detail_newsDetail);
             RecyclerView postImg = findViewById(R.id.post_detail_img_container);
+            LinearLayout heartComponent = findViewById(R.id.interaction_heart_component);
+            LinearLayout commentsComponent = findViewById(R.id.interaction_comments_component);
+            TextView heartCount = findViewById(R.id.community_heart_count_text_view);
+            TextView commentsCount = findViewById(R.id.community_comments_count_text_View);
             RecyclerView comments = findViewById(R.id.post_detail_user_comments_container);
 
             userId.setText(String.valueOf(post.getUserId()));
             date.setText(
                     DateFormat.getDateInstance(2).format(new Date(post.getPosted()))
             );
-            postDetailText.setText(post.getNewsDetail());
+            postDetailText.setText(post.getDescription());
+           // heartComponent.
         }
     }
 
     private void netRequest(int id){
-        new NetworkModule().get("/news/detail/", handler, PostDetailActivity.this);
+        new NetworkModule().get("/news/detail/" + id, handler, PostDetailActivity.this);
     }
 }

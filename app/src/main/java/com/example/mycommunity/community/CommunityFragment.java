@@ -100,7 +100,6 @@ public class CommunityFragment extends Fragment {
         });
         recyclerView = view.findViewById(R.id.community_recycler_view);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
-
     }
 
     @Override
@@ -124,23 +123,5 @@ public class CommunityFragment extends Fragment {
         CommunityPostAdapter newsItemAdapter = new CommunityPostAdapter(listData);
         recyclerView.setAdapter(newsItemAdapter);
     }
-//    private void init() {
-//        Random random = new Random();
-//        StringBuilder builder = new StringBuilder();
-//        int tem;
-//        for (int i = 0; i < 40; i++) {
-//            CommunityPost communityPost = new CommunityPost();
-//            communityPost.setUserImg(R.drawable.ic_user);
-//            builder.append("一个大新闻");
-//            communityPost.setUseName("小虾米");
-//            communityPost.setPostTime("4分钟前");
-//            communityPost.setPostTitle(builder.toString());
-//            communityPost.setPostImg(R.drawable.ic_big_news);
-//            tem = random.nextInt(3000);
-//            communityPost.setPostHeartCount(String.valueOf(tem));
-//            tem = random.nextInt(3000);
-//            communityPost.setPostCommentsCount(String.valueOf(tem));
-//            posts.add(communityPost);
-//        }
-//    }
+
 }

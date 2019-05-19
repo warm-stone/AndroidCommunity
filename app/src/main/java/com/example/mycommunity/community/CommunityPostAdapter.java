@@ -10,6 +10,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
@@ -43,6 +44,8 @@ public class CommunityPostAdapter extends RecyclerView.Adapter {
         ImageView comments;
         TextView heartCount;
         TextView commentsCount;
+        LinearLayout heartComponent;
+        LinearLayout commentComponent;
 
         public ViewHolder(View view) {
             super(view);
@@ -56,6 +59,8 @@ public class CommunityPostAdapter extends RecyclerView.Adapter {
             comments = view.findViewById(R.id.community_icon_comment);
             heartCount = view.findViewById(R.id.community_heart_count_text_view);
             commentsCount = view.findViewById(R.id.community_comments_count_text_View);
+            heartComponent = view.findViewById(R.id.interaction_heart_component);
+            commentComponent = view.findViewById(R.id.interaction_comments_component);
         }
     }
 
@@ -76,7 +81,6 @@ public class CommunityPostAdapter extends RecyclerView.Adapter {
         }
         View view = LayoutInflater.from(context).inflate(R.layout.community_post_item, viewGroup, false);
         final ViewHolder holder = new ViewHolder(view);
-        final int position = holder.getAdapterPosition();
         view.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -86,10 +90,12 @@ public class CommunityPostAdapter extends RecyclerView.Adapter {
                 context.startActivity(intent);
             }
         });
-        holder.heart.setOnClickListener(new View.OnClickListener() {
+        holder.heartComponent.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                int position = holder.getAdapterPosition();
                 new NetworkModule().post("/news/collect/" + position, "", handler, context);
+                holder.heartCount.setText(String.valueOf(Integer.valueOf(holder.heartCount.getText().toString()) + 1));
             }
         });
         return holder;
@@ -98,19 +104,21 @@ public class CommunityPostAdapter extends RecyclerView.Adapter {
     @Override
     public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position) {
         CommunityPost communityPost = posts.get(position);
-                ViewHolder viewHolder = (ViewHolder) holder;
-                //Glide.with(context).load(communityPost.getUserImg()).into(viewHolder.userImg);
-                viewHolder.userName.setText(String.valueOf(communityPost.getUserId()));
-                //viewHolder.postTime.setText(communityPost.getPostTime());
-                viewHolder.postTitle.setText(communityPost.getTitle());
-                viewHolder.postContent.setText(communityPost.getDescription());
-                Glide.with(context).load(communityPost.getImgUrl()).into(viewHolder.postImg);
-                viewHolder.heartCount.setText(String.valueOf(communityPost.getStar()));
-                viewHolder.commentsCount.setText(String.valueOf(communityPost.getComments()));
+        ViewHolder viewHolder = (ViewHolder) holder;
+        //Glide.with(context).load(communityPost.getUserImg()).into(viewHolder.userImg);
+        viewHolder.userName.setText(String.valueOf(communityPost.getUserId()));
+        //viewHolder.postTime.setText(communityPost.getPostTime());
+        viewHolder.postTitle.setText(communityPost.getTitle());
+        viewHolder.postContent.setText(communityPost.getDescription());
+        Glide.with(context).load(communityPost.getImgUrl()).into(viewHolder.postImg);
+        viewHolder.heartCount.setText(String.valueOf(communityPost.getStar()));
+        viewHolder.commentsCount.setText(String.valueOf(communityPost.getComments()));
     }
 
     @Override
     public int getItemCount() {
-         return posts.size();
+        if (posts != null)
+            return posts.size();
+        return 0;
     }
 }
