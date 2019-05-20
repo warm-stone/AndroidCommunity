@@ -24,7 +24,7 @@ public class CommunityPost extends LitePalSupport implements Serializable {
     private int star;
     private int comments;
     private int type;
-    private int userId;
+    private long userId;
     private String newsDetail;
     /**
      * posted : 1554558536000
@@ -88,11 +88,11 @@ public class CommunityPost extends LitePalSupport implements Serializable {
         this.type = type;
     }
 
-    public int getUserId() {
+    public long getUserId() {
         return userId;
     }
 
-    public void setUserId(int userId) {
+    public void setUserId(long userId) {
         this.userId = userId;
     }
 

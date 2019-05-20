@@ -35,7 +35,7 @@ public class CommunityFragment extends Fragment {
         @Override
         public boolean handleMessage(Message msg) {
 
-            CacheManager<CommunityPost> manager = new CacheManager<>(CommunityPost.class);
+            final CacheManager<CommunityPost> manager = new CacheManager<>(CommunityPost.class);
             if (msg.what == 0) {
                 try {
                     ReturnPosts returnPosts = new Gson().fromJson((String) msg.obj, ReturnPosts.class);
@@ -63,7 +63,8 @@ public class CommunityFragment extends Fragment {
                     default:
                         UserNotice.showToast(getContext(), UserNotice.UNEXPECTED_STATE);
                 }
-                setListData(manager.getData(0, 8));
+                List<CommunityPost> list = manager.getData(0, 8);
+                setListData(list);
             }
 
             return false;

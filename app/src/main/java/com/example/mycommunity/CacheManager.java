@@ -3,7 +3,6 @@ package com.example.mycommunity;
 import org.litepal.LitePal;
 import org.litepal.crud.LitePalSupport;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class CacheManager<T extends LitePalSupport> {
@@ -64,7 +63,15 @@ public class CacheManager<T extends LitePalSupport> {
         return data;
     }
 
-
+    public T findById(long id) {
+        List<T> data = null;
+        try {
+            data = LitePal.where("idx = ?", id + "").find(clazz);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return data != null ? data.get(0) : null;
+    }
 
     public T getFirst() {
         return LitePal.findLast(clazz);

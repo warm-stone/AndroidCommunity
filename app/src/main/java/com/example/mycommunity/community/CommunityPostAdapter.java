@@ -17,15 +17,19 @@ import com.bumptech.glide.Glide;
 import com.example.mycommunity.NetworkModule;
 import com.example.mycommunity.R;
 import com.example.mycommunity.community.postDetail.commonPost.PostDetailActivity;
+import com.example.mycommunity.community.star.Star;
+import com.example.mycommunity.userInf.UserInfService;
 
 import java.util.List;
+
+import de.hdodenhof.circleimageview.CircleImageView;
 
 public class CommunityPostAdapter extends RecyclerView.Adapter {
 
     private Context context;
     private List<CommunityPost> posts;
     private final static int COMMON_POST = 1;
-    private Handler handler = new Handler(new Handler.Callback() {
+    private Handler defaultHandler = new Handler(new Handler.Callback() {
         @Override
         public boolean handleMessage(Message msg) {
 
@@ -34,7 +38,7 @@ public class CommunityPostAdapter extends RecyclerView.Adapter {
     });
 
     static class ViewHolder extends RecyclerView.ViewHolder {
-        ImageView userImg;
+        CircleImageView userImg;
         TextView userName;
         TextView postTime;
         TextView postTitle;
@@ -94,8 +98,10 @@ public class CommunityPostAdapter extends RecyclerView.Adapter {
             @Override
             public void onClick(View v) {
                 int position = holder.getAdapterPosition();
-                new NetworkModule().post("/news/collect/" + position, "", handler, context);
-                holder.heartCount.setText(String.valueOf(Integer.valueOf(holder.heartCount.getText().toString()) + 1));
+                new NetworkModule().post("/news/collect/" + posts.get(position).getId(),
+                        "",
+                        new Star(context, holder.heart, holder.heartCount, posts.get(position)).getHandler(),
+                        context);
             }
         });
         return holder;
@@ -105,9 +111,8 @@ public class CommunityPostAdapter extends RecyclerView.Adapter {
     public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position) {
         CommunityPost communityPost = posts.get(position);
         ViewHolder viewHolder = (ViewHolder) holder;
-        //Glide.with(context).load(communityPost.getUserImg()).into(viewHolder.userImg);
         viewHolder.userName.setText(String.valueOf(communityPost.getUserId()));
-        //viewHolder.postTime.setText(communityPost.getPostTime());
+        new UserInfService(context).getUserInfById(communityPost.getUserId(), viewHolder.userImg, viewHolder.userName);
         viewHolder.postTitle.setText(communityPost.getTitle());
         viewHolder.postContent.setText(communityPost.getDescription());
         Glide.with(context).load(communityPost.getImgUrl()).into(viewHolder.postImg);
