@@ -98,7 +98,7 @@ public class CommunityPostAdapter extends RecyclerView.Adapter {
             @Override
             public void onClick(View v) {
                 int position = holder.getAdapterPosition();
-                new NetworkModule().post("/news/collect/" + posts.get(position).getId(),
+                new NetworkModule().post("/news/collect/" + posts.get(position).getIdx(),
                         "",
                         new Star(context, holder.heart, holder.heartCount, posts.get(position)).getHandler(),
                         context);

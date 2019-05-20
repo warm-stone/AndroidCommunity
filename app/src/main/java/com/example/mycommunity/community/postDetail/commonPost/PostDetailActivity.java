@@ -55,7 +55,7 @@ public class PostDetailActivity extends AppCompatActivity {
                     UserNotice.showToast(PostDetailActivity.this, UserNotice.USER_AUTHENTICATION_FAILURE);
                     break;
                 case 3:
-                    netRequest(post.getId());
+                    netRequest(post.getIdx());
                     break;
                 case 4:
                     if (returnPostMsg != null)
@@ -82,7 +82,7 @@ public class PostDetailActivity extends AppCompatActivity {
         post = (CommunityPost) intent.getSerializableExtra("postDetail");
         if (post != null) {
 
-            netRequest(post.getId());
+            netRequest(post.getIdx());
             Button follow = findViewById(R.id.post_detail_follow);
             CircleImageView userIc = findViewById(R.id.post_detail_user_ic);
             TextView userId = findViewById(R.id.post_detail_user_name);
@@ -99,7 +99,7 @@ public class PostDetailActivity extends AppCompatActivity {
             heartComponent.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    new NetworkModule().post("/news/collect/" + post.getId(),
+                    new NetworkModule().post("/news/collect/" + post.getIdx(),
                             "",
                             new Star(PostDetailActivity.this, heart, heartCount, post).getHandler(),
                             PostDetailActivity.this

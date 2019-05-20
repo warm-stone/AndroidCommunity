@@ -37,7 +37,7 @@ public class Star {
                     if (collectionMsg != null) {
                         if (imageView.getDrawable().getCurrent().getConstantState() == context.getResources().getDrawable(R.drawable.ic_heart).getConstantState()) {
                             for (CommunityPost post : collectionMsg.getData().getCollectNews())
-                                if (postHolder.getId() == post.getId()) {
+                                if (postHolder.getIdx() == postHolder.getIdx()) {
                                     ((Activity) context).runOnUiThread(new Runnable() {
                                         @Override
                                         public void run() {
@@ -53,7 +53,7 @@ public class Star {
                                     isCollected = false;
                                 }
                             if (!isCollected) {
-                                new NetworkModule().post("/news/collect/" + postHolder.getId(), "", defaultHandler, context);
+                                new NetworkModule().post("/news/collect/" + postHolder.getIdx(), "", defaultHandler, context);
                                 ((Activity) context).runOnUiThread(new Runnable() {
                                     @Override
                                     public void run() {
@@ -63,7 +63,7 @@ public class Star {
                                 });
                             }
                         } else {
-                            new NetworkModule().post("/news/collect/" + postHolder.getId(), "", defaultHandler, context);
+                            new NetworkModule().post("/news/collect/" + postHolder.getIdx(), "", defaultHandler, context);
                             ((Activity) context).runOnUiThread(new Runnable() {
                                 @Override
                                 public void run() {
@@ -81,7 +81,7 @@ public class Star {
                     UserNotice.showToast(context, UserNotice.USER_AUTHENTICATION_FAILURE);
                     break;
                 case 3:
-                    new NetworkModule().post("/news/collect/" + postHolder.getId(), "", new Handler(this), context);
+                    new NetworkModule().post("/news/collect/" + postHolder.getIdx(), "", new Handler(this), context);
                     break;
                 case 4:
                     if (collectionMsg != null)

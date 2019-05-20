@@ -1,5 +1,7 @@
 package com.example.mycommunity.community;
 
+import com.google.gson.annotations.SerializedName;
+
 import org.litepal.crud.LitePalSupport;
 
 import java.io.Serializable;
@@ -17,7 +19,8 @@ public class CommunityPost extends LitePalSupport implements Serializable {
      * newsDetail : 前面我们知道了怎么获取Class，那么我们可以通过这个Class干什么呢？总结如下：获取成员方法Method获取成员变量Field获取构造函数Constructor下面来具体介绍获取成员方法信息单独获取某一个方法是通过Class类的以下方法获得的：public Method getDeclaredMethod(String name, Class<?>... parameterTypes) // 得到该类所有的方法，不包括父类的public Method getMethod(String name, Class<?>... parameterTypes) // 得到该类所有的public方法，包括
      */
 
-    private int id;
+    @SerializedName("id")
+    private int idx;
     private String title;
     private String description;
     private String imgUrl;
@@ -32,12 +35,12 @@ public class CommunityPost extends LitePalSupport implements Serializable {
 
     private long posted;
 
-    public int getId() {
-        return id;
+    public int getIdx() {
+        return idx;
     }
 
-    public void setId(int id) {
-        this.id = id;
+    public void setIdx(int idx) {
+        this.idx = idx;
     }
 
     public String getTitle() {
