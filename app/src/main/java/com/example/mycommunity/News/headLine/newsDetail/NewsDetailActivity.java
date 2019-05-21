@@ -1,5 +1,6 @@
 package com.example.mycommunity.news.headLine.newsDetail;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -33,8 +34,6 @@ public class NewsDetailActivity extends AppCompatActivity {
                         if (details != null) {
                             detailContainer.setLayoutManager(new LinearLayoutManager(NewsDetailActivity.this));
                             detailContainer.setAdapter(new NewsDetailAdapter(details));
-                            comments.setLayoutManager(new LinearLayoutManager(NewsDetailActivity.this));
-                            comments.setAdapter(new NewsDetailAdapter(details));
                             CacheManager<NewsDetail> manager = new CacheManager<>(NewsDetail.class);
                             manager.saveData(details);
                         }
@@ -56,7 +55,8 @@ public class NewsDetailActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_news_detail);
         initView();
-        new NetworkModule().get("/headline/get/1", handler, NewsDetailActivity.this);
+        Intent intent = getIntent();
+        new NetworkModule().get("/headline/get/" + intent.getStringExtra("journalismId"), handler, NewsDetailActivity.this);
        // netRequest();
     }
 

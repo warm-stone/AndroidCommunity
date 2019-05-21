@@ -19,6 +19,7 @@ import de.hdodenhof.circleimageview.CircleImageView;
 
 public class UserInfService {
 
+    private UserInformation userInformation = null;
     private long userId = -1;
     private String nickname = null;
     private Context context;
@@ -29,7 +30,6 @@ public class UserInfService {
         public boolean handleMessage(Message msg) {
             boolean isOnline = false;
             ReturnMsg returnUserInformation = null;
-            UserInformation userInformation = null;
             try {
                 returnUserInformation = new Gson().fromJson((String) msg.obj, ReturnMsg.class);
                 userInformation = returnUserInformation.getData();
@@ -90,6 +90,10 @@ public class UserInfService {
         this.context = context;
     }
 
+    public UserInformation getUserInformation () {
+        return userInformation;
+    }
+
     public void getUserInfById(long userId, CircleImageView imageView, TextView textView) {
         new NetworkModule().get("/user/findbyid?id=" + userId, handler, context);
         this.userId = userId;
@@ -97,6 +101,13 @@ public class UserInfService {
         this.textView = textView;
     }
 
+    public void getUserInfById(long userId, CircleImageView imageView, TextView textView, UserInformation userInformation) {
+        new NetworkModule().get("/user/findbyid?id=" + userId, handler, context);
+        this.userId = userId;
+        this.imageView = imageView;
+        this.textView = textView;
+        this.userInformation = userInformation;
+    }
     public void getUserInfByNickname(String nickname) {
         new NetworkModule().get("", handler, context);
         this.nickname = nickname;

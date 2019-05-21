@@ -55,7 +55,7 @@ public class NewsItemAdapter extends RecyclerView.Adapter {
                 int position = holder.getAdapterPosition();
                 Intent intent = new Intent(context, NewsDetailActivity.class);
                 News news = newsList.get(position);
-                intent.putExtra("journalismId", news.getId());
+                intent.putExtra("journalismId", news.getId() + "");
                 context.startActivity(intent);
             }
         });
@@ -71,7 +71,7 @@ public class NewsItemAdapter extends RecyclerView.Adapter {
         viewHolder.hadHeart.setText(String.valueOf(news.getStarNums()));
         String temp = news.getPublishTime().split("T")[0];
         viewHolder.publishTime.setText(temp);
-        Glide.with(context).load(news.getImgId()).error(R.drawable.ic_load_fail).into(viewHolder.newsImg);
+        Glide.with(context).load(news.getImages()).error(R.drawable.ic_load_fail).into(viewHolder.newsImg);
     }
 
     @Override

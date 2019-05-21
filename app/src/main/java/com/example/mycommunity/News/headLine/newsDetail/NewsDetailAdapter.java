@@ -48,7 +48,7 @@ class NewsDetailAdapter extends RecyclerView.Adapter {
         NewsDetail detail = details.get(position);
         ViewHolder holder = (ViewHolder)viewHolder;
         holder.detailText.setText(detail.getContent());
-        if (detail.getImageUrl() != null){
+        if (detail.getImageUrl() != null && !detail.getImageUrl().equals("")){
             Glide.with(context).load(detail.getImageUrl()).error(R.drawable.ic_load_fail).into(holder.detailImg);
         }
     }

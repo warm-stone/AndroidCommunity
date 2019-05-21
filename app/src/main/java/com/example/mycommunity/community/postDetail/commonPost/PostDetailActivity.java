@@ -21,6 +21,7 @@ import com.example.mycommunity.community.postDetail.Comment;
 import com.example.mycommunity.community.postDetail.CommentsAdapter;
 import com.example.mycommunity.community.star.Star;
 import com.example.mycommunity.userInf.UserInfService;
+import com.example.mycommunity.userInf.UserInformation;
 import com.google.gson.Gson;
 
 import java.text.DateFormat;
@@ -33,6 +34,7 @@ public class PostDetailActivity extends AppCompatActivity {
 
     private CommunityPost post;
     private RecyclerView commentsRecycleView;
+    private UserInformation userInformation = null;
     private Handler handler = new Handler(new Handler.Callback() {
         @Override
         public boolean handleMessage(Message msg) {
@@ -83,7 +85,7 @@ public class PostDetailActivity extends AppCompatActivity {
         if (post != null) {
 
             netRequest(post.getIdx());
-            Button follow = findViewById(R.id.post_detail_follow);
+            final Button follow = findViewById(R.id.post_detail_follow);
             CircleImageView userIc = findViewById(R.id.post_detail_user_ic);
             TextView userId = findViewById(R.id.post_detail_user_name);
             TextView date = findViewById(R.id.post_detail_pub_date);
@@ -94,14 +96,28 @@ public class PostDetailActivity extends AppCompatActivity {
             final ImageView heart = findViewById(R.id.community_icon_heart);
             final TextView heartCount = findViewById(R.id.community_heart_count_text_view);
             TextView commentsCount = findViewById(R.id.community_comments_count_text_View);
-            new UserInfService(this).getUserInfById(post.getUserId(), userIc, userId);
+            UserInfService userInfService = new UserInfService(this);
+            userInfService.getUserInfById(post.getUserId(), userIc, userId, userInformation);
             commentsRecycleView = findViewById(R.id.post_detail_user_comments_container);
+            follow.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    if (userInformation != null) {
+                        new NetworkModule().post("/news/follow/poster/" + userInformation.getNickname(),
+                                "",
+                                new Star(PostDetailActivity.this, userInformation).getFollowHandler(),
+                                PostDetailActivity.this
+                        );
+                        follow.setVisibility(View.GONE);
+                    }
+                }
+            });
             heartComponent.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     new NetworkModule().post("/news/collect/" + post.getIdx(),
                             "",
-                            new Star(PostDetailActivity.this, heart, heartCount, post).getHandler(),
+                            new Star(PostDetailActivity.this, heart, heartCount, post).getStarHandler(),
                             PostDetailActivity.this
                     );
                 }

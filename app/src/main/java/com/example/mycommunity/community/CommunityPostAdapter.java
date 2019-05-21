@@ -100,7 +100,7 @@ public class CommunityPostAdapter extends RecyclerView.Adapter {
                 int position = holder.getAdapterPosition();
                 new NetworkModule().post("/news/collect/" + posts.get(position).getIdx(),
                         "",
-                        new Star(context, holder.heart, holder.heartCount, posts.get(position)).getHandler(),
+                        new Star(context, holder.heart, holder.heartCount, posts.get(position)).getStarHandler(),
                         context);
             }
         });
