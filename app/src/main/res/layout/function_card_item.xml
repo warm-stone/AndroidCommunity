@@ -13,10 +13,8 @@
         <ImageView
             android:id="@+id/function_img"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:scaleType="centerInside"
-            android:padding="5dp"
-            android:contentDescription="TODO" />
+            android:layout_height="80dp"
+            android:scaleType="centerInside" />
         <TextView
             android:id="@+id/function_text"
             android:layout_width="match_parent"

@@ -17,15 +17,15 @@
             app:layout_scrollFlags="scroll|exitUntilCollapsed">
 
             <ImageView
+                android:id="@+id/user_img_background"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:scaleType="centerCrop"
                 android:src="@drawable/ic_big_news"
-                app:layout_collapseMode="parallax"
-                android:contentDescription="TODO" />
+                app:layout_collapseMode="parallax" />
 
             <de.hdodenhof.circleimageview.CircleImageView
-                android:id="@+id/mine_user_ic"
+                android:id="@+id/user_img_user_ic"
                 android:layout_width="80dp"
                 android:layout_height="80dp"
                 android:layout_gravity="center"
@@ -38,18 +38,4 @@
         </android.support.design.widget.CollapsingToolbarLayout>
     </android.support.design.widget.AppBarLayout>
 
-    <Button
-        android:id="@+id/select_user_img_button"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
-    <Button
-        android:id="@+id/select_user_img_camera"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="end"/>
-
-    <ImageView
-        android:id="@+id/select_user_img_img"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
 </android.support.design.widget.CoordinatorLayout>

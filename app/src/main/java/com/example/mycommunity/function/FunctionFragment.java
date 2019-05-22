@@ -13,6 +13,8 @@ import android.view.ViewGroup;
 import com.example.mycommunity.R;
 
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collection;
 import java.util.List;
 
 public class FunctionFragment extends Fragment {
@@ -29,11 +31,9 @@ public class FunctionFragment extends Fragment {
         Function[] functions = new Function[]{
                 new Function(R.drawable.ic_repair, "立即报修"),
                 new Function(R.drawable.ic_for_water, "送水服务"),
-                new Function(R.drawable.ic_secretary, "找书记")};
-        List<Function> functionList = new ArrayList<>();
-        for (int i = 0; i < 3; i++) {
-            functionList.add(functions[i]);
-        }
+                new Function(R.drawable.ic_secretary, "找书记"),
+                new Function(R.drawable.ic_vote, "投票")};
+        List<Function> functionList = Arrays.asList(functions);
         GridLayoutManager layoutManager = new GridLayoutManager(getContext(), 3);
         RecyclerView recyclerView = view.findViewById(R.id.function_recycle_view);
         recyclerView.setLayoutManager(layoutManager);

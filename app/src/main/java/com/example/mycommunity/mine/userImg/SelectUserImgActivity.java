@@ -32,12 +32,15 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 
+import de.hdodenhof.circleimageview.CircleImageView;
+
 public class SelectUserImgActivity extends AppCompatActivity {
 
     private static final int TAKE_PHOTO = 1;
     private static final int CHOOSE_PHOTO = 2;
     private Uri imgUri;
-    private ImageView imageView;
+    private ImageView userBackground;
+    private CircleImageView user_img;
     private Handler handler = new Handler(new Handler.Callback() {
         @Override
         public boolean handleMessage(Message msg) {
@@ -84,12 +87,6 @@ public class SelectUserImgActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_select_user_img);
-        imageView = findViewById(R.id.select_user_img_img);
-        Button button = findViewById(R.id.select_user_img_button);
-        button.setOnClickListener(onClickListener);
-        Button button1 = findViewById(R.id.select_user_img_camera);
-        button1.setOnClickListener(takePhoto);
-
     }
 
     @Override
@@ -112,7 +109,6 @@ public class SelectUserImgActivity extends AppCompatActivity {
                 if (resultCode == RESULT_OK) {
                     try {
                         Bitmap bitmap = BitmapFactory.decodeStream(getContentResolver().openInputStream(imgUri));
-                        imageView.setImageBitmap(bitmap);
                     } catch (FileNotFoundException e) {
                         Log.w("test", e);
                     }
@@ -143,7 +139,6 @@ public class SelectUserImgActivity extends AppCompatActivity {
         } else if ("file".equalsIgnoreCase(uri.getScheme())) {
             imgPath = uri.getPath();
         }
-        displayImg(imgPath);
     }
 
     private void openAlbum() {
@@ -165,10 +160,4 @@ public class SelectUserImgActivity extends AppCompatActivity {
         return path;
     }
 
-    private void displayImg(String imgPath) {
-        if (imgPath != null) {
-            Bitmap bitmap = BitmapFactory.decodeFile(imgPath);
-            imageView.setImageBitmap(bitmap);
-        }
-    }
 }

@@ -1,77 +1,81 @@
 package com.example.mycommunity;
 
+import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.net.Uri;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
+import android.provider.MediaStore;
+import android.support.annotation.Nullable;
+import android.support.v4.content.FileProvider;
 import android.support.v7.app.AppCompatActivity;
-import android.view.Gravity;
-import android.view.LayoutInflater;
+import android.util.Log;
 import android.view.View;
-import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.PopupWindow;
 
-import com.bigkoo.pickerview.adapter.ArrayWheelAdapter;
-import com.contrarywind.listener.OnItemSelectedListener;
 import com.contrarywind.view.WheelView;
-import com.example.mycommunity.login.Login;
+import com.example.mycommunity.mine.userImg.SelectUserImgActivity;
 import com.example.mycommunity.news.headLine.News;
 
 import org.litepal.LitePal;
 
+import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.List;
 
-import okhttp3.Call;
-import okhttp3.Callback;
-import okhttp3.OkHttpClient;
-import okhttp3.Request;
-import okhttp3.Response;
-
 public class test extends AppCompatActivity {
-
-    WheelView wheelView;
-    PopupWindow popupWindow;
+    private File outputImg;
+    private Uri imgUri;
+    private Handler handler = new Handler(new Handler.Callback() {
+        @Override
+        public boolean handleMessage(Message msg) {
+            int t = msg.what;
+            return false;
+        }
+    });
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_test);
-        News n = new News();
-        n.setAuthor("asd");
-        n.setCommentNums(1);
-        n.setDescription("就是测试而已");
-        boolean t =  n.save();
-        List<News> news = LitePal.findAll(News.class);
+        Button button = findViewById(R.id.button);
+        button.setOnClickListener(onClickListener);
     }
 
     View.OnClickListener onClickListener = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
+            takePhoto();
         }
     };
     View.OnClickListener onClickListener2 = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
-
         }
     };
 
-    private void netRequest(){
-        OkHttpClient client = new OkHttpClient();
-        Request request = new Request.Builder().url("http://www.fangxiaosong.me:8080/chengfeng/news/nice").header("Authorization", Login.getAuthorization(this)).build();
-        client.newCall(request).enqueue(new Callback() {
-            @Override
-            public void onFailure(Call call, IOException e) {
-
-            }
-
-            @Override
-            public void onResponse(Call call, Response response) throws IOException {
-                String s = response.body().string();
-            }
-        });
+    private void takePhoto() {
+        outputImg = new File(getExternalFilesDir(MediaStore.Images.Media.MIME_TYPE), "output_img.jpg");
+        imgUri = FileProvider.getUriForFile(this, "com.example.selectuserimg.fileprovider", outputImg);
+        Intent intent = new Intent("android.media.action.IMAGE_CAPTURE");
+        intent.putExtra(MediaStore.EXTRA_OUTPUT, imgUri);
+        startActivityForResult(intent, 1);
     }
 
-
-
+    @Override
+        protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+            super.onActivityResult(requestCode, resultCode, data);
+            if (resultCode == RESULT_OK) {
+                try {
+                    Bitmap bitmap = BitmapFactory.decodeStream(getContentResolver().openInputStream(imgUri));
+                    new NetworkModule().postImg("/file/uploads", "jpg", outputImg, handler, this);
+                } catch (FileNotFoundException e) {
+                    Log.w("test", e);
+                }
+            }
+    }
 }

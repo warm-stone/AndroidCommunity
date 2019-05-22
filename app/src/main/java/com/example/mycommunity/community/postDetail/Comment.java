@@ -14,6 +14,15 @@ public class Comment {
     private long replyTime;
     private long parentId;
     private long postId;
+    private String nickname;
+    private String avatar;
+    /**
+     * postId : 34
+     * imageUrl : http://47.95.244.237:8888/group1/M00/00/00/rBElLFyS5V6APMzyAAiQx3COPNA489.jpg
+     * parentId : 0
+     */
+
+    private String imageUrl;
 
     public long getId() {
         return id;
@@ -53,5 +62,29 @@ public class Comment {
 
     public void setPostId(long postId) {
         this.postId = postId;
+    }
+
+    public String getNickname() {
+        return nickname;
+    }
+
+    public void setNickname(String nickname) {
+        this.nickname = nickname;
+    }
+
+    public String getAvatar() {
+        return avatar;
+    }
+
+    public void setAvatar(String avatar) {
+        this.avatar = avatar;
+    }
+
+    public String getImageUrl() {
+        return imageUrl;
+    }
+
+    public void setImageUrl(String imageUrl) {
+        this.imageUrl = imageUrl;
     }
 }

@@ -8,6 +8,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
 import com.example.mycommunity.R;
 
 import java.util.List;
@@ -16,6 +17,7 @@ import de.hdodenhof.circleimageview.CircleImageView;
 
 public class CommentsAdapter extends RecyclerView.Adapter {
     private List<Comment> comments;
+    private Context context = null;
 
     public CommentsAdapter(List<Comment> comments) {
         this.comments = comments;
@@ -37,7 +39,9 @@ public class CommentsAdapter extends RecyclerView.Adapter {
     @NonNull
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
-        Context context = viewGroup.getContext();
+        if (context == null) {
+            context = viewGroup.getContext();
+        }
         View view = LayoutInflater.from(context).inflate(R.layout.reply_item, viewGroup, false);
         ViewHolder holder = new ViewHolder(view);
         holder.replyContent.setOnClickListener(new View.OnClickListener() {
@@ -55,6 +59,10 @@ public class CommentsAdapter extends RecyclerView.Adapter {
         Comment comment = comments.get(position);
         ViewHolder holder = (ViewHolder)viewHolder;
         holder.replyContent.setText(comment.getContent());
+        holder.username.setText(comment.getNickname());
+        if (comment.getAvatar() != null && comment.getAvatar().equals("")) {
+            Glide.with(context).load(comment.getAvatar()).error(R.drawable.ic_error_ic).into(holder.userIc);
+        }
     }
 
     @Override

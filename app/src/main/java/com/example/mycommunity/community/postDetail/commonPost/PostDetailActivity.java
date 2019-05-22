@@ -8,7 +8,9 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -35,6 +37,9 @@ public class PostDetailActivity extends AppCompatActivity {
     private CommunityPost post;
     private RecyclerView commentsRecycleView;
     private UserInformation userInformation = null;
+    private EditText postCommentContent;
+    private LinearLayout postCommentComponent;
+
     private Handler handler = new Handler(new Handler.Callback() {
         @Override
         public boolean handleMessage(Message msg) {
@@ -99,6 +104,9 @@ public class PostDetailActivity extends AppCompatActivity {
             UserInfService userInfService = new UserInfService(this);
             userInfService.getUserInfById(post.getUserId(), userIc, userId, userInformation);
             commentsRecycleView = findViewById(R.id.post_detail_user_comments_container);
+            postCommentComponent = findViewById(R.id.post_detail_post_comment_component);
+            postCommentContent = findViewById(R.id.post_detail_comment_content);
+            final TextView postComment = findViewById(R.id.post_detail_post_comment);
             follow.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -129,12 +137,74 @@ public class PostDetailActivity extends AppCompatActivity {
             date.setText(
                     DateFormat.getDateInstance(2).format(new Date(post.getPosted()))
             );
+            commentsComponent.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    postCommentComponent.setVisibility(View.VISIBLE);
+                    postCommentContent.setFocusable(true);
+                    postCommentContent.setFocusableInTouchMode(true);
+                    postCommentContent.requestFocus();
+                    showInput(postCommentContent);
+                }
+            });
+            postComment.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    hideInput();
+                    Comment comment = new Comment();
+                    comment.setContent(postCommentContent.getText().toString());
+                    comment.setPostId(post.getIdx());
+                    new NetworkModule().post(
+                            "/news/reply/create",
+                            new Gson().toJson(comment),
+                            new Handler(new Handler.Callback() {
+                                @Override
+                                public boolean handleMessage(Message msg) {
+                                    postCommentComponent.setVisibility(View.GONE);
+                                    switch (msg.what) {
+                                        case 0:
+                                            netRequest(post.getIdx());
+                                            break;
+                                        case 1:
+                                            UserNotice.showToast(PostDetailActivity.this, UserNotice.NETWORK_CONNECT_FAILURE);
+                                            break;
+                                        case 2:
+                                            UserNotice.showToast(PostDetailActivity.this, UserNotice.USER_AUTHENTICATION_FAILURE);
+                                            break;
+                                        case 3:
+                                            netRequest(post.getIdx());
+                                            break;
+                                        case 4:
+                                            UserNotice.showToast(PostDetailActivity.this, "请输入评论");
+                                            break;
+                                        default:
+                                            UserNotice.showToast(PostDetailActivity.this, UserNotice.UNEXPECTED_STATE);
+                                    }
+                                    return false;
+                                }
+                            }),
+                            PostDetailActivity.this);
+                }
+            });
             postDetailText.setText(post.getDescription());
-            // heartComponent.
         }
     }
 
     private void netRequest(int id) {
         new NetworkModule().get("/news/detail/" + id, handler, PostDetailActivity.this);
+    }
+
+    public void showInput(EditText et) {
+        et.requestFocus();
+        InputMethodManager imm = (InputMethodManager) getSystemService(INPUT_METHOD_SERVICE);
+        imm.showSoftInput(et, InputMethodManager.SHOW_IMPLICIT);
+    }
+
+    protected void hideInput() {
+        InputMethodManager imm = (InputMethodManager) getSystemService(INPUT_METHOD_SERVICE);
+        View v = getWindow().peekDecorView();
+        if (null != v) {
+            imm.hideSoftInputFromWindow(v.getWindowToken(), 0);
+        }
     }
 }

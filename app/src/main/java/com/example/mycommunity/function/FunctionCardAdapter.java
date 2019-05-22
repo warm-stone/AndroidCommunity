@@ -52,7 +52,7 @@ public class FunctionCardAdapter extends RecyclerView.Adapter {
                 new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        Intent intent;
+                        Intent intent = null;
                         int position = holder.getAdapterPosition();
                         switch (position) {
                             case 0:
@@ -64,9 +64,8 @@ public class FunctionCardAdapter extends RecyclerView.Adapter {
                             case 2:
                                 intent = new Intent(mContext, ForSecretaryActivity.class);
                                 break;
-                            default:
-                                intent = new Intent();
                         }
+                        if (intent != null)
                         mContext.startActivity(intent);
                     }
                 });

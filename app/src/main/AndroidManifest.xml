@@ -29,12 +29,12 @@
         <activity
             android:name=".main.MainCommunity"
             android:label="@string/title_activity_main_community">
+        </activity>
+        <activity android:name=".test" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
-        </activity>
-        <activity android:name=".test" >
         </activity>
         <activity android:name=".login.ForgetPassWord" />
         <activity android:name=".login.RegisterActivity" />

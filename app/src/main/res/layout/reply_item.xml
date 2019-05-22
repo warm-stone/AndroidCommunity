@@ -25,8 +25,10 @@
         android:layout_marginTop="3dp"
         android:layout_marginEnd="8dp"/>
     <View
-        android:layout_marginStart="38dp"
+        android:layout_marginStart="50dp"
         android:layout_width="wrap_content"
         android:layout_height="1sp"
+        android:layout_marginTop="6dp"
+        android:background="@color/gray"
         android:layout_below="@id/reply_content"/>
 </RelativeLayout>

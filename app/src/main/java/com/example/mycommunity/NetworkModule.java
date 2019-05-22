@@ -126,7 +126,8 @@ public class NetworkModule {
     public  void postImg(String url,String imgName, File file, Handler mHandler, Context mContext){
         context = mContext;
         handler = mHandler;
-        RequestBody fileBody = RequestBody.create(MediaType.parse("image/jpg"), file);
+        url = baseUrl + url;
+        RequestBody fileBody = RequestBody.create(MediaType.parse("multipart/form-data"), file);
         RequestBody requestBody = new  MultipartBody.Builder().addFormDataPart("files", imgName, fileBody).build();
         Request request = new Request.Builder().url(url).header("Authorization", Login.getAuthorization(mContext)).post(requestBody).build();
         client.newCall(request).enqueue(stateCheck);
