@@ -65,7 +65,7 @@ public class LoginActivity extends AppCompatActivity {
                 case 0:
                     ReturnUserInformation information = gson.fromJson((String) msg.obj, ReturnUserInformation.class);
                     UserInformation base_info = information.getData().getBase_info();
-                    userInformation.setId(base_info.getId());
+                    userInformation.setIdx(base_info.getIdx());
                     userInformation.setCommunityId(base_info.getCommunityId());
                     Login.storageInformation(userInformation, LoginActivity.this);
                     finish();

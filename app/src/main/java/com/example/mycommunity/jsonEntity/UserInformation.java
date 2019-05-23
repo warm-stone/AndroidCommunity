@@ -1,5 +1,7 @@
 package com.example.mycommunity.jsonEntity;
 
+import com.google.gson.annotations.SerializedName;
+
 import org.litepal.crud.LitePalSupport;
 
 public class UserInformation  extends LitePalSupport {
@@ -11,6 +13,7 @@ public class UserInformation  extends LitePalSupport {
     * avatar : 头像地址
     * motto : 个性签名
     * */
+    private boolean me = false;
     private String nickname;
     private String password;
     private String phone;
@@ -31,8 +34,8 @@ public class UserInformation  extends LitePalSupport {
      * birthday : -28800000
      * signUp : 1553937229000
      */
-
-    private long id;
+    @SerializedName("id")
+    private long idx;
     private long integral;
     private long signUp;
 
@@ -160,14 +163,6 @@ public class UserInformation  extends LitePalSupport {
         this.motto = motto;
     }
 
-    public long getId() {
-        return id;
-    }
-
-    public void setId(long id) {
-        this.id = id;
-    }
-
     public long getIntegral() {
         return integral;
     }
@@ -182,6 +177,26 @@ public class UserInformation  extends LitePalSupport {
 
     public void setSignUp(long signUp) {
         this.signUp = signUp;
+    }
+
+    public boolean isMe() {
+        return me;
+    }
+
+    public void setMe(boolean me) {
+        this.me = me;
+    }
+
+    public void setBirthday(long birthday) {
+        this.birthday = birthday;
+    }
+
+    public long getIdx() {
+        return idx;
+    }
+
+    public void setIdx(long idx) {
+        this.idx = idx;
     }
 }
 
