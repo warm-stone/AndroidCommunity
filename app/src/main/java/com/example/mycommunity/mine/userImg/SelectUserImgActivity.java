@@ -20,73 +20,150 @@ import android.support.v4.content.FileProvider;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
-import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.TextView;
 
-import com.example.mycommunity.UserNotice;
-import com.example.mycommunity.mine.ReturnImgUrl;
+import com.bigkoo.pickerview.adapter.ArrayWheelAdapter;
+import com.bumptech.glide.Glide;
+import com.contrarywind.listener.OnItemSelectedListener;
+import com.contrarywind.view.WheelView;
+import com.example.mycommunity.MyPopWheel;
+import com.example.mycommunity.NetworkModule;
 import com.example.mycommunity.R;
+import com.example.mycommunity.UserNotice;
+import com.example.mycommunity.imgService.ReturnImgMsg;
 import com.google.gson.Gson;
 
 import java.io.File;
 import java.io.FileNotFoundException;
-import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Arrays;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
 public class SelectUserImgActivity extends AppCompatActivity {
 
-    private static final int TAKE_PHOTO = 1;
-    private static final int CHOOSE_PHOTO = 2;
+    private static final int TAKE_PHOTO = 0;
+    private static final int CHOOSE_PHOTO = 1;
+    private static int action = -1;
+    private static int which = -1;
     private Uri imgUri;
     private ImageView userBackground;
-    private CircleImageView user_img;
+    private CircleImageView userImg;
+    private File imgHolder;
     private Handler handler = new Handler(new Handler.Callback() {
         @Override
         public boolean handleMessage(Message msg) {
-            Gson gson = new Gson();
-            String s = (String) msg.obj;
-            ReturnImgUrl returnImgUrl = gson.fromJson((String) msg.obj, ReturnImgUrl.class);
+            ReturnImgMsg imgMsg = null;
+            String url = null;
+            try {
+                imgMsg = new Gson().fromJson((String) msg.obj, ReturnImgMsg.class);
+                url = imgMsg.getData();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+            switch (msg.what) {
+                case 0:
+                    if (which == 1) {
+                        Glide.with(SelectUserImgActivity.this).load(url).placeholder(R.drawable.ic_error_ic).into(userImg);
+                    } else if (which == 2) {
+                        Glide.with(SelectUserImgActivity.this).load(url).placeholder(R.drawable.ic_error_ic).into(userBackground);
+                    }
+                    which = -1;
+                    break;
+                case 1:
+                    UserNotice.showToast(SelectUserImgActivity.this, UserNotice.NETWORK_CONNECT_FAILURE);
+                    break;
+                case 2:
+                    UserNotice.showToast(SelectUserImgActivity.this, UserNotice.USER_AUTHENTICATION_FAILURE);
+                    break;
+                case 3:
+                    netRequest();
+                    break;
+                case 4:
+                    UserNotice.showToast(SelectUserImgActivity.this, imgMsg.getMessage());
+                    break;
+                default:
+                    UserNotice.showToast(SelectUserImgActivity.this, UserNotice.UNEXPECTED_STATE);
+            }
             return false;
         }
     });
-    File outputImg;
-    private View.OnClickListener takePhoto = new View.OnClickListener() {
-        @Override
-        public void onClick(View v) {
-            outputImg = new File(getExternalFilesDir(MediaStore.Images.Media.MIME_TYPE), "output_img.jpg");
-            try {
 
-                if (outputImg.exists()) {
-                    outputImg.delete();
-                }
-                outputImg.createNewFile();
-            } catch (IOException e) {
-                Log.w("test", e);
-            }
-            imgUri = FileProvider.getUriForFile(SelectUserImgActivity.this, "com.example.selectuserimg.fileprovider", outputImg);
-            Intent intent = new Intent("android.media.action.IMAGE_CAPTURE");
-            intent.putExtra(MediaStore.EXTRA_OUTPUT, imgUri);
-            startActivityForResult(intent, TAKE_PHOTO);
+    private void takePhoto() {
+        imgHolder = new File(getExternalFilesDir(MediaStore.Images.Media.MIME_TYPE), "output_img.jpg");
+        imgUri = FileProvider.getUriForFile(SelectUserImgActivity.this, "com.example.selectuserimg.fileprovider", imgHolder);
+        Intent intent = new Intent("android.media.action.IMAGE_CAPTURE");
+        intent.putExtra(MediaStore.EXTRA_OUTPUT, imgUri);
+        startActivityForResult(intent, TAKE_PHOTO);
+    }
+
+    private void choosePhoto() {
+        if (ContextCompat.checkSelfPermission(SelectUserImgActivity.this, Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
+            ActivityCompat.requestPermissions(SelectUserImgActivity.this,
+                    new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, 1);
+        } else {
+            openAlbum();
         }
-    };
-    private View.OnClickListener onClickListener = new View.OnClickListener() {
-        @Override
-        public void onClick(View v) {
-            if (ContextCompat.checkSelfPermission(SelectUserImgActivity.this, Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
-                ActivityCompat.requestPermissions(SelectUserImgActivity.this,
-                        new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, 1);
-            } else {
-                openAlbum();
-            }
-        }
-    };
+    }
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_select_user_img);
+        initView();
+    }
+
+    private void initView() {
+        userImg = findViewById(R.id.user_img_user_ic);
+        userBackground = findViewById(R.id.user_img_background);
+        final MyPopWheel myPopWheel = new MyPopWheel(this);
+        View view = myPopWheel.getSelector();
+        TextView selectCancel = view.findViewById(R.id.wheel_item_select_cancel);
+        TextView selectConfirm = view.findViewById(R.id.wheel_item_select_confirm);
+        WheelView wheelView = view.findViewById(R.id.wheel_item_wheel);
+        selectCancel.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                action = -1;
+                myPopWheel.popOut();
+            }
+        });
+        selectConfirm.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                myPopWheel.popOut();
+                if (action == TAKE_PHOTO) {
+                    takePhoto();
+                } else if (action == CHOOSE_PHOTO) {
+                    choosePhoto();
+                }
+            }
+        });
+        wheelView.setCyclic(false);
+        wheelView.setAdapter(new ArrayWheelAdapter<>(new ArrayList<String>(Arrays.asList("拍照", "相册选取"))));
+        wheelView.setOnItemSelectedListener(new OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(int index) {
+                action = index;
+            }
+        });
+        userImg.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                which = 1;
+                myPopWheel.popIn(v);
+            }
+        });
+        userBackground.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                which = 2;
+                myPopWheel.popIn(v);
+            }
+        });
+
     }
 
     @Override
@@ -116,14 +193,23 @@ public class SelectUserImgActivity extends AppCompatActivity {
                 break;
             case CHOOSE_PHOTO:
                 if (resultCode == RESULT_OK) {
-                    handleImgOnKitKat(data);
+                    String path = handleImgOnKitKat(data);
+                    imgHolder = new File(path);
                 }
+                break;
+            default:
+                imgHolder = null;
         }
+        if (imgHolder != null) {
+            netRequest();
+        }
+
+
     }
 
-    private void handleImgOnKitKat(Intent data) {
+    private String handleImgOnKitKat(Intent data) {
         String imgPath = null;
-        Uri uri = (Uri) data.getData();
+        Uri uri = data.getData();
         if (DocumentsContract.isDocumentUri(this, uri)) {
             String docId = DocumentsContract.getDocumentId(uri);
             if ("com.android.providers.media.documents".equals(uri.getAuthority())) {
@@ -139,6 +225,7 @@ public class SelectUserImgActivity extends AppCompatActivity {
         } else if ("file".equalsIgnoreCase(uri.getScheme())) {
             imgPath = uri.getPath();
         }
+        return imgPath;
     }
 
     private void openAlbum() {
@@ -158,6 +245,10 @@ public class SelectUserImgActivity extends AppCompatActivity {
         }
 
         return path;
+    }
+
+    private void netRequest() {
+        new NetworkModule().postImg("/file/uploads", "jpg", imgHolder, handler, this);
     }
 
 }

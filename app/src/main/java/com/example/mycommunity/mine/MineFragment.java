@@ -28,6 +28,7 @@ import okhttp3.Response;
 
 public class MineFragment extends Fragment {
 
+    private static final int ACCOUNT = 234;
     private Gson gson = new Gson();
     private Handler handler = new Handler(new Handler.Callback() {
         @Override
@@ -37,13 +38,6 @@ public class MineFragment extends Fragment {
             return false;
         }
     });
-    private View.OnClickListener signOutListener = new View.OnClickListener() {
-        @Override
-        public void onClick(View v) {
-            String url = "/logout";
-            new NetworkModule().post(url, "", handler, getContext());
-        }
-    };
 
     private Callback callback = new Callback() {
         @Override
@@ -79,7 +73,7 @@ public class MineFragment extends Fragment {
         @Override
         public void onClick(View v) {
             Intent intent = new Intent(getContext(), UserAccountActivity.class);
-            startActivity(intent);
+            startActivityForResult(intent, ACCOUNT);
         }
     };
 
@@ -97,7 +91,13 @@ public class MineFragment extends Fragment {
         signOutText.setTextColor(getResources().getColor(R.color.red));
         informationText.setText("个人信息");
         messageText.setText("消息");
-        signOut.setOnClickListener(signOutListener);
+        signOut.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String url = "/logout";
+                new NetworkModule().post(url, "", handler, getContext());
+            }
+        });
         RelativeLayout account = view.findViewById(R.id.mine_account);
         TextView accountText = account.findViewById(R.id.user_information_text);
         accountText.setText("账户");

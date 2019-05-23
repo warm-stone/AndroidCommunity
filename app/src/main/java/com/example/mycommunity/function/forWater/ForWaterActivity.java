@@ -196,28 +196,4 @@ public class ForWaterActivity extends AppCompatActivity {
         });
 
     }
-
-
-    private void test() {
-        final List<String> brands = new ArrayList<>();
-        brands.add("打发");
-        brands.add("打山东发");
-        brands.add("打发sdf");
-        brands.add("打发");
-        brands.add("打发是");
-        brands.add("打撒发");
-        if (brands.size() != 0) {
-            wheelView.setAdapter(new ArrayWheelAdapter<>(brands));
-            wheelView.setOnItemSelectedListener(new OnItemSelectedListener() {
-                @Override
-                public void onItemSelected(int index) {
-                    Water water = new Water();
-                    water.setBrand(brands.get(index));
-                    selectedWater = water;
-                }
-            });
-        }
-    }
-
-
 }
