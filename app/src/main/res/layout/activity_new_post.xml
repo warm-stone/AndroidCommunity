@@ -23,7 +23,7 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:text="发布到社区"
-                android:textColor="@color/black"
+                android:textColor="@color/white"
                 android:textSize="16dp" />
 
             <TextView
@@ -72,8 +72,7 @@
                 android:layout_width="80dp"
                 android:layout_height="80dp"
                 android:layout_below="@+id/new_post_content"
-                android:scaleType="centerCrop"
-                android:src="@drawable/ic_placeholder" />
+                android:scaleType="centerCrop"/>
         </RelativeLayout>
     </android.support.v4.widget.NestedScrollView>
 </android.support.design.widget.CoordinatorLayout>

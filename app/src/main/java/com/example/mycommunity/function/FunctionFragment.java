@@ -31,8 +31,7 @@ public class FunctionFragment extends Fragment {
         Function[] functions = new Function[]{
                 new Function(R.drawable.ic_repair, "立即报修"),
                 new Function(R.drawable.ic_for_water, "送水服务"),
-                new Function(R.drawable.ic_secretary, "找书记"),
-                new Function(R.drawable.ic_vote, "投票")};
+                new Function(R.drawable.ic_secretary, "找书记")};
         List<Function> functionList = Arrays.asList(functions);
         GridLayoutManager layoutManager = new GridLayoutManager(getContext(), 3);
         RecyclerView recyclerView = view.findViewById(R.id.function_recycle_view);

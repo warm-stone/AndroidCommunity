@@ -32,6 +32,9 @@ import com.example.mycommunity.NetworkModule;
 import com.example.mycommunity.R;
 import com.example.mycommunity.UserNotice;
 import com.example.mycommunity.imgService.ReturnImgMsg;
+import com.example.mycommunity.jsonEntity.ReturnMsg;
+import com.example.mycommunity.jsonEntity.UserInformation;
+import com.example.mycommunity.login.Login;
 import com.google.gson.Gson;
 
 import java.io.File;
@@ -43,9 +46,11 @@ import de.hdodenhof.circleimageview.CircleImageView;
 
 public class SelectUserImgActivity extends AppCompatActivity {
 
+    private UserInformation userInformation = null;
+    private String url = null;
     private static final int TAKE_PHOTO = 0;
     private static final int CHOOSE_PHOTO = 1;
-    private static int action = -1;
+    private static int action = 0;
     private static int which = -1;
     private Uri imgUri;
     private ImageView userBackground;
@@ -55,7 +60,7 @@ public class SelectUserImgActivity extends AppCompatActivity {
         @Override
         public boolean handleMessage(Message msg) {
             ReturnImgMsg imgMsg = null;
-            String url = null;
+            url = null;
             try {
                 imgMsg = new Gson().fromJson((String) msg.obj, ReturnImgMsg.class);
                 url = imgMsg.getData();
@@ -64,11 +69,68 @@ public class SelectUserImgActivity extends AppCompatActivity {
             }
             switch (msg.what) {
                 case 0:
-                    if (which == 1) {
-                        Glide.with(SelectUserImgActivity.this).load(url).placeholder(R.drawable.ic_error_ic).into(userImg);
-                    } else if (which == 2) {
-                        Glide.with(SelectUserImgActivity.this).load(url).placeholder(R.drawable.ic_error_ic).into(userBackground);
+                    if (url != null && which == 2) {
+                        Glide.with(SelectUserImgActivity.this).load(url).into(userBackground);
+                        Login.storeBackground(url, SelectUserImgActivity.this);
                     }
+                    final Intent intent = new Intent();
+                    userInformation.setAvatar(url);
+                    intent.putExtra("userInformation", userInformation);
+                    SelectUserImgActivity.this.setResult(RESULT_OK, intent);
+                    final String s = userInformation.getNickname();
+                    userInformation.setNickname(null);
+                    if (which == 1)
+                        new NetworkModule().put(
+                                "/user/update",
+                                new Gson().toJson(userInformation, UserInformation.class),
+                                new Handler(new Handler.Callback() {
+                                    @Override
+                                    public boolean handleMessage(Message msg) {
+                                        ReturnMsg returnMsg = null;
+                                        try {
+                                            Gson gson = new Gson();
+                                            returnMsg = gson.fromJson(((String) msg.obj), ReturnMsg.class);
+                                        } catch (Exception e) {
+                                            e.printStackTrace();
+                                        }
+                                        switch (msg.what) {
+                                            case 0:
+                                                if (url != null && which == 1) {
+                                                    Glide.with(SelectUserImgActivity.this).load(url).into(userImg);
+                                                    userInformation.setAvatar(url);
+                                                }
+                                                SelectUserImgActivity.this.setResult(RESULT_OK, intent);
+                                                userInformation.setNickname(s);
+                                                Login.storageInformation(userInformation, SelectUserImgActivity.this);
+                                                finish();
+                                                break;
+                                            case 1:
+                                                UserNotice.showToast(SelectUserImgActivity.this, UserNotice.NETWORK_CONNECT_FAILURE);
+                                                break;
+                                            case 2:
+                                                UserNotice.showToast(SelectUserImgActivity.this, UserNotice.USER_AUTHENTICATION_FAILURE);
+                                                break;
+                                            case 3:
+                                                new NetworkModule().put(
+                                                        "/user/update",
+                                                        new Gson().toJson(userInformation, UserInformation.class),
+                                                        new Handler(this),
+                                                        SelectUserImgActivity.this
+                                                );
+                                                break;
+                                            case 4:
+                                                if (returnMsg != null)
+                                                    UserNotice.showToast(SelectUserImgActivity.this, returnMsg.getMessage());
+                                                break;
+                                            case 5:
+                                                UserNotice.showToast(SelectUserImgActivity.this, UserNotice.UNFORMATTED_DATA);
+
+                                        }
+                                        return false;
+                                    }
+                                }),
+                                SelectUserImgActivity.this
+                        );
                     which = -1;
                     break;
                 case 1:
@@ -81,7 +143,8 @@ public class SelectUserImgActivity extends AppCompatActivity {
                     netRequest();
                     break;
                 case 4:
-                    UserNotice.showToast(SelectUserImgActivity.this, imgMsg.getMessage());
+                    if (imgMsg != null)
+                        UserNotice.showToast(SelectUserImgActivity.this, imgMsg.getMessage());
                     break;
                 default:
                     UserNotice.showToast(SelectUserImgActivity.this, UserNotice.UNEXPECTED_STATE);
@@ -116,8 +179,15 @@ public class SelectUserImgActivity extends AppCompatActivity {
     }
 
     private void initView() {
+        Intent intent = getIntent();
+        if (intent.getSerializableExtra("userInformation") != null)
+            userInformation = (UserInformation) intent.getSerializableExtra("userInformation");
         userImg = findViewById(R.id.user_img_user_ic);
         userBackground = findViewById(R.id.user_img_background);
+        if (userInformation.getAvatar() != null && !userInformation.getAvatar().equals(""))
+            Glide.with(this).load(userInformation.getAvatar()).into(userImg);
+        if (Login.getBackground(this) != null)
+            Glide.with(this).load(Login.getBackground(this)).into(userBackground);
         final MyPopWheel myPopWheel = new MyPopWheel(this);
         View view = myPopWheel.getSelector();
         TextView selectCancel = view.findViewById(R.id.wheel_item_select_cancel);
@@ -142,7 +212,7 @@ public class SelectUserImgActivity extends AppCompatActivity {
             }
         });
         wheelView.setCyclic(false);
-        wheelView.setAdapter(new ArrayWheelAdapter<>(new ArrayList<String>(Arrays.asList("拍照", "相册选取"))));
+        wheelView.setAdapter(new ArrayWheelAdapter<>(new ArrayList<>(Arrays.asList("拍照", "相册选取"))));
         wheelView.setOnItemSelectedListener(new OnItemSelectedListener() {
             @Override
             public void onItemSelected(int index) {

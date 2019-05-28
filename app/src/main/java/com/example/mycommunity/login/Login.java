@@ -5,8 +5,8 @@ import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
 
 import com.example.mycommunity.CacheManager;
-import com.example.mycommunity.jsonEntity.UserInformation;
 import com.example.mycommunity.NetworkModule;
+import com.example.mycommunity.jsonEntity.UserInformation;
 
 import java.util.List;
 
@@ -27,7 +27,7 @@ public class Login {
 //        editor = preferences.edit();
 //        editor.putString("nickname", userInformation.getNickname());
 //        editor.putString("password", userInformation.getPassword());
-//        editor.putBoolean("isRemember", true);
+        editor.putBoolean("isRemember", true);
         editor.putBoolean("isLoggedIn", true);
         editor.apply();
     }
@@ -79,7 +79,7 @@ public class Login {
 //        editor.putString("motto", information.getMotto());
 //        editor.putInt("communityId", information.getCommunityId());
 //        editor.putString("communityName", information.getCommunityName());
-//        editor.putBoolean("isRemember", true);
+        editor.putBoolean("isRemember", true);
         editor.putBoolean("isLoggedIn", true);
         editor.apply();
     }
@@ -114,7 +114,7 @@ public class Login {
 //        editor.remove("community");
         editor.remove("isLoggedIn");
         editor.remove("Authorization");
-//        editor.remove("isRemember");
+        editor.remove("isRemember");
         editor.apply();
     }
 
@@ -140,12 +140,13 @@ public class Login {
         editor.apply();
     }
 
-    public static String getPhone(Context context){
+    public static String getPhone(Context context) {
         UserInformation userInformation = loadInformation(context);
         return userInformation.getPhone();
 //        preferences = PreferenceManager.getDefaultSharedPreferences(context);
 //        return preferences.getString("phone", "");
     }
+
     public static UserInformation loadPassword(Context context) {
         return loadInformation(context);
 
@@ -154,6 +155,19 @@ public class Login {
 //        userInformation.setNickname(preferences.getString("nickname", ""));
 //        userInformation.setPassword(preferences.getString("password", ""));
 //        return userInformation;
+    }
+
+    public static void storeBackground(String background, Context context) {
+        preferences = PreferenceManager.getDefaultSharedPreferences(context);
+        editor = preferences.edit();
+        editor.putString("background", background);
+        editor.apply();
+
+    }
+
+    public static String getBackground(Context context) {
+        preferences = PreferenceManager.getDefaultSharedPreferences(context);
+        return preferences.getString("background", null);
     }
 
     public static void login(Callback callback, Context context) {

@@ -110,13 +110,13 @@ public class PostDetailActivity extends AppCompatActivity {
             follow.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
+                    follow.setVisibility(View.INVISIBLE);
                     if (userInformation != null) {
                         new NetworkModule().post("/news/follow/poster/" + userInformation.getNickname(),
                                 "",
                                 new Star(PostDetailActivity.this, userInformation).getFollowHandler(),
                                 PostDetailActivity.this
                         );
-                        follow.setVisibility(View.GONE);
                     }
                 }
             });

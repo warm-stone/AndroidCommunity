@@ -29,6 +29,17 @@ public class CommunityPost extends LitePalSupport implements Serializable {
     private int type;
     private long userId;
     private String newsDetail;
+
+    private String images;
+
+    public String getImages() {
+        return images;
+    }
+
+    public void setImages(String images) {
+        this.images = images;
+    }
+
     /**
      * posted : 1554558536000
      */

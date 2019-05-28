@@ -4,7 +4,9 @@ import com.google.gson.annotations.SerializedName;
 
 import org.litepal.crud.LitePalSupport;
 
-public class UserInformation  extends LitePalSupport {
+import java.io.Serializable;
+
+public class UserInformation  extends LitePalSupport implements Serializable {
 
     /*
     * nickname : 昵称（不可重复）

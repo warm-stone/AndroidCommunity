@@ -17,6 +17,7 @@ import com.example.mycommunity.NetworkModule;
 import com.example.mycommunity.R;
 import com.example.mycommunity.jsonEntity.ReturnMsg;
 import com.example.mycommunity.jsonEntity.UserInformation;
+import com.example.mycommunity.main.MainCommunity;
 import com.example.mycommunity.mine.ReturnUserInformation;
 import com.google.gson.Gson;
 
@@ -65,9 +66,11 @@ public class LoginActivity extends AppCompatActivity {
                 case 0:
                     ReturnUserInformation information = gson.fromJson((String) msg.obj, ReturnUserInformation.class);
                     UserInformation base_info = information.getData().getBase_info();
-                    userInformation.setIdx(base_info.getIdx());
-                    userInformation.setCommunityId(base_info.getCommunityId());
-                    Login.storageInformation(userInformation, LoginActivity.this);
+                    base_info.setNickname(userInformation.getNickname());
+                    base_info.setPassword(userInformation.getPassword());
+                    Login.storageInformation(base_info, LoginActivity.this);
+                    Intent intent = new Intent(LoginActivity.this, MainCommunity.class);
+                    LoginActivity.this.startActivity(intent);
                     finish();
                     break;
                 default:
